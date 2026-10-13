@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#4A1B22">
   <meta name="description" content="MEFA Agency; markalar, işletmeler ve mekanlar için tanıtım, pazarlama, prodüksiyon, tedarik ve organizasyon çözümlerini doğru iş ağıyla buluşturur.">
   <meta name="robots" content="index, follow">
@@ -19,8 +19,9 @@
       --shadow:0 24px 70px rgba(48,17,22,.12); --radius:22px; --max:1200px;
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth;scroll-padding-top:90px}
-    body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.65;overflow-x:hidden}
+    /* Mobil font büyüme engeli ve scroll ayarları */
+    html{scroll-behavior:smooth;scroll-padding-top:90px;-webkit-text-size-adjust:100%;}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
     body.menu-open{overflow:hidden}
     img{max-width:100%;display:block}
     a{color:inherit;text-decoration:none}
@@ -44,11 +45,10 @@
     
     /* Header & Logo */
     .header{position:fixed;inset:4px 0 auto;z-index:1000;color:white;transition:background .3s,box-shadow .3s,color .3s}
-    .header.scrolled{background:rgba(253,251,247,.95);backdrop-filter:blur(18px);color:var(--burgundy);box-shadow:0 8px 35px rgba(48,17,22,.08);border-bottom:1px solid var(--line)}
+    .header.scrolled{background:rgba(253,251,247,.95);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:var(--burgundy);box-shadow:0 8px 35px rgba(48,17,22,.08);border-bottom:1px solid var(--line)}
     .nav{height:88px;display:flex;align-items:center;justify-content:space-between;gap:24px;transition:height .3s}
     .scrolled .nav{height:74px}
     
-    /* Yeni Kademeli Logo Stili */
     .brand{display:inline-flex;align-items:center;flex-shrink:0}
     .logo-stacked{display:flex;flex-direction:column;font-family:Manrope,sans-serif;font-weight:800;line-height:0.75;text-transform:lowercase;letter-spacing:-0.05em;padding-top:4px}
     .logo-me{font-size:2.3rem;color:currentColor;transition:color .3s}
@@ -64,7 +64,7 @@
     .menu-toggle{display:none;width:44px;height:44px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:7px;font-size:1.1rem}
     
     /* Hero */
-    .hero{position:relative;min-height:760px;height:min(900px,100svh);display:flex;align-items:center;isolation:isolate;overflow:hidden;background:var(--burgundy-dark);color:white}
+    .hero{position:relative;min-height:760px;height:100vh;height:100svh;height:min(900px,100vh);height:min(900px,100svh);display:flex;align-items:center;isolation:isolate;overflow:hidden;background:var(--burgundy-dark);color:white}
     .hero-bg{position:absolute;inset:0;z-index:-2;background:var(--burgundy-dark);}
     .hero-bg video {width: 100%; height: 100%; object-fit: cover; opacity: 0.35;}
     .hero-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(48,17,22,.98) 0%,rgba(74,27,34,.88) 44%,rgba(74,27,34,.3) 100%);}
@@ -78,7 +78,7 @@
     .hero-actions{display:flex;flex-wrap:wrap;gap:13px}
     .hero-note{display:flex;align-items:center;gap:12px;margin-top:45px;color:rgba(255,255,255,.64);font-size:.79rem;letter-spacing:.03em}
     .hero-note:before{content:"";width:42px;height:1px;background:var(--rose-light)}
-    .hero-aside{justify-self:end;width:min(100%,360px);padding:28px;border:1px solid rgba(255,255,255,.2);background:rgba(48,17,22,.36);backdrop-filter:blur(13px);border-radius:14px;box-shadow:0 25px 80px rgba(0,0,0,.16)}
+    .hero-aside{justify-self:end;width:min(100%,360px);padding:28px;border:1px solid rgba(255,255,255,.2);background:rgba(48,17,22,.36);-webkit-backdrop-filter:blur(13px);backdrop-filter:blur(13px);border-radius:14px;box-shadow:0 25px 80px rgba(0,0,0,.16)}
     .aside-label{font-size:.69rem;text-transform:uppercase;letter-spacing:.17em;color:#d0a09b;font-weight:800}
     .aside-head{font:800 1.6rem/1.2 Manrope,sans-serif;margin:13px 0 23px;letter-spacing:-.04em}
     .aside-item{display:flex;align-items:center;gap:13px;padding:15px 0;border-top:1px solid rgba(255,255,255,.14);font-weight:600;font-size:.91rem}
@@ -140,6 +140,8 @@
       scroll-behavior: smooth;
       align-items: center;
       padding: 40px calc(50% - 42.5vw);
+      -webkit-overflow-scrolling: touch;
+      will-change: transform;
     }
     @media (min-width: 768px) {
       .slider-track {
@@ -200,6 +202,7 @@
       width: 52px;
       height: 52px;
       background: rgba(255,255,255,0.15);
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.25);
       border-radius: 12px;
@@ -234,6 +237,7 @@
       height: 55px;
       border-radius: 50%;
       background: rgba(255,255,255,0.9);
+      -webkit-backdrop-filter: blur(5px);
       backdrop-filter: blur(5px);
       border: 1px solid var(--line);
       color: var(--burgundy);
@@ -313,7 +317,8 @@
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
     .field label{font-size:.8rem;font-weight:800;color:var(--burgundy)}
-    .field input,.field textarea,.field select{width:100%;padding:13px 14px;border:1px solid #e6dfd9;background:#fcfaf8;border-radius:6px;outline:none;color:var(--ink);transition:border .2s,box-shadow .2s}
+    /* iOS input auto-zoom engellemek için -webkit-appearance eklendi */
+    .field input,.field textarea,.field select{width:100%;padding:13px 14px;border:1px solid #e6dfd9;background:#fcfaf8;border-radius:6px;outline:none;color:var(--ink);-webkit-appearance:none;appearance:none;transition:border .2s,box-shadow .2s}
     .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(163,107,105,.12)}
     .field textarea{resize:vertical;min-height:130px}
     .form-note{font-size:.74rem;color:var(--muted);margin:14px 0 0}
@@ -348,7 +353,7 @@
       .container{width:min(100% - 36px,var(--max))}
       .nav{height:75px}.scrolled .nav{height:68px}
       .menu-toggle{display:grid;place-items:center}
-      .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(84vw,360px);padding:105px 28px 35px;background:var(--cream);color:var(--burgundy);display:flex;align-items:stretch;flex-direction:column;gap:0;box-shadow:-20px 0 60px rgba(0,0,0,.15);transform:translateX(110%);transition:transform .3s;z-index:-1}
+      .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(84vw,360px);padding:105px 28px 35px;background:var(--cream);color:var(--burgundy);display:flex;align-items:stretch;flex-direction:column;gap:0;box-shadow:-20px 0 60px rgba(0,0,0,.15);transform:translateX(110%);transition:transform .3s;z-index:-1;will-change:transform;}
       .nav-links.open{transform:translateX(0)}
       .nav-links a:not(.nav-cta){padding:17px 0;border-bottom:1px solid var(--line);font-size:.95rem}
       .nav-links a:not(.nav-cta):after{display:none}
@@ -375,6 +380,9 @@
       .contact-social{margin-top:20px}.contact-form{padding:30px}
       .footer{padding-top:50px}.footer-grid{grid-template-columns:1fr 1fr;gap:35px 22px}
       .footer-brand{grid-column:1/-1}.footer-bottom{flex-direction:column;gap:8px}
+      
+      /* iOS Focus Zoom Engellemesi İçin 16px Sabitleme */
+      .field input, .field textarea, .field select { font-size: 16px !important; }
     }
     @media(max-width:430px){
       .container{width:calc(100% - 30px)}
@@ -622,6 +630,24 @@
             <div class="benefit"><div class="benefit-icon"><i class="fa-solid fa-user-tie"></i></div><div><h3>Tek muhatap</h3><p>Farklı uzman ve tedarikçileri tek bir koordinasyon sürecinde buluştururuz.</p></div></div>
             <div class="benefit"><div class="benefit-icon"><i class="fa-solid fa-sliders"></i></div><div><h3>Esnek çözüm modeli</h3><p>Hazır paketler yerine projenizin kapsamına uygun hizmet kombinasyonu kurarız.</p></div></div>
             <div class="benefit"><div class="benefit-icon"><i class="fa-solid fa-location-dot"></i></div><div><h3>Yerel güç, geniş network</h3><p>Türkiye'nin her yerindeki bağlantıları farklı uzmanlık ve kaynaklarla birleştiririz.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="local">
+      <div class="container">
+        <div class="local-panel reveal">
+          <div class="local-copy">
+            <span class="eyebrow" style="color: #e0b5b0;">SAMSUN OFİSİ</span>
+            <h2 class="section-title">Yerel temas noktası.<br>Geniş çözüm ağı.</h2>
+            <p class="section-copy">Samsun ofisimiz; işletmelerle yüz yüze iletişim kurduğumuz, ihtiyaçları dinlediğimiz, doğru çözüm ortaklarını buluşturduğumuz ve projeyi yönettiğimiz koordinasyon merkezidir.</p>
+            <div class="local-quote">“Doğru bağlantı.<br>Gerçek çözüm.”</div>
+          </div>
+          <div class="local-points">
+            <div class="local-point"><h3>Tek noktadan koordinasyon</h3><p>Birden fazla ihtiyacı tek iletişim akışında yönetiriz.</p></div>
+            <div class="local-point"><h3>Esnek çözüm modeli</h3><p>Projenizin kapsamına ve hedeflerine uygun hizmet bileşenleri oluştururuz.</p></div>
+            <div class="local-point"><h3>Yerel erişim + network</h3><p>Samsun’daki ilişkileri farklı uzmanlık ve kaynaklarla bir araya getiririz.</p></div>
           </div>
         </div>
       </div>
