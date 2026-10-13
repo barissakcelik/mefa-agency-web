@@ -3,116 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEFA Agency | Samsun</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS (CDN üzerinden) -->
+    <title>MEFA Agency | Sizin için, doğru bağlantılarla.</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        mefaBordo: '#491A1E',
-                        mefaGul: '#9A6B65',
-                        mefaKrem: '#EFEAE3',
-                        mefaYesil: '#15321B'
+                        burgundy: {
+                            DEFAULT: '#4A1B22',
+                            light: '#5a212a',
+                            dark: '#381419'
+                        },
+                        rose: {
+                            DEFAULT: '#A36B69',
+                            light: '#b57f7d',
+                            dark: '#8f5c5a'
+                        },
+                        cream: {
+                            DEFAULT: '#FDFBF7',
+                            dark: '#f0ece1'
+                        }
                     },
                     fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Ekstra yumuşak geçişler ve gölgeler için ufak dokunuşlar */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.6);
+        body { font-family: 'Inter', sans-serif; background-color: #FDFBF7; color: #4A1B22; }
+        .glass-nav {
+            background: rgba(253, 251, 247, 0.9);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(163, 107, 105, 0.2);
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(74, 27, 34, 0.1), 0 8px 10px -6px rgba(74, 27, 34, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4A1B22 0%, #A36B69 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
-<body class="bg-mefaKrem text-gray-800 font-sans antialiased">
+<body class="antialiased">
 
-    <!-- Header / Navigasyon -->
-    <header class="fixed w-full top-0 z-50 bg-mefaKrem/90 backdrop-blur-md shadow-sm">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center">
-                    <!-- Logo Metni (Resim de eklenebilir) -->
-                    <a href="#" class="text-4xl font-extrabold text-mefaBordo tracking-tighter">me<br><span class="text-mefaGul relative -top-3">fa.</span></a>
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="text-4xl font-extrabold tracking-tighter text-burgundy flex flex-col leading-none">
+                        <span>me</span>
+                        <span class="text-rose -mt-1 relative">fa.<span class="absolute text-[10px] tracking-widest text-burgundy -bottom-3 left-1 font-medium">AGENCY</span></span>
+                    </div>
                 </div>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#hakkimizda" class="text-gray-700 hover:text-mefaBordo font-semibold transition">Neden MEFA?</a>
-                    <a href="#hizmetler" class="text-gray-700 hover:text-mefaBordo font-semibold transition">Hizmetlerimiz</a>
-                    <a href="#is-akisi" class="text-gray-700 hover:text-mefaBordo font-semibold transition">Nasıl Çalışıyoruz?</a>
-                </nav>
-                <div class="hidden md:flex">
-                    <a href="#iletisim" class="bg-mefaBordo text-white px-6 py-2 rounded-full font-semibold hover:bg-mefaGul transition shadow-lg">Bize Ulaşın</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#hakkimizda" class="text-burgundy hover:text-rose transition-colors font-medium">Hakkımızda</a>
+                    <a href="#hizmetler" class="text-burgundy hover:text-rose transition-colors font-medium">Hizmetlerimiz</a>
+                    <a href="#iletisim" class="text-burgundy hover:text-rose transition-colors font-medium">İletişim</a>
+                    <a href="#iletisim" class="bg-burgundy text-cream px-6 py-2 rounded-full hover:bg-rose transition-colors font-semibold shadow-md hover:shadow-lg">Bize Ulaşın</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-burgundy hover:text-rose focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
         </div>
-    </header>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream-dark border-t border-rose/20">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#hakkimizda" class="block px-3 py-2 text-burgundy font-medium">Hakkımızda</a>
+                <a href="#hizmetler" class="block px-3 py-2 text-burgundy font-medium">Hizmetlerimiz</a>
+                <a href="#iletisim" class="block px-3 py-2 text-burgundy font-medium">İletişim</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Hero (Karşılama) Bölümü -->
-    <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-mefaYesil font-bold tracking-wider uppercase mb-4 text-sm md:text-base">Mefa Agency • Samsun</h2>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-mefaBordo mb-6 leading-tight">
-                Sizin için, <br> <span class="text-mefaGul">doğru bağlantılarla.</span>
-            </h1>
-            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-                Markaları, işletmeleri ve mekanları tanıtım, pazarlama, üretim ve organizasyon çözümleriyle tek çatı altında buluşturuyoruz.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#iletisim" class="bg-mefaBordo text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-mefaGul transition shadow-xl">Hemen Başlayalım</a>
-                <a href="#hizmetler" class="bg-white text-mefaBordo border border-mefaBordo px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition">Neler Yapıyoruz?</a>
+    <!-- Hero -->
+    <section id="hero" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: radial-gradient(#4A1B22 1px, transparent 1px); background-size: 30px 30px;"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-burgundy tracking-tight mb-6 leading-tight">
+                    Sizin için, <br/>
+                    <span class="gradient-text">doğru bağlantılarla.</span>
+                </h1>
+                <p class="mt-4 text-xl md:text-2xl text-gray-600 mb-10 font-light">
+                    Markaları, işletmeleri ve mekanları tanıtım, pazarlama, üretim ve organizasyon çözümleriyle buluşturuyoruz.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#iletisim" class="bg-burgundy text-cream px-8 py-4 rounded-full text-lg font-semibold hover:bg-rose transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        Hemen Başlayalım <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#hizmetler" class="bg-transparent border-2 border-burgundy text-burgundy px-8 py-4 rounded-full text-lg font-semibold hover:bg-burgundy hover:text-cream transition-all flex items-center justify-center">
+                        Hizmetlerimiz
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Hakkımızda Bölümü -->
+    <!-- Hakkımızda -->
     <section id="hakkimizda" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div class="mb-10 lg:mb-0 relative">
+                    <div class="absolute -inset-4 bg-rose/10 rounded-3xl transform rotate-3"></div>
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="MEFA Agency Team" class="relative rounded-2xl shadow-xl object-cover h-[400px] w-full">
+                </div>
                 <div>
-                    <h3 class="text-3xl md:text-4xl font-bold text-mefaBordo mb-6">Ajans gibi düşünür, network gibi hareket eder.</h3>
-                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
-                        MEFA; markaların, işletmelerin ve mekanların ihtiyaçlarına güçlü bir iş ağıyla cevap veren, projeye uygun çözüm ortaklarını organize eden yaratıcı bir koordinasyon merkezidir.
+                    <h2 class="text-sm font-bold text-rose tracking-wider uppercase mb-2">Mefa Nedir?</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-burgundy mb-6 leading-tight">
+                        Ajans gibi düşünür,<br/>network gibi hareket eder.
+                    </h3>
+                    <p class="text-gray-600 text-lg mb-6">
+                        MEFA; markaların, işletmelerin ve mekanların ihtiyaçlarına güçlü bir ağla buluşturan, projeye uygun çözüm ortaklarını organize eden yaratıcı bir koordinasyon merkezidir.
                     </p>
-                    <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-mefaGul mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span class="text-gray-700 font-medium">Tek muhatap ile hızlı koordinasyon</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-mefaGul mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span class="text-gray-700 font-medium">İhtiyaca özel, esnek çözüm modelleri</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-mefaGul mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span class="text-gray-700 font-medium">Samsun merkezli yerel güç ve ulusal vizyon</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="bg-mefaKrem p-10 rounded-3xl relative">
-                    <div class="absolute -top-6 -left-6 w-24 h-24 bg-mefaGul rounded-full opacity-20"></div>
-                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-mefaBordo rounded-full opacity-10"></div>
-                    <h4 class="text-2xl font-bold text-mefaBordo mb-4 text-center">Gücümüz</h4>
-                    <div class="grid grid-cols-2 gap-6 text-center mt-8">
-                        <div>
-                            <div class="text-4xl font-extrabold text-mefaGul">+10</div>
-                            <div class="text-sm font-semibold text-gray-700 mt-2">Sektör & İş Ortağı</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-rose/20 p-3 rounded-lg text-burgundy"><i class="fas fa-bolt text-xl"></i></div>
+                            <div>
+                                <h4 class="font-bold text-burgundy">Hızlı Erişim</h4>
+                                <p class="text-sm text-gray-600">Zaman kaybetmeden doğru çözüme ulaşırsınız.</p>
+                            </div>
                         </div>
-                        <div>
-                            <div class="text-4xl font-extrabold text-mefaGul">100+</div>
-                            <div class="text-sm font-semibold text-gray-700 mt-2">İş Birliği</div>
-                        </div>
-                        <div class="col-span-2 mt-4">
-                            <div class="text-4xl font-extrabold text-mefaBordo">Sınırsız</div>
-                            <div class="text-sm font-semibold text-gray-700 mt-2">Olasılık</div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-rose/20 p-3 rounded-lg text-burgundy"><i class="fas fa-handshake text-xl"></i></div>
+                            <div>
+                                <h4 class="font-bold text-burgundy">Tek Muhatap</h4>
+                                <p class="text-sm text-gray-600">Tüm süreçleri tek bir akışta koordine ederiz.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -120,136 +150,180 @@
         </div>
     </section>
 
-    <!-- Hizmetler Bölümü -->
-    <section id="hizmetler" class="py-20">
+    <!-- Hizmetler -->
+    <section id="hizmetler" class="py-20 bg-cream-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold text-mefaBordo mb-4">Bir markanın ihtiyacı olan her şey, tek çatı altında.</h2>
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-bold text-rose tracking-wider uppercase mb-2">Hizmet Alanlarımız</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-burgundy mb-4">Bir markanın ihtiyacı olan her şey, tek çatı altında.</h3>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Kutu 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-300 border-b-4 border-mefaGul">
-                    <div class="text-mefaBordo font-bold text-5xl mb-4 opacity-20">01</div>
-                    <h3 class="text-xl font-bold text-mefaBordo mb-3">Influencer Marketing</h3>
-                    <p class="text-gray-600 text-sm">Markanızı doğru kitlelerle buluşturan yaratıcı kampanyalar, marka-creator eşleşmeleri ve yerel/ulusal erişim.</p>
-                </div>
-                <!-- Kutu 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-300 border-b-4 border-mefaBordo">
-                    <div class="text-mefaGul font-bold text-5xl mb-4 opacity-20">02</div>
-                    <h3 class="text-xl font-bold text-mefaBordo mb-3">Prodüksiyon & İçerik</h3>
-                    <p class="text-gray-600 text-sm">Markanızın hikayesini etkileyici içeriklerle anlatırız. Fotoğraf, video çekimi, reklam filmleri ve grafik tasarım.</p>
-                </div>
-                <!-- Kutu 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-300 border-b-4 border-mefaGul">
-                    <div class="text-mefaBordo font-bold text-5xl mb-4 opacity-20">03</div>
-                    <h3 class="text-xl font-bold text-mefaBordo mb-3">Mekan & Etkinlik</h3>
-                    <p class="text-gray-600 text-sm">Mekanınıza özel unutulmaz deneyimler organize ederiz. Etkinlik planlama, keşif ve servis koordinasyonu.</p>
-                </div>
-                <!-- Kutu 4 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-300 border-b-4 border-mefaBordo">
-                    <div class="text-mefaGul font-bold text-5xl mb-4 opacity-20">04</div>
-                    <h3 class="text-xl font-bold text-mefaBordo mb-3">Dijital Çözümler & Tedarik</h3>
-                    <p class="text-gray-600 text-sm">Sosyal medya yönetimi, dijital strateji geliştirme ile iş kıyafeti ve promosyon ürünleri gibi kurumsal tedarik çözümleri.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- İş Akışı Bölümü -->
-    <section id="is-akisi" class="py-20 bg-mefaBordo text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-12">İhtiyaçtan ticari değere: 4 Adımda Çözüm</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="w-16 h-16 bg-mefaGul rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">1</div>
-                    <h4 class="font-bold text-xl mb-2">İhtiyacı Belirlemek</h4>
-                    <p class="text-mefaKrem text-sm">Markanın hedefini, problemini ve beklentisini netleştiririz.</p>
-                </div>
-                <div>
-                    <div class="w-16 h-16 bg-mefaGul rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">2</div>
-                    <h4 class="font-bold text-xl mb-2">Doğru Kaynağa Ulaşmak</h4>
-                    <p class="text-mefaKrem text-sm">Network içinden en doğru üretici, uzman veya içerik üreticisini seçeriz.</p>
-                </div>
-                <div>
-                    <div class="w-16 h-16 bg-mefaGul rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">3</div>
-                    <h4 class="font-bold text-xl mb-2">Çözümü Organize Etmek</h4>
-                    <p class="text-mefaKrem text-sm">İşin üretim, iletişim ve uygulama sürecini baştan sona koordine ederiz.</p>
-                </div>
-                <div>
-                    <div class="w-16 h-16 bg-white text-mefaBordo rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">4</div>
-                    <h4 class="font-bold text-xl mb-2">Ticari Değer Yaratmak</h4>
-                    <p class="text-mefaKrem text-sm">Markaya görünürlük, hız, kolaylık ve somut sonuçlar üretiriz.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- İletişim / Footer -->
-    <section id="iletisim" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-mefaKrem rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row">
-                <!-- İletişim Bilgileri -->
-                <div class="bg-mefaBordo text-white p-10 md:w-1/2 flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-3xl font-bold mb-4">Birlikte Çalışalım</h2>
-                        <p class="mb-8 text-mefaKrem opacity-80">İhtiyacınızı konuşalım, doğru çözümü birlikte kuralım.</p>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-center">
-                                <svg class="w-6 h-6 mr-4 text-mefaGul" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                <span>mefacreative@gmail.com</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-6 h-6 mr-4 text-mefaGul" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                                <span>0554 172 78 55</span>
-                            </div>
-                            <div class="flex items-start">
-                                <svg class="w-6 h-6 mr-4 text-mefaGul mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <span>Adalet Mahallesi, Evliya Çelebi Sokak No: 3<br>İlkadım / Samsun</span>
-                            </div>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
+                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
+                        <i class="fas fa-hashtag"></i>
                     </div>
-                    <div class="mt-12">
-                        <a href="https://instagram.com/mefa.agency" target="_blank" class="inline-flex items-center text-white hover:text-mefaGul transition">
-                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                            @mefa.agency
-                        </a>
-                    </div>
+                    <h4 class="text-xl font-bold text-burgundy mb-3">Influencer Marketing</h4>
+                    <p class="text-gray-600">Markanızı doğru kitlelerle buluşturan yaratıcı kampanyalar. Marka-creator eşleşmeleri ve sosyal medya yönetimi.</p>
                 </div>
                 
-                <!-- İletişim Formu -->
-                <div class="p-10 md:w-1/2">
-                    <!-- FORMSPREE VEYA WEB3FORMS LİNKİNİ ACTION KISMINA YAPIŞTIRIN -->
-                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
+                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-burgundy mb-3">Prodüksiyon & İçerik Üretimi</h4>
+                    <p class="text-gray-600">Markanızın hikayesini etkileyici içeriklerle anlatırız. Fotoğraf, video çekimi, kurgu ve grafik tasarım.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
+                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-burgundy mb-3">Mekan & Etkinlik Org.</h4>
+                    <p class="text-gray-600">Mekanınıza özel unutulmaz deneyimler organize ederiz. Etkinlik planlama, davet ve servis koordinasyonu.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
+                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-burgundy mb-3">Dijital Pazarlama</h4>
+                    <p class="text-gray-600">Dijitalde görünür, ölçülebilir ve sürdürülebilir büyüme. E-ticaret danışmanlığı, reklam yönetimi ve raporlama.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100 md:col-span-2 lg:col-span-1 lg:col-start-2">
+                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-burgundy mb-3">Tedarik / Kurumsal İhtiyaçlar</h4>
+                    <p class="text-gray-600">İş kıyafetlerinde özel üretim, promosyon ürünleri ve kurumunuza özel tekstil çözümleri.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim Formu ve Bilgileri -->
+    <section id="iletisim" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-bold text-rose tracking-wider uppercase mb-2">İletişim</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-burgundy mb-4">Birlikte Çalışalım</h3>
+                <p class="text-gray-600">İhtiyacınızı konuşalım, doğru çözümü birlikte kuralım.</p>
+            </div>
+
+            <div class="bg-cream-dark rounded-3xl overflow-hidden shadow-xl flex flex-col lg:flex-row">
+                
+                <!-- Sol: İletişim Bilgileri -->
+                <div class="bg-burgundy p-10 lg:w-1/3 text-white flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-2xl font-bold mb-8">İletişim Bilgilerimiz</h4>
+                        <div class="space-y-8">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-rose/20 rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fas fa-map-marker-alt text-rose"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-rose-light mb-1">Adres</h5>
+                                    <p class="text-cream/80 text-sm">Adalet Mahallesi<br>Evliya Çelebi Sokak No: 3<br>İlkadım / Samsun</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-rose/20 rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fas fa-phone-alt text-rose"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-rose-light mb-1">Telefon</h5>
+                                    <a href="tel:05541727855" class="text-cream/80 hover:text-white transition text-sm">0554 172 78 55</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-rose/20 rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <i class="fas fa-envelope text-rose"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-rose-light mb-1">E-Posta</h5>
+                                    <a href="mailto:mefacreative@gmail.com" class="text-cream/80 hover:text-white transition text-sm">mefacreative@gmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-12 pt-8 border-t border-white/10">
+                        <h5 class="font-semibold text-rose-light mb-4">Bizi Takip Edin</h5>
+                        <div class="flex space-x-4">
+                            <a href="https://instagram.com/mefa.agency" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-rose transition text-xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ: Form -->
+                <div class="p-10 lg:w-2/3 bg-white">
+                    <h4 class="text-2xl font-bold text-burgundy mb-2">Bize Mesaj Gönderin</h4>
+                    <p class="text-gray-500 text-sm mb-8">Formu doldurarak talebinizi iletebilirsiniz. En kısa sürede size dönüş yapacağız.</p>
+                    
+                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                        <!-- WEB3FORMS ACCESS KEY BURAYA GELECEK -->
+                        <input type="hidden" name="access_key" value="SENİN-ACCESS-KEY-BURAYA-GELECEK">
                         
-                        <!-- Buraya Web3Forms'dan aldığın Access Key'i ekleyeceksin -->
-                        <!-- <input type="hidden" name="access_key" value="SENİN-ACCESS-KEY-BURAYA-GELECEK"> -->
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Adınız Soyadınız</label>
-                            <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mefaGul bg-white">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Adınız Soyadınız</label>
+                                <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">E-Posta Adresiniz</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50">
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">E-Posta Adresiniz</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mefaGul bg-white">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Telefon Numaranız</label>
+                            <input type="tel" name="phone" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Mesajınız / İhtiyacınız</label>
-                            <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mefaGul bg-white resize-none"></textarea>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mesajınız / İhtiyacınız</label>
+                            <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50 resize-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-mefaBordo text-white font-bold py-3 px-4 rounded-xl hover:bg-mefaGul transition shadow-md">
-                            Mesaj Gönder
+                        <button type="submit" class="w-full bg-burgundy text-cream font-bold py-4 px-6 rounded-xl hover:bg-rose transition-colors shadow-md hover:shadow-lg flex justify-center items-center gap-2">
+                            <i class="fas fa-paper-plane"></i> Mesajı Gönder
                         </button>
                     </form>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <footer class="bg-white py-6 text-center border-t border-gray-200">
-        <p class="text-gray-500 text-sm">© 2024 MEFA Agency. Tüm hakları saklıdır. Doğru bağlantı. Gerçek çözüm.</p>
+    <!-- Footer -->
+    <footer class="bg-burgundy-dark text-cream py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="text-2xl font-bold tracking-tighter">me<span class="text-rose">fa.</span></span>
+            </div>
+            <div class="text-sm text-cream/60">
+                &copy; <span id="year"></span> MEFA Agency. Tüm hakları saklıdır.
+            </div>
+        </div>
     </footer>
 
+    <script>
+        // Yılı otomatik güncelle
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Mobil menü açma/kapama
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobil menüdeki linke tıklayınca menüyü kapat
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
 </body>
 </html>
