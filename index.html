@@ -88,7 +88,6 @@
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="#hakkimizda" class="nav-link hover:text-rose transition-colors font-medium text-sm tracking-wide uppercase">Hakkımızda</a>
                     <a href="#hizmetler" class="nav-link hover:text-rose transition-colors font-medium text-sm tracking-wide uppercase">Hizmetlerimiz</a>
-                    <a href="#is-ortaklari" class="nav-link hover:text-rose transition-colors font-medium text-sm tracking-wide uppercase">Çözümler</a>
                     <a href="#iletisim" class="nav-link hover:text-rose transition-colors font-medium text-sm tracking-wide uppercase">İletişim</a>
                     <a href="#iletisim" class="bg-rose text-white px-6 py-2.5 rounded hover:bg-burgundy transition-colors font-semibold shadow-md text-sm uppercase tracking-wider">Bize Ulaşın</a>
                 </div>
@@ -112,11 +111,14 @@
         </div>
     </nav>
 
-    <!-- Tam Ekran Kurumsal Hero Bölümü -->
+    <!-- Tam Ekran Kurumsal Hero Bölümü (VİDEOLU) -->
     <section id="hero" class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-burgundy-dark">
-        <!-- Arka Plan Görseli ve Karanlık Overlay -->
+        <!-- Arka Plan Videosu ve Karanlık Overlay -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="MEFA Agency Corporate" class="w-full h-full object-cover object-center opacity-40">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover object-center opacity-40">
+                <!-- Şık bir ajans/ekip çalışması stok videosu eklendi -->
+                <source src="https://cdn.pixabay.com/video/2020/05/25/40134-424915606_large.mp4" type="video/mp4">
+            </video>
             <div class="absolute inset-0 bg-gradient-to-r from-burgundy-dark/95 via-burgundy/80 to-transparent mix-blend-multiply"></div>
         </div>
 
@@ -213,7 +215,7 @@
         </div>
     </section>
 
-    <!-- HİZMETLER - MERKEZ ODAKLI SLIDER (Özellik Korundu, Çerçeve Kurumsallaştı) -->
+    <!-- HİZMETLER - MERKEZ ODAKLI SLIDER (OKLAR GÖRSELLERİN YANINDA) -->
     <section id="hizmetler" class="py-24 bg-white overflow-hidden relative border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -221,18 +223,21 @@
                     <h2 class="text-rose font-bold uppercase tracking-[0.2em] text-sm mb-3">Çözüm Alanlarımız</h2>
                     <h3 class="text-3xl md:text-4xl font-bold text-burgundy leading-tight">Bir markanın ihtiyacı olan her şey,<br/>tek çatı altında.</h3>
                 </div>
-                <div class="flex gap-4">
-                    <button id="prevBtn" class="w-12 h-12 border border-gray-200 rounded flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white hover:border-burgundy transition-colors">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button id="nextBtn" class="w-12 h-12 border border-gray-200 rounded flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white hover:border-burgundy transition-colors">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
         <div class="relative w-full group">
+            
+            <!-- Sol Ok Butonu (Görsellerin yanına alındı) -->
+            <button id="prevBtn" class="absolute left-4 md:left-12 lg:left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-14 md:h-14 bg-white/90 backdrop-blur-md border border-gray-200 rounded-full shadow-lg flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white hover:border-burgundy transition-all transform hover:scale-105">
+                <i class="fas fa-chevron-left text-lg"></i>
+            </button>
+
+            <!-- Sağ Ok Butonu (Görsellerin yanına alındı) -->
+            <button id="nextBtn" class="absolute right-4 md:right-12 lg:right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-14 md:h-14 bg-white/90 backdrop-blur-md border border-gray-200 rounded-full shadow-lg flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white hover:border-burgundy transition-all transform hover:scale-105">
+                <i class="fas fa-chevron-right text-lg"></i>
+            </button>
+
             <!-- Slider Track -->
             <div id="sliderTrack" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 items-center py-4 slider-padding relative z-20">
                 
@@ -311,7 +316,7 @@
             
             <div class="bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col lg:flex-row border border-gray-100">
                 
-                <!-- Sol: İletişim Bilgileri (Koyu Tema) -->
+                <!-- Sol: İletişim Bilgileri -->
                 <div class="bg-burgundy p-12 lg:w-2/5 text-white flex flex-col justify-between">
                     <div>
                         <h2 class="text-rose font-bold uppercase tracking-[0.2em] text-sm mb-3">İletişim</h2>
@@ -381,7 +386,7 @@
         </div>
     </section>
 
-    <!-- Kurumsal Footer -->
+    <!-- Kurumsal Footer (LinkedIn Kaldırıldı) -->
     <footer class="bg-burgundy-dark text-white pt-16 pb-8 border-t border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
@@ -404,11 +409,9 @@
                 <div>
                     <h4 class="text-lg font-bold mb-6">Sosyal Medya</h4>
                     <div class="flex space-x-4">
+                        <!-- Sadece Instagram Kütü Kaldı -->
                         <a href="https://instagram.com/mefa.agency" target="_blank" class="w-10 h-10 bg-white/5 rounded flex items-center justify-center hover:bg-rose transition-colors">
                             <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-white/5 rounded flex items-center justify-center hover:bg-rose transition-colors">
-                            <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
                 </div>
@@ -426,7 +429,6 @@
         
         // --- NAVBAR SCROLL EFEKTİ ---
         const navbar = document.getElementById('navbar');
-        const navLinks = document.querySelectorAll('.nav-link');
         const logoText = document.getElementById('logo-text');
         const logoSubtext = document.getElementById('logo-subtext');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
