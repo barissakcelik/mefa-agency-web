@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MEFA Agency | Yönetim Paneli</title>
+    
+    <!-- YENİ: Tarayıcı Sekme İkonu (Favicon) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%234A1B22'/><text x='50%' y='52%' font-family='Manrope, sans-serif' font-size='42' font-weight='800' fill='%23ffffff' text-anchor='middle' dominant-baseline='middle'>mf</text></svg>">
+    
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -236,7 +240,7 @@
                                 </div>
                             </div>
 
-                            <!-- Net Beklenen Gelir Güncellemesi -->
+                            <!-- Net Beklenen Gelir -->
                             <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-yellow-400">
                                 <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Net Beklenen Gelir</h3>
                                 <div class="flex flex-wrap items-end gap-2">
@@ -348,6 +352,7 @@
         const itemsPerPage = 20;
         let myChart = null;
 
+        // === OTURUM KONTROLÜ ===
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 showDashboard();
