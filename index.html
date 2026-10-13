@@ -1,574 +1,855 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEFA Agency | Kurumsal İletişim ve Çözüm Merkezi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4A1B22">
+  <meta name="description" content="MEFA Agency; markalar, işletmeler ve mekanlar için tanıtım, pazarlama, prodüksiyon, tedarik ve organizasyon çözümlerini doğru iş ağıyla buluşturur.">
+  <meta name="robots" content="index, follow">
+  <title>MEFA Agency | Sizin İçin, Doğru Bağlantılarla</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --burgundy:#4A1B22; --burgundy-light:#61242d; --burgundy-dark:#301116;
+      --rose:#A36B69; --rose-light:#BD8985; --cream:#FDFBF7; --cream-dark:#F0ECE1;
+      --ink:#241b1b; --muted:#756b69; --line:rgba(74,27,34,.13); --white:#fff;
+      --shadow:0 24px 70px rgba(48,17,22,.12); --radius:22px; --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:90px}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.65;overflow-x:hidden}
+    body.menu-open{overflow:hidden}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    button,input,textarea,select{font:inherit}
+    button,a{-webkit-tap-highlight-color:transparent}
+    button{cursor:pointer}
+    .container{width:min(var(--max),calc(100% - 48px));margin-inline:auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:12px;color:var(--rose);font-size:.75rem;font-weight:800;letter-spacing:.19em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:28px;height:2px;background:currentColor}
+    .section-title{font-family:Manrope,sans-serif;color:var(--burgundy);font-size:clamp(2rem,4vw,3.35rem);line-height:1.13;letter-spacing:-.055em;margin:15px 0 18px;font-weight:800}
+    .section-copy{max-width:650px;color:var(--muted);font-size:1.05rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:15px 22px;border:1px solid transparent;border-radius:7px;font-size:.9rem;font-weight:700;transition:transform .25s,background .25s,color .25s,border-color .25s}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-primary{background:var(--rose);color:white;box-shadow:0 10px 25px rgba(163,107,105,.2)}
+    .btn-primary:hover{background:var(--burgundy)}
+    .btn-outline{border-color:rgba(255,255,255,.38);color:white;background:rgba(255,255,255,.04)}
+    .btn-outline:hover{background:white;color:var(--burgundy)}
+    .btn-dark{background:var(--burgundy);color:white}
+    .btn-dark:hover{background:var(--rose)}
+    .topline{height:4px;background:linear-gradient(90deg,var(--burgundy),var(--rose),var(--cream-dark))}
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        burgundy: {
-                            DEFAULT: '#4A1B22',
-                            light: '#61242d',
-                            dark: '#301116'
-                        },
-                        rose: {
-                            DEFAULT: '#A36B69',
-                            light: '#b57f7d',
-                            dark: '#8f5c5a'
-                        },
-                        cream: {
-                            DEFAULT: '#FDFBF7',
-                            dark: '#f0ece1'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #FDFBF7; color: #1a1a1a; overflow-x: hidden; }
-        
-        /* Navbar Dinamik Geçişi */
-        .nav-scrolled {
-            background: rgba(253, 251, 247, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(90deg, #A36B69 0%, #FDFBF7 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    /* Header */
+    .header{position:fixed;inset:4px 0 auto;z-index:1000;color:white;transition:background .3s,box-shadow .3s,color .3s}
+    .header.scrolled{background:rgba(253,251,247,.95);backdrop-filter:blur(18px);color:var(--burgundy);box-shadow:0 8px 35px rgba(48,17,22,.08);border-bottom:1px solid var(--line)}
+    .nav{height:88px;display:flex;align-items:center;justify-content:space-between;gap:24px;transition:height .3s}
+    .scrolled .nav{height:74px}
+    .brand{display:inline-flex;align-items:center;gap:12px;flex-shrink:0}
+    .brand-mark{width:43px;height:43px;display:grid;place-items:center;border:1px solid currentColor;border-radius:50%;font-family:Manrope,sans-serif;font-size:1.08rem;font-weight:800;letter-spacing:-.1em;padding-right:3px}
+    .brand-word{font-family:Manrope,sans-serif;font-size:1.55rem;font-weight:800;letter-spacing:-.09em;line-height:1}
+    .brand-word span{color:var(--rose)}
+    .brand-sub{display:block;font-size:.54rem;letter-spacing:.28em;font-weight:700;margin-top:5px}
+    .nav-links{display:flex;align-items:center;gap:30px}
+    .nav-links a:not(.nav-cta){font-size:.81rem;font-weight:700;position:relative}
+    .nav-links a:not(.nav-cta):after{content:"";position:absolute;left:0;bottom:-8px;width:0;height:2px;background:var(--rose);transition:width .25s}
+    .nav-links a:not(.nav-cta):hover:after{width:100%}
+    .nav-cta{padding:12px 17px;background:var(--rose);color:white;border-radius:5px;font-size:.8rem;font-weight:800}
+    .nav-cta:hover{background:var(--burgundy)}
+    .menu-toggle{display:none;width:44px;height:44px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:7px;font-size:1.1rem}
+    
+    /* Hero (VİDEOLU GÜNCELLEME) */
+    .hero{position:relative;min-height:760px;height:min(900px,100svh);display:flex;align-items:center;isolation:isolate;overflow:hidden;background:var(--burgundy-dark);color:white}
+    .hero-bg{position:absolute;inset:0;z-index:-2;background:var(--burgundy-dark);}
+    .hero-bg video {width: 100%; height: 100%; object-fit: cover; opacity: 0.35;}
+    .hero-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(48,17,22,.98) 0%,rgba(74,27,34,.88) 44%,rgba(74,27,34,.3) 100%);}
+    .hero:after{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(circle at 78% 40%,rgba(163,107,105,.22),transparent 34%),linear-gradient(0deg,rgba(48,17,22,.65),transparent 35%)}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.65fr);align-items:center;gap:45px;padding-top:80px}
+    .hero-content{max-width:720px}
+    .hero .eyebrow{color:#d4a19b}
+    .hero h1{font-family:Manrope,sans-serif;font-size:clamp(3.3rem,7.2vw,6.6rem);line-height:.99;letter-spacing:-.075em;margin:25px 0 26px;font-weight:800}
+    .hero h1 em{font-style:normal;color:#d0a09b}
+    .hero-lead{max-width:620px;color:rgba(255,255,255,.76);font-size:clamp(1rem,1.5vw,1.18rem);line-height:1.85;margin:0 0 34px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:13px}
+    .hero-note{display:flex;align-items:center;gap:12px;margin-top:45px;color:rgba(255,255,255,.64);font-size:.79rem;letter-spacing:.03em}
+    .hero-note:before{content:"";width:42px;height:1px;background:var(--rose-light)}
+    .hero-aside{justify-self:end;width:min(100%,360px);padding:28px;border:1px solid rgba(255,255,255,.2);background:rgba(48,17,22,.36);backdrop-filter:blur(13px);border-radius:14px;box-shadow:0 25px 80px rgba(0,0,0,.16)}
+    .aside-label{font-size:.69rem;text-transform:uppercase;letter-spacing:.17em;color:#d0a09b;font-weight:800}
+    .aside-head{font:800 1.6rem/1.2 Manrope,sans-serif;margin:13px 0 23px;letter-spacing:-.04em}
+    .aside-item{display:flex;align-items:center;gap:13px;padding:15px 0;border-top:1px solid rgba(255,255,255,.14);font-weight:600;font-size:.91rem}
+    .aside-item i{width:36px;height:36px;display:grid;place-items:center;color:#e0b5b0;background:rgba(163,107,105,.2);border-radius:9px}
+    .hero-bottom{position:absolute;bottom:0;left:0;right:0;border-top:1px solid rgba(255,255,255,.17);background:rgba(48,17,22,.24)}
+    .hero-bottom-inner{display:flex;justify-content:space-between;gap:20px;padding:19px 0;color:rgba(255,255,255,.75);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .hero-bottom span{display:flex;align-items:center;gap:10px}
+    .hero-bottom i{color:#d0a09b}
+    
+    /* Intro */
+    .intro{padding:125px 0 115px}
+    .intro-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:90px;align-items:center}
+    .intro-visual{position:relative;min-height:530px}
+    .intro-photo{position:absolute;inset:0 35px 35px 0;border-radius:13px;overflow:hidden;background:var(--cream-dark)}
+    .intro-photo img{width:100%;height:100%;object-fit:cover}
+    .intro-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(48,17,22,.35),transparent 45%)}
+    .photo-tag{position:absolute;z-index:2;left:25px;bottom:25px;color:white;font:700 .78rem Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+    .intro-stamp{position:absolute;right:0;bottom:0;width:170px;height:170px;background:var(--burgundy);color:white;border:8px solid var(--cream);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+    .intro-stamp strong{font:800 2rem Manrope,sans-serif;color:#d0a09b;line-height:1.1}
+    .intro-stamp span{font-size:.66rem;line-height:1.35;letter-spacing:.08em;text-transform:uppercase;margin-top:7px}
+    .intro-copy .section-copy{margin-bottom:26px}
+    .intro-quote{padding:18px 0 18px 22px;border-left:3px solid var(--rose);color:var(--burgundy);font:700 1.12rem/1.55 Manrope,sans-serif;margin:30px 0}
+    .mini-points{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
+    .mini-point{display:flex;gap:12px;align-items:flex-start}
+    .mini-point i{color:var(--rose);margin-top:5px}
+    .mini-point strong{display:block;font-size:.91rem;color:var(--burgundy)}
+    .mini-point span{display:block;font-size:.81rem;color:var(--muted);margin-top:3px;line-height:1.5}
+    
+    /* Process */
+    .process{padding:110px 0;background:var(--burgundy);color:white;position:relative;overflow:hidden}
+    .process:after{content:"MEFA";position:absolute;right:-25px;bottom:-100px;font:800 22rem/1 Manrope,sans-serif;letter-spacing:-.12em;color:rgba(255,255,255,.025);pointer-events:none}
+    .process .section-title{color:white;max-width:700px}
+    .process .section-copy{color:rgba(255,255,255,.67)}
+    .process-head{display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:55px}
+    .process-head .section-copy{max-width:390px}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.22);position:relative;z-index:1}
+    .step{padding:27px 23px 0 0;position:relative}
+    .step:not(:first-child){padding-left:23px;border-left:1px solid rgba(255,255,255,.15)}
+    .step-num{font:800 2.5rem Manrope,sans-serif;color:#d0a09b;letter-spacing:-.06em}
+    .step h3{font:800 1.05rem/1.4 Manrope,sans-serif;margin:22px 0 12px;max-width:210px}
+    .step p{font-size:.88rem;color:rgba(255,255,255,.65);margin:0;max-width:240px}
+    .process-foot{margin-top:40px;padding-top:23px;border-top:1px solid rgba(255,255,255,.15);font-size:.8rem;letter-spacing:.04em;color:#e0c3c0}
+    
+    /* Services (YENİ ODAK MERKEZLİ SLIDER) */
+    .services{padding:120px 0; overflow:hidden;}
+    .services-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:45px}
+    .services-head .section-copy{max-width:430px;margin-bottom:8px}
+    
+    .slider-wrap {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .slider-track {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      align-items: center;
+      padding: 40px calc(50% - 42.5vw);
+    }
+    @media (min-width: 768px) {
+      .slider-track {
+        padding: 40px calc(50% - 200px);
+      }
+    }
+    .slider-track::-webkit-scrollbar { display: none; }
+    .slider-track { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Yana Kaydırma Çubuğunu Gizleme */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .slider-card {
+      scroll-snap-align: center;
+      flex-shrink: 0;
+      width: 85vw;
+      max-width: 400px;
+      height: 480px;
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.5s ease-out;
+      transform: scale(0.85);
+      opacity: 0.4;
+      cursor: pointer;
+    }
+    .slider-card.active {
+      transform: scale(1);
+      opacity: 1;
+      z-index: 10;
+    }
+    .slider-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .slider-card:hover img {
+      transform: scale(1.08);
+    }
+    .slider-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--burgundy-dark) 0%, rgba(74,27,34,0.6) 45%, transparent 100%);
+      pointer-events: none;
+    }
+    .slider-content {
+      position: absolute;
+      inset: 0;
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      pointer-events: none;
+      color: white;
+    }
+    .slider-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+    .slider-content h3 {
+      font-family: Manrope, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0 0 10px;
+      line-height: 1.2;
+    }
+    .slider-content p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      margin: 0;
+    }
 
-        /* Slider Padding Hesaplaması (Kenarlarda boşluk bırakmak için) */
-        .slider-padding {
-            padding-left: calc(50% - 42.5vw);
-            padding-right: calc(50% - 42.5vw);
-        }
-        @media (min-width: 768px) {
-            .slider-padding {
-                padding-left: calc(50% - 200px);
-                padding-right: calc(50% - 200px);
-            }
-        }
-    </style>
+    /* Slider Yönlendirme Okları (Görsellerin Üstünde/Yanında) */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 30;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--line);
+      color: var(--burgundy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+    }
+    .slider-btn:hover {
+      background: var(--burgundy);
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .slider-btn.prev { left: 15px; }
+    .slider-btn.next { right: 15px; }
+    @media (min-width: 768px) {
+      .slider-btn.prev { left: 30px; }
+      .slider-btn.next { right: 30px; }
+    }
+    @media (min-width: 1200px) {
+      .slider-btn.prev { left: calc(50% - 550px); }
+      .slider-btn.next { right: calc(50% - 550px); }
+    }
+
+    .services-cta{margin-top:30px;padding:27px 32px;border-radius:12px;background:var(--cream-dark);display:flex;justify-content:space-between;align-items:center;gap:25px}
+    .services-cta strong{display:block;font:800 1.2rem Manrope,sans-serif;color:var(--burgundy)}
+    .services-cta span{display:block;color:var(--muted);font-size:.88rem;margin-top:4px}
+    
+    /* Feature split */
+    .growth{background:#f4efe8;padding:110px 0}
+    .growth-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .growth-visual{min-height:530px;position:relative;border-radius:14px;overflow:hidden;background:var(--burgundy)}
+    .growth-visual img{width:100%;height:100%;min-height:530px;object-fit:cover;opacity:.74}
+    .growth-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(48,17,22,.86),rgba(48,17,22,.03) 75%)}
+    .growth-overlay{position:absolute;z-index:2;left:32px;right:32px;bottom:30px;color:white}
+    .growth-overlay .tiny{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:#d0a09b;font-weight:800}
+    .growth-overlay h3{font:800 clamp(1.7rem,3vw,2.5rem)/1.15 Manrope,sans-serif;letter-spacing:-.05em;margin:12px 0 0;max-width:440px}
+    .benefit-list{margin-top:30px;display:grid;gap:0}
+    .benefit{display:grid;grid-template-columns:45px 1fr;gap:16px;padding:19px 0;border-bottom:1px solid var(--line)}
+    .benefit-icon{width:42px;height:42px;display:grid;place-items:center;background:white;border:1px solid var(--line);border-radius:10px;color:var(--rose)}
+    .benefit h3{font:800 1rem Manrope,sans-serif;color:var(--burgundy);margin:0 0 4px}
+    .benefit p{font-size:.87rem;color:var(--muted);margin:0}
+    
+    /* Local */
+    .local{padding:115px 0}
+    .local-panel{display:grid;grid-template-columns:1fr 1fr;background:var(--burgundy-dark);color:white;border-radius:16px;overflow:hidden}
+    .local-copy{padding:clamp(30px,5vw,65px)}
+    .local-copy .section-title{color:white}
+    .local-copy .section-copy{color:rgba(255,255,255,.68)}
+    .local-quote{font:800 clamp(1.4rem,2.5vw,2rem)/1.25 Manrope,sans-serif;letter-spacing:-.04em;color:#d0a09b;margin:32px 0 0}
+    .local-points{padding:45px;display:grid;align-content:center;gap:13px;background:linear-gradient(140deg,rgba(163,107,105,.22),rgba(48,17,22,.1))}
+    .local-point{padding:22px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.035)}
+    .local-point h3{font:800 1rem Manrope,sans-serif;margin:0 0 5px}
+    .local-point p{font-size:.85rem;color:rgba(255,255,255,.65);margin:0}
+    
+    /* Contact */
+    .contact{padding:115px 0;background:var(--cream-dark)}
+    .contact-head{text-align:center;max-width:720px;margin:0 auto 45px}
+    .contact-head .eyebrow{justify-content:center}
+    .contact-head .section-copy{margin-inline:auto}
+    .contact-panel{display:grid;grid-template-columns:.82fr 1.18fr;border-radius:16px;overflow:hidden;background:white;box-shadow:var(--shadow)}
+    .contact-info{background:var(--burgundy);padding:clamp(30px,4vw,52px);color:white;display:flex;flex-direction:column}
+    .contact-info h3{font:800 2rem/1.15 Manrope,sans-serif;letter-spacing:-.05em;margin:15px 0}
+    .contact-info>p{color:rgba(255,255,255,.68);font-size:.9rem;margin:0 0 28px}
+    .contact-detail{display:flex;gap:15px;padding:17px 0;border-top:1px solid rgba(255,255,255,.15)}
+    .contact-detail i{color:#d0a09b;margin-top:5px;width:18px;text-align:center}
+    .contact-detail strong{display:block;font-size:.85rem;margin-bottom:3px}
+    .contact-detail span,.contact-detail a{font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.6}
+    .contact-social{display:flex;gap:10px;margin-top:auto;padding-top:28px}
+    .social-link{width:42px;height:42px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;transition:background .2s}
+    .social-link:hover{background:var(--rose)}
+    .contact-form{padding:clamp(30px,4vw,52px)}
+    .contact-form h3{font:800 1.55rem Manrope,sans-serif;color:var(--burgundy);margin:0 0 8px;letter-spacing:-.04em}
+    .contact-form>p{font-size:.87rem;color:var(--muted);margin:0 0 27px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+    .field label{font-size:.8rem;font-weight:800;color:var(--burgundy)}
+    .field input,.field textarea,.field select{width:100%;padding:13px 14px;border:1px solid #e6dfd9;background:#fcfaf8;border-radius:6px;outline:none;color:var(--ink);transition:border .2s,box-shadow .2s}
+    .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(163,107,105,.12)}
+    .field textarea{resize:vertical;min-height:130px}
+    .form-note{font-size:.74rem;color:var(--muted);margin:14px 0 0}
+    .result{display:none;margin-top:17px;padding:13px 15px;border-radius:7px;font-size:.85rem}
+    .result.success{display:block;background:#edf7ef;color:#236335;border:1px solid #cbe6d0}
+    .result.error{display:block;background:#fff0ef;color:#8a2424;border:1px solid #f0cecb}
+    
+    /* Footer */
+    .footer{background:var(--burgundy-dark);color:white;padding:65px 0 24px}
+    .footer-grid{display:grid;grid-template-columns:1.4fr .7fr .9fr;gap:55px;padding-bottom:45px}
+    .footer-brand .brand{margin-bottom:22px}
+    .footer-brand p{max-width:370px;color:rgba(255,255,255,.57);font-size:.87rem}
+    .footer h4{font:800 .9rem Manrope,sans-serif;margin:8px 0 20px}
+    .footer-links{display:grid;gap:11px;color:rgba(255,255,255,.63);font-size:.84rem}
+    .footer-links a:hover{color:#d0a09b}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.14);padding-top:22px;display:flex;justify-content:space-between;gap:20px;color:rgba(255,255,255,.43);font-size:.75rem}
+    .back-top{position:fixed;z-index:50;right:22px;bottom:22px;width:45px;height:45px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--rose);color:white;box-shadow:0 8px 22px rgba(48,17,22,.22);opacity:0;pointer-events:none;transform:translateY(10px);transition:.25s}
+    .back-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in-view{opacity:1;transform:translateY(0)}
+    
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+    @media(max-width:980px){
+      .nav-links{gap:18px}.nav-links a:not(.nav-cta){font-size:.76rem}
+      .hero{min-height:760px;height:auto;padding:130px 0 95px}.hero-grid{grid-template-columns:1fr .7fr;gap:28px}
+      .hero-aside{padding:22px}.intro-grid,.growth-grid{gap:45px}
+      .steps{grid-template-columns:repeat(2,1fr);row-gap:30px}
+      .step:nth-child(3){border-left:0;padding-left:0}.process-head{align-items:start;flex-direction:column;gap:10px}
+      .local-points{padding:28px}.contact-panel{grid-template-columns:.9fr 1.1fr}.footer-grid{gap:30px}
+    }
+    @media(max-width:760px){
+      .container{width:min(100% - 36px,var(--max))}
+      .nav{height:75px}.scrolled .nav{height:68px}
+      .menu-toggle{display:grid;place-items:center}
+      .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(84vw,360px);padding:105px 28px 35px;background:var(--cream);color:var(--burgundy);display:flex;align-items:stretch;flex-direction:column;gap:0;box-shadow:-20px 0 60px rgba(0,0,0,.15);transform:translateX(110%);transition:transform .3s;z-index:-1}
+      .nav-links.open{transform:translateX(0)}
+      .nav-links a:not(.nav-cta){padding:17px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+      .nav-links a:not(.nav-cta):after{display:none}
+      .nav-cta{text-align:center;margin-top:22px;padding:15px}
+      .hero{min-height:0;padding:135px 0 0}
+      .hero-bg{background:linear-gradient(90deg,rgba(48,17,22,.95),rgba(74,27,34,.78)),url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80") center/cover}
+      .hero-grid{display:block;padding-top:0;padding-bottom:55px}
+      .hero h1{font-size:clamp(3rem,13vw,5rem);margin-top:22px}
+      .hero-lead{font-size:1rem}.hero-aside{display:none}.hero-note{margin-top:30px}
+      .hero-bottom{position:relative}.hero-bottom-inner{display:grid;grid-template-columns:1fr 1fr;gap:13px;font-size:.62rem;letter-spacing:.08em;padding:17px 0}
+      .intro,.services,.local,.contact{padding:78px 0}
+      .intro-grid,.growth-grid{grid-template-columns:1fr;gap:42px}
+      .intro-visual{min-height:420px;max-width:540px;width:100%}
+      .intro-stamp{width:135px;height:135px;border-width:6px}.intro-stamp strong{font-size:1.6rem}
+      .mini-points{grid-template-columns:1fr 1fr}
+      .process{padding:78px 0}.process-head{margin-bottom:35px}
+      .steps{grid-template-columns:1fr 1fr;gap:25px 0}.step{padding-right:15px}.step:not(:first-child){padding-left:15px}
+      .step:nth-child(odd){border-left:0;padding-left:0}.step-num{font-size:2rem}
+      .services-head{display:block}.services-head .section-copy{margin-top:15px}
+      .services-cta{align-items:flex-start;flex-direction:column;padding:23px}
+      .growth{padding:78px 0}.growth-visual,.growth-visual img{min-height:400px}
+      .local-panel{grid-template-columns:1fr}.local-points{padding:0 25px 25px}
+      .contact-head{text-align:left}.contact-head .eyebrow{justify-content:flex-start}
+      .contact-panel{grid-template-columns:1fr}.contact-info{padding:30px}
+      .contact-social{margin-top:20px}.contact-form{padding:30px}
+      .footer{padding-top:50px}.footer-grid{grid-template-columns:1fr 1fr;gap:35px 22px}
+      .footer-brand{grid-column:1/-1}.footer-bottom{flex-direction:column;gap:8px}
+    }
+    @media(max-width:430px){
+      .container{width:calc(100% - 30px)}
+      .brand-mark{width:38px;height:38px;font-size:.95rem}.brand-word{font-size:1.4rem}
+      .hero-actions{flex-direction:column;align-items:stretch}.hero-actions .btn{width:100%}
+      .hero-bottom-inner{grid-template-columns:1fr}.hero-bottom span:nth-child(3){display:none}
+      .intro-visual{min-height:360px}.intro-photo{inset:0 20px 25px 0}.intro-stamp{width:118px;height:118px}
+      .mini-points{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr}.step,.step:not(:first-child),.step:nth-child(odd){padding:20px 0 0;border-left:0;border-top:1px solid rgba(255,255,255,.15)}
+      .step:first-child{border-top:0}.step h3{margin:10px 0}
+      .form-grid{grid-template-columns:1fr;gap:0}
+      .footer-grid{grid-template-columns:1fr}.footer-brand{grid-column:auto}
+    }
+  </style>
 </head>
-<body class="antialiased">
-
-    <!-- Dinamik Kurumsal Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 border-b border-white/10 bg-transparent text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer h-full" onclick="window.scrollTo(0,0)">
-                    <div id="logo-text" class="text-3xl font-extrabold tracking-tighter leading-none relative transition-colors duration-300">
-                        <span class="block">me</span>
-                        <span class="block text-rose -mt-1 relative">fa.<span id="logo-subtext" class="absolute text-[8px] tracking-[0.2em] -bottom-2.5 left-0.5 font-bold uppercase transition-colors duration-300">AGENCY</span></span>
-                    </div>
-                </div>
-                
-                <!-- Masaüstü Menü -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#hakkimizda" class="nav-link hover:text-rose transition-colors font-medium text-sm tracking-wide uppercase">Hakkımızda</a>
-                    <a href="#hizmetler" class="nav-link hover:text-rose transition-colors font-medium text-sm tracking-wide uppercase">Hizmetlerimiz</a>
-                    <a href="#iletisim" class="nav-link hover:text-rose transition-colors font-medium text-sm tracking-wide uppercase">İletişim</a>
-                    <a href="#iletisim" class="bg-rose text-white px-6 py-2.5 rounded hover:bg-burgundy transition-colors font-semibold shadow-md text-sm uppercase tracking-wider">Bize Ulaşın</a>
-                </div>
-
-                <!-- Mobil Menü Butonu -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobil Menü -->
-        <div id="mobile-menu" class="hidden md:hidden bg-cream border-t border-gray-200 absolute w-full left-0 top-full shadow-xl">
-            <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#hakkimizda" class="block px-3 py-3 text-burgundy font-medium border-b border-gray-100">Hakkımızda</a>
-                <a href="#hizmetler" class="block px-3 py-3 text-burgundy font-medium border-b border-gray-100">Hizmetlerimiz</a>
-                <a href="#iletisim" class="block px-3 py-3 text-burgundy font-medium">İletişim</a>
-            </div>
-        </div>
+<body>
+  <div class="topline"></div>
+  <header class="header" id="header">
+    <nav class="nav container" aria-label="Ana menü">
+      <a class="brand" href="#anasayfa" aria-label="MEFA Agency ana sayfa">
+        <span class="brand-mark">mf</span>
+        <span><span class="brand-word">me<span>fa.</span></span><span class="brand-sub">AGENCY · SAMSUN</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      <div class="nav-links" id="navLinks">
+        <a href="#hakkimizda">Hakkımızda</a>
+        <a href="#surec">Çalışma Sürecimiz</a>
+        <a href="#hizmetler">Hizmetler</a>
+        <a href="#neden-mefa">Neden MEFA?</a>
+        <a class="nav-cta" href="#iletisim">Projenizi Konuşalım <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
     </nav>
+  </header>
 
-    <!-- Tam Ekran Kurumsal Hero Bölümü (VİDEOLU) -->
-    <section id="hero" class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden bg-burgundy-dark">
-        <!-- Arka Plan Videosu ve Karanlık Overlay -->
-        <div class="absolute inset-0 z-0">
-            <video autoplay loop muted playsinline class="w-full h-full object-cover object-center opacity-40">
-                <!-- Şık bir ajans/ekip çalışması stok videosu eklendi -->
-                <source src="https://cdn.pixabay.com/video/2020/05/25/40134-424915606_large.mp4" type="video/mp4">
-            </video>
-            <div class="absolute inset-0 bg-gradient-to-r from-burgundy-dark/95 via-burgundy/80 to-transparent mix-blend-multiply"></div>
+  <main>
+    <section class="hero" id="anasayfa">
+      <div class="hero-bg">
+        <!-- VİDEO: bg-video.mp4 klasöründeyse onu oynatır, yüklenmezse diye alternatif bir CDN linki de ekledim -->
+        <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=85">
+            <source src="bg-video.mp4" type="video/mp4">
+            <source src="https://cdn.pixabay.com/video/2020/05/25/40134-424915606_large.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="eyebrow">MEFA AGENCY · SAMSUN</span>
+          <h1>Sizin için,<br><em>doğru bağlantılarla.</em></h1>
+          <p class="hero-lead">Markalar, işletmeler ve mekanlar için tanıtım, pazarlama, üretim ve organizasyon çözümlerini doğru iş ağıyla bir araya getiriyoruz.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#iletisim">Projenizi konuşalım <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="btn btn-outline" href="#hizmetler">Çözümlerimizi keşfedin</a>
+          </div>
+          <div class="hero-note">Yaratıcı fikirler. Güçlü iş birlikleri. Somut sonuçlar.</div>
         </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div class="max-w-3xl">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-[2px] bg-rose"></div>
-                    <span class="text-rose font-bold uppercase tracking-[0.2em] text-sm">Mefa Agency Samsun</span>
-                </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 leading-[1.1]">
-                    İhtiyaçtan <br/>
-                    <span class="gradient-text">Ticari Değere.</span>
-                </h1>
-                <p class="mt-4 text-lg md:text-xl text-gray-300 mb-10 font-light leading-relaxed max-w-2xl border-l-4 border-rose pl-6">
-                    Markaları, işletmeleri ve mekanları tanıtım, pazarlama, üretim ve organizasyon çözümleriyle tek bir akışta buluşturuyoruz. Ajans gibi düşünür, network gibi hareket ederiz.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#iletisim" class="bg-rose text-white px-8 py-4 rounded text-center font-semibold hover:bg-white hover:text-burgundy transition-all shadow-lg flex items-center justify-center gap-3">
-                        Projeyi Konuşalım <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <a href="#hizmetler" class="border border-white/30 text-white px-8 py-4 rounded text-center font-semibold hover:bg-white/10 transition-all flex items-center justify-center">
-                        Çözümlerimizi İnceleyin
-                    </a>
-                </div>
-            </div>
+        <aside class="hero-aside" aria-label="Çözüm alanları">
+          <div class="aside-label">MEFA çözüm ağı</div>
+          <div class="aside-head">Bir ihtiyaçtan,<br>birlikte doğan çözümler.</div>
+          <div class="aside-item"><i class="fa-solid fa-bullhorn"></i> Marka ve ürün tanıtımı</div>
+          <div class="aside-item"><i class="fa-solid fa-clapperboard"></i> İçerik ve prodüksiyon</div>
+          <div class="aside-item"><i class="fa-solid fa-people-group"></i> Organizasyon ve etkinlik</div>
+          <div class="aside-item"><i class="fa-solid fa-diagram-project"></i> Tedarik ve koordinasyon</div>
+        </aside>
+      </div>
+      <div class="hero-bottom">
+        <div class="container hero-bottom-inner">
+          <span><i class="fa-solid fa-lightbulb"></i> Yaratıcı fikirler</span>
+          <span><i class="fa-solid fa-handshake"></i> Güçlü iş birlikleri</span>
+          <span><i class="fa-solid fa-arrow-trend-up"></i> Somut sonuçlar</span>
+          <span><i class="fa-solid fa-location-dot"></i> Samsun merkezli</span>
         </div>
-        
-        <!-- Alt Scroll İndikatörü -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-            <a href="#hakkimizda" class="text-white/50 hover:text-white transition-colors">
-                <i class="fas fa-chevron-down text-2xl"></i>
-            </a>
-        </div>
+      </div>
     </section>
 
-    <!-- Kurumsal Hakkımızda / Vizyon Bölümü -->
-    <section id="hakkimizda" class="py-24 bg-cream">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                <!-- Sol Görsel Grubu -->
-                <div class="relative">
-                    <div class="absolute top-0 -left-4 w-32 h-32 bg-rose/10 rounded-full blur-2xl"></div>
-                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kurumsal Toplantı" class="relative rounded-lg shadow-2xl object-cover h-[500px] w-full z-10">
-                    
-                    <!-- Yüzen İstatistik Kutusu -->
-                    <div class="absolute -bottom-8 -right-8 bg-white p-8 rounded-lg shadow-xl z-20 border-l-4 border-burgundy hidden md:block">
-                        <div class="text-4xl font-extrabold text-burgundy mb-1">100+</div>
-                        <div class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Başarılı İş Birliği</div>
-                    </div>
-                </div>
-
-                <!-- Sağ Metin Grubu -->
-                <div>
-                    <h2 class="text-rose font-bold uppercase tracking-[0.2em] text-sm mb-3">Mefa Nedir?</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-burgundy mb-6 leading-tight">
-                        Doğru Kaynak, Tek Muhatap,<br/>Somut Sonuçlar.
-                    </h3>
-                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                        MEFA, ihtiyacı tek tek hizmetlere bölmek yerine; markanızın hedefini, problemini ve beklentisini netleştirir. Geniş network ağı içinden doğru üreticiyi ve uzmanı seçer, tüm süreci uçtan uca koordine eder.
-                    </p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-burgundy/5 rounded flex items-center justify-center shrink-0">
-                                <i class="fas fa-crosshairs text-burgundy text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-burgundy text-lg">İhtiyacı Belirleme</h4>
-                                <p class="text-sm text-gray-600 mt-1">Markanın hedefini ve beklentisini netleştirip en uygun rotayı çizeriz.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-burgundy/5 rounded flex items-center justify-center shrink-0">
-                                <i class="fas fa-network-wired text-burgundy text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-burgundy text-lg">Doğru Kaynağa Ulaşım</h4>
-                                <p class="text-sm text-gray-600 mt-1">Samsun merkezli yerel gücümüzle projeye en uygun uzmanı projeye dahil ederiz.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-burgundy/5 rounded flex items-center justify-center shrink-0">
-                                <i class="fas fa-chart-line text-burgundy text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-burgundy text-lg">Ticari Değer Yaratma</h4>
-                                <p class="text-sm text-gray-600 mt-1">Markaya sadece görünürlük değil; hız, kolaylık ve ölçülebilir sonuç üretiriz.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="intro" id="hakkimizda">
+      <div class="container intro-grid">
+        <div class="intro-visual reveal">
+          <div class="intro-photo">
+            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1100&q=85" alt="Birlikte çalışan yaratıcı ekip" loading="lazy">
+            <div class="photo-tag">Fikirden uygulamaya</div>
+          </div>
+          <div class="intro-stamp"><strong>360°</strong><span>İhtiyaca özel<br>çözüm yaklaşımı</span></div>
         </div>
+        <div class="intro-copy reveal">
+          <span class="eyebrow">MEFA NEDİR?</span>
+          <h2 class="section-title">Ajans gibi düşünür,<br>network gibi hareket eder.</h2>
+          <p class="section-copy">MEFA; markaların, işletmelerin ve mekanların ihtiyaçlarını güçlü bir iş ağıyla buluşturan, projeye uygun çözüm ortaklarını organize eden yaratıcı bir koordinasyon merkezidir.</p>
+          <div class="intro-quote">Tek tek hizmet değil; ihtiyaca göre şekillenen çözüm.</div>
+          <p class="section-copy">İhtiyacı anlar, doğru üretici ve uzmanları bir araya getirir, üretimden iletişime ve uygulamaya kadar süreci koordine ederiz. Samsun ofisimiz, yerel temasın ve proje koordinasyonunun merkezidir.</p>
+          <div class="mini-points">
+            <div class="mini-point"><i class="fa-solid fa-circle-check"></i><div><strong>İhtiyacı anlarız</strong><span>Hedefi ve beklentiyi netleştiririz.</span></div></div>
+            <div class="mini-point"><i class="fa-solid fa-circle-check"></i><div><strong>Doğru ağı kurarız</strong><span>Projeye uygun kaynakları seçeriz.</span></div></div>
+            <div class="mini-point"><i class="fa-solid fa-circle-check"></i><div><strong>Süreci yönetiriz</strong><span>İş ortaklarını tek akışta buluştururuz.</span></div></div>
+            <div class="mini-point"><i class="fa-solid fa-circle-check"></i><div><strong>Değer üretiriz</strong><span>Hızı, kolaylığı ve etkiyi önemseriz.</span></div></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- HİZMETLER - MERKEZ ODAKLI SLIDER (OKLAR GÖRSELLERİN YANINDA) -->
-    <section id="hizmetler" class="py-24 bg-white overflow-hidden relative border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-                <div class="max-w-2xl">
-                    <h2 class="text-rose font-bold uppercase tracking-[0.2em] text-sm mb-3">Çözüm Alanlarımız</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-burgundy leading-tight">Bir markanın ihtiyacı olan her şey,<br/>tek çatı altında.</h3>
-                </div>
-            </div>
+    <section class="process" id="surec">
+      <div class="container">
+        <div class="process-head reveal">
+          <div><span class="eyebrow" style="color: #e0b5b0;">MEFA İLE ÇALIŞMA SERÜVENİ</span><h2 class="section-title">İhtiyaçtan ticari değere:<br>4 adımda çözüm.</h2></div>
+          <p class="section-copy">Her proje farklıdır. Biz de hazır kalıplar yerine, markanızın hedefine uygun bir yol haritası oluştururuz.</p>
         </div>
+        <div class="steps">
+          <article class="step reveal"><div class="step-num">01</div><h3>İhtiyacı belirlemek</h3><p>Markanın hedefini, problemini ve beklentisini birlikte netleştiririz.</p></article>
+          <article class="step reveal"><div class="step-num">02</div><h3>Doğru kaynağa ulaşmak</h3><p>İş ağı içinden projeye uygun üretici, uzman veya içerik üreticisini seçeriz.</p></article>
+          <article class="step reveal"><div class="step-num">03</div><h3>Çözümü organize etmek</h3><p>Üretim, iletişim ve uygulama süreçlerini koordineli biçimde yürütürüz.</p></article>
+          <article class="step reveal"><div class="step-num">04</div><h3>Ticari değer yaratmak</h3><p>Markanıza görünürlük, hız, kolaylık ve anlamlı sonuçlar kazandırmayı hedefleriz.</p></article>
+        </div>
+        <div class="process-foot">İhtiyacı anla <span aria-hidden="true">→</span> doğru ağı kur <span aria-hidden="true">→</span> süreci yönet <span aria-hidden="true">→</span> değere dönüştür</div>
+      </div>
+    </section>
 
-        <div class="relative w-full group">
+    <!-- HİZMETLER - YENİ ODAK MERKEZLİ SLIDER -->
+    <section class="services" id="hizmetler">
+      <div class="container">
+        <div class="services-head reveal">
+          <div><span class="eyebrow">HİZMET ALANLARIMIZ</span><h2 class="section-title">Bir markanın ihtiyacı olan<br>birçok şey, tek çatı altında.</h2></div>
+          <p class="section-copy">İhtiyacınıza göre doğru hizmetleri ve çözüm ortaklarını bir araya getiriyor, proje boyunca koordinasyonu sağlıyoruz.</p>
+        </div>
+      </div>
+      
+      <div class="slider-wrap reveal">
+        <!-- Sol Ok (Görsel üstünde) -->
+        <button id="prevBtn" class="slider-btn prev" aria-label="Önceki hizmet">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <!-- Sağ Ok (Görsel üstünde) -->
+        <button id="nextBtn" class="slider-btn next" aria-label="Sonraki hizmet">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <div class="slider-track" id="sliderTrack">
+          
+          <!-- Hizmet 1 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80" alt="Marka Tanıtımı">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-bullhorn"></i></div>
+              <h3>Marka ve Ürün Tanıtımı</h3>
+              <p>Ürünlerinizi, hizmetlerinizi ve kampanyalarınızı hedef kitlenize uygun yaratıcı fikirlerle duyurmanıza yardımcı oluruz.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 2 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=800&q=80" alt="Influencer Marketing">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-hashtag"></i></div>
+              <h3>Influencer Marketing</h3>
+              <p>Marka ile içerik üreticisini doğru eşleştirerek yerel erişim ve güvene dayalı iş birlikleri planlarız.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 3 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80" alt="Prodüksiyon ve İçerik">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-video"></i></div>
+              <h3>Prodüksiyon ve İçerik</h3>
+              <p>Fotoğraf, video çekimi, kurgu ve içerik üretimiyle markanızın hikayesini etkili biçimde anlatırız.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 4 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80" alt="Grafik Tasarım">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-pen-nib"></i></div>
+              <h3>Grafik Tasarım</h3>
+              <p>Marka iletişiminizi destekleyen görsel tasarımlar ve yaratıcı materyaller için çözüm ortaklarıyla çalışırız.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 5 (BAŞLANGIÇTA MERKEZDE OLACAK) -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" alt="Organizasyon ve Etkinlik">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+              <h3>Organizasyon ve Etkinlik</h3>
+              <p>Doğum günü, butik kutlama ve özel etkinlikler için mekan, pasta, süsleme ve ekipman ağını koordine ederiz.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 6 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=800&q=80" alt="Tedarik ve Kurumsal İhtiyaçlar">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+              <h3>Tedarik ve Kurumsal İhtiyaçlar</h3>
+              <p>Kurumsal tekstil, personel kıyafeti, promosyon ürünleri ve özel üretim süreçlerinde koordinasyon sağlarız.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 7 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Dijital Pazarlama">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <h3>Dijital Pazarlama ve E-Ticaret</h3>
+              <p>Dijital kanallarda görünürlüğünüzü geliştirmek için pazarlama, reklam ve e-ticaret ihtiyaçlarını birlikte ele alırız.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 8 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Mekan Tanıtımı">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-store"></i></div>
+              <h3>Mekan ve Saha Tanıtımı</h3>
+              <p>Mekanların, işletmelerin ve saha çalışmalarının tanıtımını hedefe ve yerel dinamiklere uygun şekilde planlarız.</p>
+            </div>
+          </article>
+
+          <!-- Hizmet 9 -->
+          <article class="slider-card">
+            <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80" alt="Sosyal Medya Yönetimi">
+            <div class="slider-overlay"></div>
+            <div class="slider-content">
+              <div class="slider-icon"><i class="fa-solid fa-comments"></i></div>
+              <h3>Sosyal Medya Yönetimi</h3>
+              <p>İçerik planlama, paylaşım akışı ve marka-creator iş birliklerini birbiriyle uyumlu hale getiririz.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+      
+      <div class="container">
+        <div class="services-cta reveal">
+          <div><strong>İhtiyacınız listede yok mu?</strong><span>Projenizi anlatın; birlikte doğru çözüm modelini oluşturalım.</span></div>
+          <a class="btn btn-dark" href="#iletisim">Bize ulaşın <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="growth" id="neden-mefa">
+      <div class="container growth-grid">
+        <div class="growth-visual reveal">
+          <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85" alt="İş birliği ve proje planlama toplantısı" loading="lazy">
+          <div class="growth-overlay"><div class="tiny">Görünürlük & büyüme</div><h3>Markanızı sadece göstermez, harekete geçiririz.</h3></div>
+        </div>
+        <div class="growth-copy reveal">
+          <span class="eyebrow">NEDEN MEFA?</span>
+          <h2 class="section-title">Birden fazla ihtiyaç.<br>Tek iletişim akışı.</h2>
+          <p class="section-copy">Farklı hizmet sağlayıcıları ayrı ayrı yönetmek yerine, projenizin ihtiyaçlarını tek çerçevede ele alır; doğru bağlantıları ve koordinasyonu sağlarız.</p>
+          <div class="benefit-list">
+            <div class="benefit"><div class="benefit-icon"><i class="fa-solid fa-bolt"></i></div><div><h3>Hızlı erişim</h3><p>Doğru çözümü aramak için harcayacağınız zamanı azaltmaya yardımcı oluruz.</p></div></div>
+            <div class="benefit"><div class="benefit-icon"><i class="fa-solid fa-user-tie"></i></div><div><h3>Tek muhatap</h3><p>Farklı uzman ve tedarikçileri tek bir koordinasyon sürecinde buluştururuz.</p></div></div>
+            <div class="benefit"><div class="benefit-icon"><i class="fa-solid fa-sliders"></i></div><div><h3>Esnek çözüm modeli</h3><p>Hazır paketler yerine projenizin kapsamına uygun hizmet kombinasyonu kurarız.</p></div></div>
+            <div class="benefit"><div class="benefit-icon"><i class="fa-solid fa-location-dot"></i></div><div><h3>Yerel güç, geniş network</h3><p>Samsun’daki yerel temasları farklı uzmanlık ve kaynaklarla birleştiririz.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="local">
+      <div class="container">
+        <div class="local-panel reveal">
+          <div class="local-copy">
+            <span class="eyebrow" style="color: #e0b5b0;">SAMSUN OFİSİ</span>
+            <h2 class="section-title">Yerel temas noktası.<br>Geniş çözüm ağı.</h2>
+            <p class="section-copy">Samsun ofisimiz; işletmelerle yüz yüze iletişim kurduğumuz, ihtiyaçları dinlediğimiz, doğru çözüm ortaklarını buluşturduğumuz ve projeyi yönettiğimiz koordinasyon merkezidir.</p>
+            <div class="local-quote">“Doğru bağlantı.<br>Gerçek çözüm.”</div>
+          </div>
+          <div class="local-points">
+            <div class="local-point"><h3>Tek noktadan koordinasyon</h3><p>Birden fazla ihtiyacı tek iletişim akışında yönetiriz.</p></div>
+            <div class="local-point"><h3>Esnek çözüm modeli</h3><p>Projenizin kapsamına ve hedeflerine uygun hizmet bileşenleri oluştururuz.</p></div>
+            <div class="local-point"><h3>Yerel erişim + network</h3><p>Samsun’daki ilişkileri farklı uzmanlık ve kaynaklarla bir araya getiririz.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="iletisim">
+      <div class="container">
+        <div class="contact-head reveal">
+          <span class="eyebrow">İLETİŞİM</span>
+          <h2 class="section-title">Birlikte çalışalım.</h2>
+          <p class="section-copy">İhtiyacınızı konuşalım, doğru çözümü birlikte kuralım. Projenizi bize anlatın; size en uygun yol haritasını birlikte değerlendirelim.</p>
+        </div>
+        <div class="contact-panel reveal">
+          <div class="contact-info">
+            <span class="eyebrow" style="color:#d0a09b">MEFA AGENCY · SAMSUN</span>
+            <h3>Projenizi birlikte şekillendirelim.</h3>
+            <p>Formu doldurabilir veya doğrudan iletişim bilgilerimiz üzerinden bize ulaşabilirsiniz.</p>
+            <div class="contact-detail"><i class="fa-solid fa-location-dot"></i><div><strong>Merkez Ofis</strong><span>Adalet Mahallesi, Evliya Çelebi Sokak No: 3<br>İlkadım / Samsun</span></div></div>
+            <div class="contact-detail"><i class="fa-solid fa-phone"></i><div><strong>Telefon</strong><a href="tel:+905541727855">0554 172 78 55</a></div></div>
+            <div class="contact-detail"><i class="fa-solid fa-envelope"></i><div><strong>E-posta</strong><a href="mailto:mefacreative@gmail.com">mefacreative@gmail.com</a></div></div>
+            <div class="contact-social"><a class="social-link" href="https://instagram.com/mefa.agency" target="_blank" rel="noopener noreferrer" aria-label="MEFA Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+          </div>
+          <div class="contact-form">
+            <h3>Bize mesaj gönderin</h3>
+            <p>Projenizin temel detaylarını paylaşın. Size dönüş yapabilmemiz için iletişim bilgilerinizi doğru girdiğinizden emin olun.</p>
+            <form id="contactForm">
+              <input type="hidden" name="access_key" value="815c8e1a-c26a-4007-bb8d-6d81662e82a4">
+              <input type="hidden" name="subject" value="MEFA Agency - Web Sitesi İletişim Formu">
+              <input type="hidden" name="from_name" value="MEFA Agency Web Sitesi">
+              <div class="form-grid">
+                <div class="field"><label for="name">Adınız Soyadınız *</label><input id="name" name="name" type="text" autocomplete="name" required placeholder="Adınız Soyadınız"></div>
+                <div class="field"><label for="email">E-posta Adresiniz *</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="ornek@eposta.com"></div>
+              </div>
+              <div class="form-grid">
+                <div class="field"><label for="phone">Telefon Numaranız</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="05xx xxx xx xx"></div>
+                <div class="field"><label for="service">İlgilendiğiniz hizmet</label><select id="service" name="service"><option value="">Hizmet seçin</option><option>Marka ve kampanya tanıtımı</option><option>Influencer marketing</option><option>Prodüksiyon ve içerik</option><option>Grafik tasarım</option><option>Tedarik ve kurumsal ihtiyaçlar</option><option>Dijital pazarlama ve e-ticaret</option><option>Sosyal medya yönetimi</option><option>Organizasyon ve etkinlik</option><option>Diğer / Birden fazla hizmet</option></select></div>
+              </div>
+              <div class="field"><label for="message">Mesajınız / İhtiyacınız *</label><textarea id="message" name="message" required placeholder="Projenizden ve ihtiyaçlarınızdan kısaca bahsedin..."></textarea></div>
+              <button class="btn btn-dark" type="submit" id="submitBtn">Mesajı gönder <i class="fa-solid fa-paper-plane"></i></button>
+              <p class="form-note">Form gönderimi için internet bağlantısı gerekir.</p>
+              <div class="result" id="resultMessage" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#anasayfa" aria-label="MEFA ana sayfa"><span class="brand-mark">mf</span><span><span class="brand-word">me<span>fa.</span></span><span class="brand-sub">AGENCY · SAMSUN</span></span></a>
+          <p>Markaları, işletmeleri ve mekanları tanıtım, pazarlama, üretim ve organizasyon çözümleriyle buluşturan yaratıcı koordinasyon merkezi.</p>
+        </div>
+        <div><h4>Hızlı bağlantılar</h4><div class="footer-links"><a href="#hakkimizda">Hakkımızda</a><a href="#surec">Çalışma sürecimiz</a><a href="#hizmetler">Hizmetlerimiz</a><a href="#neden-mefa">Neden MEFA?</a><a href="#iletisim">İletişim</a></div></div>
+        <div><h4>İletişim</h4><div class="footer-links"><a href="tel:+905541727855">0554 172 78 55</a><a href="mailto:mefacreative@gmail.com">mefacreative@gmail.com</a><span>Adalet Mah. Evliya Çelebi Sok. No: 3<br>İlkadım / Samsun</span><a href="https://instagram.com/mefa.agency" target="_blank" rel="noopener noreferrer">Instagram <i class="fa-brands fa-instagram"></i></a></div></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> MEFA Agency. Tüm hakları saklıdır.</span><span>Sizin için, doğru bağlantılarla.</span></div>
+    </div>
+  </footer>
+  <button class="back-top" id="backTop" aria-label="Sayfanın başına dön"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <script>
+    (() => {
+      const header = document.getElementById('header');
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+      const backTop = document.getElementById('backTop');
+      const year = document.getElementById('year');
+      year.textContent = new Date().getFullYear();
+
+      const onScroll = () => {
+        header.classList.toggle('scrolled', window.scrollY > 35);
+        backTop.classList.toggle('visible', window.scrollY > 500);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      const closeMenu = () => {
+        navLinks.classList.remove('open');
+        document.body.classList.remove('menu-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Menüyü aç');
+        menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      };
+      menuToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        document.body.classList.toggle('menu-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+        menuToggle.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+      });
+      navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+      window.addEventListener('resize', () => { if (window.innerWidth > 760) closeMenu(); });
+      backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // Scroll Reveal
+      const revealItems = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealItems.forEach(item => observer.observe(item));
+      } else {
+        revealItems.forEach(item => item.classList.add('in-view'));
+      }
+
+      // --- ODAK MERKEZLİ SLIDER MANTIĞI ---
+      const track = document.getElementById('sliderTrack');
+      const cards = Array.from(document.querySelectorAll('.slider-card'));
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      if(track && cards.length > 0) {
+        const updateFocus = () => {
+          const trackCenter = track.getBoundingClientRect().left + (track.getBoundingClientRect().width / 2);
+          cards.forEach(card => {
+            const cardCenter = card.getBoundingClientRect().left + (card.getBoundingClientRect().width / 2);
+            const distance = Math.abs(trackCenter - cardCenter);
             
-            <!-- Sol Ok Butonu (Görsellerin yanına alındı) -->
-            <button id="prevBtn" class="absolute left-4 md:left-12 lg:left-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-14 md:h-14 bg-white/90 backdrop-blur-md border border-gray-200 rounded-full shadow-lg flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white hover:border-burgundy transition-all transform hover:scale-105">
-                <i class="fas fa-chevron-left text-lg"></i>
-            </button>
-
-            <!-- Sağ Ok Butonu (Görsellerin yanına alındı) -->
-            <button id="nextBtn" class="absolute right-4 md:right-12 lg:right-24 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-14 md:h-14 bg-white/90 backdrop-blur-md border border-gray-200 rounded-full shadow-lg flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white hover:border-burgundy transition-all transform hover:scale-105">
-                <i class="fas fa-chevron-right text-lg"></i>
-            </button>
-
-            <!-- Slider Track -->
-            <div id="sliderTrack" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 items-center py-4 slider-padding relative z-20">
-                
-                <!-- Kart 1 -->
-                <div class="service-card snap-center shrink-0 w-[85vw] md:w-[400px] h-[450px] relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 ease-out">
-                    <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Influencer Marketing" class="absolute inset-0 w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark via-burgundy/80 to-transparent"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
-                        <div class="w-12 h-12 bg-rose rounded flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-hashtag text-xl"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">Influencer Marketing</h4>
-                        <p class="text-gray-200 text-sm leading-relaxed">Markanızı doğru kitlelerle buluşturan yaratıcı kampanyalar. Marka-creator eşleşmeleri ve sosyal medya yönetimi.</p>
-                    </div>
-                </div>
-
-                <!-- Kart 2 -->
-                <div class="service-card snap-center shrink-0 w-[85vw] md:w-[400px] h-[450px] relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 ease-out">
-                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Prodüksiyon" class="absolute inset-0 w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark via-burgundy/80 to-transparent"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
-                        <div class="w-12 h-12 bg-rose rounded flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-video text-xl"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">Prodüksiyon & İçerik</h4>
-                        <p class="text-gray-200 text-sm leading-relaxed">Markanızın hikayesini etkileyici içeriklerle anlatırız. Fotoğraf, video çekimi, kurgu ve grafik tasarım.</p>
-                    </div>
-                </div>
-
-                <!-- Kart 3 (BAŞLANGIÇTA MERKEZDE OLACAK) -->
-                <div class="service-card snap-center shrink-0 w-[85vw] md:w-[400px] h-[450px] relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 ease-out">
-                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Etkinlik Organizasyon" class="absolute inset-0 w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark via-burgundy/80 to-transparent"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
-                        <div class="w-12 h-12 bg-rose rounded flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-glass-cheers text-xl"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">Mekan & Etkinlik Org.</h4>
-                        <p class="text-gray-200 text-sm leading-relaxed">Mekanınıza özel unutulmaz deneyimler organize ederiz. Etkinlik planlama, davet ve servis koordinasyonu.</p>
-                    </div>
-                </div>
-
-                <!-- Kart 4 -->
-                <div class="service-card snap-center shrink-0 w-[85vw] md:w-[400px] h-[450px] relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 ease-out">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dijital Pazarlama" class="absolute inset-0 w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark via-burgundy/80 to-transparent"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
-                        <div class="w-12 h-12 bg-rose rounded flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-chart-line text-xl"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">Dijital Pazarlama</h4>
-                        <p class="text-gray-200 text-sm leading-relaxed">Dijitalde görünür, ölçülebilir ve sürdürülebilir büyüme. E-ticaret danışmanlığı, reklam yönetimi ve raporlama.</p>
-                    </div>
-                </div>
-
-                <!-- Kart 5 -->
-                <div class="service-card snap-center shrink-0 w-[85vw] md:w-[400px] h-[450px] relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 ease-out">
-                    <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kurumsal Tedarik" class="absolute inset-0 w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark via-burgundy/80 to-transparent"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
-                        <div class="w-12 h-12 bg-rose rounded flex items-center justify-center text-white mb-6">
-                            <i class="fas fa-tshirt text-xl"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">Kurumsal Tedarik</h4>
-                        <p class="text-gray-200 text-sm leading-relaxed">İş kıyafetlerinde özel üretim, promosyon ürünleri ve kurumunuza özel tekstil çözümleri.</p>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-
-    <!-- İletişim / Form Bölümü (Kurumsal Düzen) -->
-    <section id="iletisim" class="py-24 bg-cream-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col lg:flex-row border border-gray-100">
-                
-                <!-- Sol: İletişim Bilgileri -->
-                <div class="bg-burgundy p-12 lg:w-2/5 text-white flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-rose font-bold uppercase tracking-[0.2em] text-sm mb-3">İletişim</h2>
-                        <h3 class="text-3xl font-bold mb-8">Projeyi Birlikte<br/>Şekillendirelim.</h3>
-                        <p class="text-gray-300 mb-10 leading-relaxed text-sm">Doğru çözüme hızlıca ulaşmak için formu doldurabilir veya doğrudan bizimle iletişime geçebilirsiniz.</p>
-                        
-                        <div class="space-y-8">
-                            <div class="flex items-start gap-4">
-                                <i class="fas fa-map-marker-alt text-rose text-xl mt-1"></i>
-                                <div>
-                                    <h5 class="font-semibold text-white mb-1">Merkez Ofis</h5>
-                                    <p class="text-gray-300 text-sm">Adalet Mah. Evliya Çelebi Sok.<br>No: 3 İlkadım / Samsun</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <i class="fas fa-phone-alt text-rose text-xl mt-1"></i>
-                                <div>
-                                    <h5 class="font-semibold text-white mb-1">Telefon</h5>
-                                    <a href="tel:05541727855" class="text-gray-300 hover:text-rose transition-colors text-sm">0554 172 78 55</a>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <i class="fas fa-envelope text-rose text-xl mt-1"></i>
-                                <div>
-                                    <h5 class="font-semibold text-white mb-1">E-Posta</h5>
-                                    <a href="mailto:mefacreative@gmail.com" class="text-gray-300 hover:text-rose transition-colors text-sm">mefacreative@gmail.com</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sağ: Form -->
-                <div class="p-12 lg:w-3/5 relative">
-                    <h4 class="text-2xl font-bold text-burgundy mb-2">Bize Mesaj Gönderin</h4>
-                    <p class="text-gray-500 text-sm mb-8">Formu doldurarak talebinizi iletebilirsiniz. İlgili departmanımız en kısa sürede dönüş yapacaktır.</p>
-                    
-                    <form id="contactForm" class="space-y-6">
-                        <input type="hidden" name="access_key" value="815c8e1a-c26a-4007-bb8d-6d81662e82a4">
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Adınız Soyadınız</label>
-                                <input type="text" name="name" required class="w-full px-4 py-3 rounded border border-gray-200 focus:ring-1 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">E-Posta Adresiniz</label>
-                                <input type="email" name="email" required class="w-full px-4 py-3 rounded border border-gray-200 focus:ring-1 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Telefon Numaranız</label>
-                            <input type="tel" name="phone" class="w-full px-4 py-3 rounded border border-gray-200 focus:ring-1 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Mesajınız / İhtiyacınız</label>
-                            <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded border border-gray-200 focus:ring-1 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50 resize-none"></textarea>
-                        </div>
-                        <button type="submit" id="submitBtn" class="bg-burgundy text-white font-bold py-4 px-8 rounded hover:bg-rose transition-colors flex items-center justify-center gap-2 w-full md:w-auto">
-                            Mesajı Gönder <i class="fas fa-paper-plane text-sm"></i>
-                        </button>
-
-                        <div id="resultMessage" class="hidden text-center p-4 rounded font-medium mt-4 transition-all border"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Kurumsal Footer (LinkedIn Kaldırıldı) -->
-    <footer class="bg-burgundy-dark text-white pt-16 pb-8 border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-                <div>
-                    <div class="text-3xl font-extrabold tracking-tighter leading-none mb-6">
-                        <span>me</span><span class="text-rose">fa.</span>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed pr-4">
-                        Markaları, işletmeleri ve mekanları tanıtım, pazarlama, üretim ve organizasyon çözümleriyle buluşturan koordinasyon merkezi.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold mb-6">Hızlı Bağlantılar</h4>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li><a href="#hakkimizda" class="hover:text-rose transition-colors">Hakkımızda</a></li>
-                        <li><a href="#hizmetler" class="hover:text-rose transition-colors">Çözümlerimiz</a></li>
-                        <li><a href="#iletisim" class="hover:text-rose transition-colors">İletişim</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-bold mb-6">Sosyal Medya</h4>
-                    <div class="flex space-x-4">
-                        <!-- Sadece Instagram Kütü Kaldı -->
-                        <a href="https://instagram.com/mefa.agency" target="_blank" class="w-10 h-10 bg-white/5 rounded flex items-center justify-center hover:bg-rose transition-colors">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-                <p>&copy; <span id="year"></span> MEFA Agency. Tüm hakları saklıdır.</p>
-                <p class="mt-2 md:mt-0">Doğru bağlantı. Gerçek çözüm.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Yılı otomatik güncelle
-        document.getElementById('year').textContent = new Date().getFullYear();
-        
-        // --- NAVBAR SCROLL EFEKTİ ---
-        const navbar = document.getElementById('navbar');
-        const logoText = document.getElementById('logo-text');
-        const logoSubtext = document.getElementById('logo-subtext');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
-                navbar.classList.remove('bg-transparent', 'text-white', 'py-4');
-                navbar.classList.add('py-2', 'text-burgundy');
-                logoText.classList.replace('text-white', 'text-burgundy');
-                logoSubtext.classList.replace('text-white', 'text-burgundy');
+            if (distance < (card.getBoundingClientRect().width / 2)) {
+              card.classList.add('active');
             } else {
-                navbar.classList.remove('nav-scrolled', 'py-2', 'text-burgundy');
-                navbar.classList.add('bg-transparent', 'text-white', 'py-4');
-                logoText.classList.replace('text-burgundy', 'text-white');
-                logoSubtext.classList.replace('text-burgundy', 'text-white');
+              card.classList.remove('active');
             }
-        });
+          });
+        };
 
-        // Mobil menü açma/kapama
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
+        const centerCard = () => {
+          const middleIndex = Math.floor(cards.length / 2); 
+          const targetCard = cards[middleIndex];
+          const scrollPos = targetCard.offsetLeft - (track.offsetWidth / 2) + (targetCard.offsetWidth / 2);
+          
+          track.style.scrollBehavior = 'auto';
+          track.scrollLeft = scrollPos;
+          
+          setTimeout(() => {
+              updateFocus();
+              track.style.scrollBehavior = 'smooth';
+          }, 50);
+        };
 
-        // --- HİZMETLER SLIDER (MERKEZ ODAKLI VE OTOMATİK ORTALAMA) ---
-        const track = document.getElementById('sliderTrack');
-        const cards = Array.from(document.querySelectorAll('.service-card'));
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
-        function updateCardsFocus() {
-            const trackCenter = track.getBoundingClientRect().left + (track.getBoundingClientRect().width / 2);
-            
-            cards.forEach(card => {
-                const cardCenter = card.getBoundingClientRect().left + (card.getBoundingClientRect().width / 2);
-                const distance = Math.abs(trackCenter - cardCenter);
-                
-                if (distance < (card.getBoundingClientRect().width / 2)) {
-                    card.classList.remove('opacity-40', 'scale-[0.85]');
-                    card.classList.add('opacity-100', 'scale-100', 'z-10');
-                } else {
-                    card.classList.add('opacity-40', 'scale-[0.85]');
-                    card.classList.remove('opacity-100', 'scale-100', 'z-10');
-                }
-            });
-        }
-
-        function centerMiddleCard() {
-            if(cards.length > 0) {
-                const middleIndex = Math.floor(cards.length / 2); 
-                const middleCard = cards[middleIndex];
-                
-                const scrollPos = middleCard.offsetLeft - (track.offsetWidth / 2) + (middleCard.offsetWidth / 2);
-                
-                track.style.scrollBehavior = 'auto';
-                track.scrollLeft = scrollPos;
-                
-                setTimeout(() => {
-                    updateCardsFocus();
-                    track.style.scrollBehavior = 'smooth';
-                }, 50);
-            }
-        }
-
-        track.addEventListener('scroll', updateCardsFocus);
-        window.addEventListener('resize', centerMiddleCard);
-        window.addEventListener('load', centerMiddleCard);
+        track.addEventListener('scroll', updateFocus);
+        window.addEventListener('resize', centerCard);
+        window.addEventListener('load', centerCard);
+        // Fallback in case load already fired
+        setTimeout(centerCard, 100);
 
         nextBtn.addEventListener('click', () => {
             const cardWidth = cards[0].offsetWidth + 24; 
             track.scrollBy({ left: cardWidth, behavior: 'smooth' });
         });
-
         prevBtn.addEventListener('click', () => {
             const cardWidth = cards[0].offsetWidth + 24;
             track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
         });
+      }
 
-        // --- İLETİŞİM FORMU (AJAX GÖNDERİM) ---
-        const form = document.getElementById('contactForm');
-        const result = document.getElementById('resultMessage');
-        const submitBtn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-75');
-
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
-
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-            .then(async (response) => {
-                let json = await response.json();
-                result.classList.remove('hidden');
-                
-                if (response.status == 200) {
-                    result.classList.add('bg-green-50', 'text-green-800', 'border-green-200');
-                    result.classList.remove('bg-red-50', 'text-red-800', 'border-red-200');
-                    result.innerHTML = "Mesajınız başarıyla gönderildi! Size en kısa sürede dönüş yapacağız.";
-                    form.reset();
-                } else {
-                    result.classList.add('bg-red-50', 'text-red-800', 'border-red-200');
-                    result.classList.remove('bg-green-50', 'text-green-800', 'border-green-200');
-                    result.innerHTML = "Bir hata oluştu: " + json.message;
-                }
-            })
-            .catch(error => {
-                result.classList.remove('hidden');
-                result.classList.add('bg-red-50', 'text-red-800', 'border-red-200');
-                result.classList.remove('bg-green-50', 'text-green-800', 'border-green-200');
-                result.innerHTML = "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.";
-            })
-            .then(function() {
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-75');
-                
-                setTimeout(() => {
-                    result.classList.add('hidden');
-                }, 5000);
-            });
-        });
-    </script>
+      // --- İLETİŞİM FORMU (AJAX GÖNDERİM) ---
+      const form = document.getElementById('contactForm');
+      const result = document.getElementById('resultMessage');
+      const submitBtn = document.getElementById('submitBtn');
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const original = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gönderiliyor...';
+        result.className = 'result';
+        result.textContent = '';
+        try {
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(new FormData(form)))
+          });
+          const data = await response.json();
+          if (response.ok && data.success) {
+            result.className = 'result success';
+            result.textContent = 'Mesajınız başarıyla gönderildi. İlginiz için teşekkür ederiz.';
+            form.reset();
+          } else {
+            throw new Error(data.message || 'Form gönderilemedi.');
+          }
+        } catch (error) {
+          result.className = 'result error';
+          result.textContent = 'Mesaj gönderilemedi. Lütfen tekrar deneyin veya telefon ya da e-posta üzerinden bize ulaşın.';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = original;
+          setTimeout(() => { result.className = 'result'; result.textContent = ''; }, 5000);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
