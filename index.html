@@ -42,10 +42,7 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(163, 107, 105, 0.2);
         }
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(74, 27, 34, 0.1), 0 8px 10px -6px rgba(74, 27, 34, 0.1);
-        }
+        
         .gradient-text {
             background: linear-gradient(90deg, #4A1B22 0%, #A36B69 100%);
             -webkit-background-clip: text;
@@ -73,6 +70,15 @@
         .float-2 { animation: float-2 8s ease-in-out infinite 1s; }
         .float-3 { animation: float-3 6s ease-in-out infinite 2s; }
         .animation-delay-2000 { animation-delay: 2s; }
+
+        /* Yana Kaydırma Çubuğunu Gizleme */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -113,33 +119,24 @@
         </div>
     </nav>
 
-    <!-- Hero (Modernize Edilmiş Animasyonlu ve Görselli Alan) -->
+    <!-- Hero -->
     <section id="hero" class="relative pt-32 pb-20 lg:pt-0 overflow-hidden min-h-[90vh] flex items-center justify-center bg-cream">
         
-        <!-- Yüzen Görseller Arka Planı -->
         <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <!-- Noktalı Dekorasyon -->
             <div class="absolute top-0 left-0 w-full h-full opacity-30" style="background-image: radial-gradient(#4A1B22 1px, transparent 1px); background-size: 30px 30px;"></div>
             
-            <!-- Sol Üst: Kamera / Prodüksiyon (Netflix yerine daha profesyonel bir çekim görseli eklendi) -->
             <img src="https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creative Production" class="absolute -top-10 -left-10 md:top-10 md:left-10 w-48 md:w-72 h-64 md:h-96 object-cover rounded-[2.5rem] shadow-2xl opacity-50 md:opacity-70 float-1">
             
-            <!-- Sağ Alt: Mikrofon / Podcast -->
             <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Production" class="absolute -bottom-20 -right-10 md:bottom-10 md:right-10 w-56 md:w-80 h-72 md:h-[26rem] object-cover rounded-[2.5rem] shadow-2xl opacity-50 md:opacity-70 float-2">
             
-            <!-- Sağ Üst: Etkinlik (Dairesel) -->
             <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Event" class="absolute top-20 right-5 md:top-32 md:right-32 w-32 md:w-56 h-32 md:h-56 object-cover rounded-full shadow-2xl opacity-40 md:opacity-60 float-3">
             
-            <!-- Sol Alt: Ekip / Kreatif -->
             <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Team" class="absolute bottom-10 left-5 md:bottom-20 md:left-32 w-40 md:w-64 h-40 md:h-64 object-cover rounded-[2rem] shadow-2xl opacity-40 md:opacity-60 float-1 animation-delay-2000" style="transform: rotate(8deg);">
             
-            <!-- Yazıların Okunabilirliğini Artıran İnce Blur Örtüsü -->
             <div class="absolute inset-0 bg-cream/40 backdrop-blur-[2px]"></div>
         </div>
 
-        <!-- Ana Metin Kutusu (Şeffaflaştırılmış Glassmorphism) -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mt-10 lg:mt-20">
-            <!-- bg-white/70 yerine bg-white/30 yapıldı, backdrop-blur-2xl ile buzlu cam etkisi artırıldı -->
             <div class="text-center max-w-4xl mx-auto bg-white/30 backdrop-blur-2xl border border-white/40 p-10 md:p-16 rounded-[3rem] shadow-[0_20px_60px_rgba(74,27,34,0.15)] transform transition-transform duration-500">
                 <span class="inline-block py-1.5 px-5 rounded-full bg-white/50 text-burgundy text-sm font-bold uppercase tracking-widest mb-6 border border-rose/30 shadow-sm">Mefa Agency Samsun</span>
                 <h1 class="text-5xl md:text-7xl font-extrabold text-burgundy tracking-tight mb-6 leading-[1.1]">
@@ -198,54 +195,92 @@
         </div>
     </section>
 
-    <!-- Hizmetler -->
-    <section id="hizmetler" class="py-20 bg-cream-dark">
+    <!-- HİZMETLER - YENİ KAYDIRMALI SİSTEM (YENİLENDİ) -->
+    <section id="hizmetler" class="py-24 bg-cream-dark overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
+            <div class="text-center max-w-3xl mx-auto mb-12">
                 <h2 class="text-sm font-bold text-rose tracking-wider uppercase mb-2">Hizmet Alanlarımız</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-burgundy mb-4">Bir markanın ihtiyacı olan her şey, tek çatı altında.</h3>
+                <h3 class="text-3xl md:text-5xl font-bold text-burgundy mb-4 leading-tight">Bir markanın ihtiyacı olan her şey, tek çatı altında.</h3>
+                <p class="text-gray-600">İhtiyacınıza en uygun profesyonel çözümleri aşağıdan inceleyebilirsiniz.</p>
             </div>
+        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
-                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
-                        <i class="fas fa-hashtag"></i>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Slider Konteyneri -->
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 pt-4 hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+                
+                <!-- Kart 1: Influencer Marketing -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] h-[450px] relative rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Influencer Marketing" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark/95 via-burgundy/60 to-black/10"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 border border-white/30 shadow-lg">
+                            <i class="fas fa-hashtag text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Influencer Marketing</h4>
+                        <p class="text-cream/90 text-sm leading-relaxed">Markanızı doğru kitlelerle buluşturan yaratıcı kampanyalar. Marka-creator eşleşmeleri ve sosyal medya yönetimi.</p>
                     </div>
-                    <h4 class="text-xl font-bold text-burgundy mb-3">Influencer Marketing</h4>
-                    <p class="text-gray-600">Markanızı doğru kitlelerle buluşturan yaratıcı kampanyalar. Marka-creator eşleşmeleri ve sosyal medya yönetimi.</p>
+                </div>
+
+                <!-- Kart 2: Prodüksiyon & İçerik Üretimi -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] h-[450px] relative rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Prodüksiyon" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark/95 via-burgundy/60 to-black/10"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 border border-white/30 shadow-lg">
+                            <i class="fas fa-video text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Prodüksiyon & İçerik</h4>
+                        <p class="text-cream/90 text-sm leading-relaxed">Markanızın hikayesini etkileyici içeriklerle anlatırız. Fotoğraf, video çekimi, kurgu ve grafik tasarım.</p>
+                    </div>
+                </div>
+
+                <!-- Kart 3: Mekan & Etkinlik Org. -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] h-[450px] relative rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Etkinlik Organizasyon" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark/95 via-burgundy/60 to-black/10"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 border border-white/30 shadow-lg">
+                            <i class="fas fa-glass-cheers text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Mekan & Etkinlik Org.</h4>
+                        <p class="text-cream/90 text-sm leading-relaxed">Mekanınıza özel unutulmaz deneyimler organize ederiz. Etkinlik planlama, davet ve servis koordinasyonu.</p>
+                    </div>
+                </div>
+
+                <!-- Kart 4: Dijital Pazarlama -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] h-[450px] relative rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dijital Pazarlama" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark/95 via-burgundy/60 to-black/10"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 border border-white/30 shadow-lg">
+                            <i class="fas fa-chart-line text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Dijital Pazarlama</h4>
+                        <p class="text-cream/90 text-sm leading-relaxed">Dijitalde görünür, ölçülebilir ve sürdürülebilir büyüme. E-ticaret danışmanlığı, reklam yönetimi ve raporlama.</p>
+                    </div>
+                </div>
+
+                <!-- Kart 5: Tedarik / Kurumsal İhtiyaçlar -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] h-[450px] relative rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kurumsal Tedarik" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-burgundy-dark/95 via-burgundy/60 to-black/10"></div>
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                        <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-6 border border-white/30 shadow-lg">
+                            <i class="fas fa-tshirt text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Kurumsal Tedarik</h4>
+                        <p class="text-cream/90 text-sm leading-relaxed">İş kıyafetlerinde özel üretim, promosyon ürünleri ve kurumunuza özel tekstil çözümleri.</p>
+                    </div>
                 </div>
                 
-                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
-                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-burgundy mb-3">Prodüksiyon & İçerik Üretimi</h4>
-                    <p class="text-gray-600">Markanızın hikayesini etkileyici içeriklerle anlatırız. Fotoğraf, video çekimi, kurgu ve grafik tasarım.</p>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
-                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
-                        <i class="fas fa-glass-cheers"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-burgundy mb-3">Mekan & Etkinlik Org.</h4>
-                    <p class="text-gray-600">Mekanınıza özel unutulmaz deneyimler organize ederiz. Etkinlik planlama, davet ve servis koordinasyonu.</p>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100">
-                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-burgundy mb-3">Dijital Pazarlama</h4>
-                    <p class="text-gray-600">Dijitalde görünür, ölçülebilir ve sürdürülebilir büyüme. E-ticaret danışmanlığı, reklam yönetimi ve raporlama.</p>
-                </div>
-
-                <div class="bg-white rounded-2xl p-8 shadow-md service-card transition-all border border-gray-100 md:col-span-2 lg:col-span-1 lg:col-start-2">
-                    <div class="w-14 h-14 bg-burgundy rounded-xl flex items-center justify-center text-cream mb-6 text-2xl">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-burgundy mb-3">Tedarik / Kurumsal İhtiyaçlar</h4>
-                    <p class="text-gray-600">İş kıyafetlerinde özel üretim, promosyon ürünleri ve kurumunuza özel tekstil çözümleri.</p>
-                </div>
+            </div>
+            
+            <!-- Mobilde Kaydırma İpucu -->
+            <div class="flex justify-center items-center gap-3 mt-2 text-burgundy md:hidden opacity-60">
+                <i class="fas fa-chevron-left text-sm animate-pulse"></i>
+                <span class="text-xs font-bold uppercase tracking-widest">Sağa Doğru Kaydırın</span>
+                <i class="fas fa-chevron-right text-sm animate-pulse"></i>
             </div>
         </div>
     </section>
