@@ -119,7 +119,7 @@
     .step p{font-size:.88rem;color:rgba(255,255,255,.65);margin:0;max-width:240px}
     .process-foot{margin-top:40px;padding-top:23px;border-top:1px solid rgba(255,255,255,.15);font-size:.8rem;letter-spacing:.04em;color:#e0c3c0}
     
-    /* Services (YENİ ODAK MERKEZLİ SLIDER) */
+    /* Services (SONSUZ DÖNGÜLÜ MERKEZ ODAKLI SLIDER) */
     .services{padding:120px 0; overflow:hidden;}
     .services-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:45px}
     .services-head .section-copy{max-width:430px;margin-bottom:8px}
@@ -221,7 +221,7 @@
       margin: 0;
     }
 
-    /* Slider Yönlendirme Okları (Görsellerin Üstünde/Yanında) */
+    /* Slider Yönlendirme Okları (Görsellerin Üzerinde) */
     .slider-btn {
       position: absolute;
       top: 50%;
@@ -351,7 +351,6 @@
       .nav-links a:not(.nav-cta):after{display:none}
       .nav-cta{text-align:center;margin-top:22px;padding:15px}
       .hero{min-height:0;padding:135px 0 0}
-      .hero-bg{background:linear-gradient(90deg,rgba(48,17,22,.95),rgba(74,27,34,.78)),url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80") center/cover}
       .hero-grid{display:block;padding-top:0;padding-bottom:55px}
       .hero h1{font-size:clamp(3rem,13vw,5rem);margin-top:22px}
       .hero-lead{font-size:1rem}.hero-aside{display:none}.hero-note{margin-top:30px}
@@ -410,7 +409,7 @@
   <main>
     <section class="hero" id="anasayfa">
       <div class="hero-bg">
-        <!-- VİDEO: bg-video.mp4 klasöründeyse onu oynatır, yüklenmezse diye alternatif bir CDN linki de ekledim -->
+        <!-- VİDEO: bg-video.mp4 klasöründeyse onu oynatır, yüklenmezse diye alternatif bir CDN linki ekli -->
         <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=85">
             <source src="bg-video.mp4" type="video/mp4">
             <source src="https://cdn.pixabay.com/video/2020/05/25/40134-424915606_large.mp4" type="video/mp4">
@@ -487,7 +486,7 @@
       </div>
     </section>
 
-    <!-- HİZMETLER - YENİ ODAK MERKEZLİ SLIDER -->
+    <!-- HİZMETLER - SONSUZ ODAK MERKEZLİ SLIDER -->
     <section class="services" id="hizmetler">
       <div class="container">
         <div class="services-head reveal">
@@ -509,7 +508,7 @@
         <div class="slider-track" id="sliderTrack">
           
           <!-- Hizmet 1 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80" alt="Marka Tanıtımı">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -520,7 +519,7 @@
           </article>
 
           <!-- Hizmet 2 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=800&q=80" alt="Influencer Marketing">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -531,7 +530,7 @@
           </article>
 
           <!-- Hizmet 3 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80" alt="Prodüksiyon ve İçerik">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -542,7 +541,7 @@
           </article>
 
           <!-- Hizmet 4 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80" alt="Grafik Tasarım">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -553,7 +552,7 @@
           </article>
 
           <!-- Hizmet 5 (BAŞLANGIÇTA MERKEZDE OLACAK) -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" alt="Organizasyon ve Etkinlik">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -564,7 +563,7 @@
           </article>
 
           <!-- Hizmet 6 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=800&q=80" alt="Tedarik ve Kurumsal İhtiyaçlar">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -575,18 +574,18 @@
           </article>
 
           <!-- Hizmet 7 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Dijital Pazarlama">
             <div class="slider-overlay"></div>
             <div class="slider-content">
               <div class="slider-icon"><i class="fa-solid fa-chart-line"></i></div>
-              <h3>Dijital Pazarlama ve E-Ticaret</h3>
-              <p>Dijital kanallarda görünürlüğünüzü geliştirmek için pazarlama, reklam ve e-ticaret ihtiyaçlarını birlikte ele alırız.</p>
+              <h3>Dijital Pazarlama</h3>
+              <p>Dijitalde görünür, ölçülebilir ve sürdürülebilir büyüme. E-ticaret danışmanlığı, reklam yönetimi ve raporlama.</p>
             </div>
           </article>
 
           <!-- Hizmet 8 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Mekan Tanıtımı">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -597,7 +596,7 @@
           </article>
 
           <!-- Hizmet 9 -->
-          <article class="slider-card">
+          <article class="slider-card original">
             <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80" alt="Sosyal Medya Yönetimi">
             <div class="slider-overlay"></div>
             <div class="slider-content">
@@ -671,7 +670,9 @@
             <div class="contact-detail"><i class="fa-solid fa-location-dot"></i><div><strong>Merkez Ofis</strong><span>Adalet Mahallesi, Evliya Çelebi Sokak No: 3<br>İlkadım / Samsun</span></div></div>
             <div class="contact-detail"><i class="fa-solid fa-phone"></i><div><strong>Telefon</strong><a href="tel:+905541727855">0554 172 78 55</a></div></div>
             <div class="contact-detail"><i class="fa-solid fa-envelope"></i><div><strong>E-posta</strong><a href="mailto:mefacreative@gmail.com">mefacreative@gmail.com</a></div></div>
-            <div class="contact-social"><a class="social-link" href="https://instagram.com/mefa.agency" target="_blank" rel="noopener noreferrer" aria-label="MEFA Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+            <div class="contact-social">
+              <a class="social-link" href="https://instagram.com/mefa.agency" target="_blank" rel="noopener noreferrer" aria-label="MEFA Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
           </div>
           <div class="contact-form">
             <h3>Bize mesaj gönderin</h3>
@@ -764,19 +765,30 @@
         revealItems.forEach(item => item.classList.add('in-view'));
       }
 
-      // --- ODAK MERKEZLİ SLIDER MANTIĞI ---
+      // --- HİZMETLER SLIDER (SONSUZ DÖNGÜ / INFINITE LOOP) ---
       const track = document.getElementById('sliderTrack');
-      const cards = Array.from(document.querySelectorAll('.slider-card'));
+      let originalCards = Array.from(document.querySelectorAll('.original'));
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
 
-      if(track && cards.length > 0) {
+      if (track && originalCards.length > 0) {
+        // 1. Kartları sonsuz hissi için kopyala (3 set oluştur)
+        originalCards.forEach(card => {
+          track.appendChild(card.cloneNode(true)).classList.remove('original');
+        });
+        originalCards.forEach(card => {
+          track.insertBefore(card.cloneNode(true), track.firstChild).classList.remove('original');
+        });
+
+        let allCards = Array.from(document.querySelectorAll('.slider-card'));
+        const totalOriginal = originalCards.length;
+
+        // 2. Odaklama ve boyutlandırma
         const updateFocus = () => {
           const trackCenter = track.getBoundingClientRect().left + (track.getBoundingClientRect().width / 2);
-          cards.forEach(card => {
+          allCards.forEach(card => {
             const cardCenter = card.getBoundingClientRect().left + (card.getBoundingClientRect().width / 2);
             const distance = Math.abs(trackCenter - cardCenter);
-            
             if (distance < (card.getBoundingClientRect().width / 2)) {
               card.classList.add('active');
             } else {
@@ -785,33 +797,72 @@
           });
         };
 
-        const centerCard = () => {
-          const middleIndex = Math.floor(cards.length / 2); 
-          const targetCard = cards[middleIndex];
+        // Belirli bir karta kaydırma fonksiyonu
+        const centerCardByIndex = (index, smooth = true) => {
+          const targetCard = allCards[index];
+          if(!targetCard) return;
           const scrollPos = targetCard.offsetLeft - (track.offsetWidth / 2) + (targetCard.offsetWidth / 2);
-          
-          track.style.scrollBehavior = 'auto';
+          track.style.scrollBehavior = smooth ? 'smooth' : 'auto';
           track.scrollLeft = scrollPos;
-          
-          setTimeout(() => {
-              updateFocus();
-              track.style.scrollBehavior = 'smooth';
-          }, 50);
         };
 
-        track.addEventListener('scroll', updateFocus);
-        window.addEventListener('resize', centerCard);
-        window.addEventListener('load', centerCard);
-        // Fallback in case load already fired
-        setTimeout(centerCard, 100);
+        // 3. Sınır Kontrolü (Başa veya Sona gelindiğinde ortadaki sete görünmez zıplama)
+        const checkBoundary = () => {
+          const trackCenter = track.getBoundingClientRect().left + (track.getBoundingClientRect().width / 2);
+          let activeIndex = -1;
+          let minDistance = Infinity;
+          
+          allCards.forEach((card, index) => {
+            const cardCenter = card.getBoundingClientRect().left + (card.getBoundingClientRect().width / 2);
+            const distance = Math.abs(trackCenter - cardCenter);
+            if (distance < minDistance) {
+              minDistance = distance;
+              activeIndex = index;
+            }
+          });
+
+          if (activeIndex !== -1) {
+            // Eğer sol kopyalara girildiyse -> Ana sete zıpla
+            if (activeIndex < totalOriginal) {
+              centerCardByIndex(activeIndex + totalOriginal, false);
+            } 
+            // Eğer sağ kopyalara girildiyse -> Ana sete zıpla
+            else if (activeIndex >= totalOriginal * 2) {
+              centerCardByIndex(activeIndex - totalOriginal, false);
+            }
+          }
+        };
+
+        // Sayfa yüklendiğinde ana setin (ortadaki 9'lu) tam ortasından başlat
+        const initCenter = () => {
+          const middleIndex = totalOriginal + Math.floor(totalOriginal / 2); 
+          centerCardByIndex(middleIndex, false);
+          setTimeout(updateFocus, 50);
+        };
+
+        let scrollTimeout;
+        track.addEventListener('scroll', () => {
+          updateFocus();
+          clearTimeout(scrollTimeout);
+          // Kullanıcı kaydırmayı durdurduktan 150ms sonra gizli sınırı kontrol et
+          scrollTimeout = setTimeout(checkBoundary, 150); 
+        });
+
+        window.addEventListener('resize', () => {
+          track.style.scrollBehavior = 'auto';
+          initCenter();
+        });
+        
+        window.addEventListener('load', initCenter);
+        setTimeout(initCenter, 100);
 
         nextBtn.addEventListener('click', () => {
-            const cardWidth = cards[0].offsetWidth + 24; 
-            track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+          const cardWidth = allCards[0].offsetWidth + 24; 
+          track.scrollBy({ left: cardWidth, behavior: 'smooth' });
         });
         prevBtn.addEventListener('click', () => {
-            const cardWidth = cards[0].offsetWidth + 24;
-            track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+          const cardWidth = allCards[0].offsetWidth + 24;
+          track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
         });
       }
 
