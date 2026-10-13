@@ -25,6 +25,14 @@
         body { background-color: #FDFBF7; color: #241b1b; }
         .glass-panel { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border: 1px solid rgba(74,27,34,0.1); }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
+        /* Özel Scrollbar (İş listesi için) */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #A36B69; }
+        /* Animasyonlar */
+        .accordion-content { transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+        .accordion-content.open { max-height: 1000px; opacity: 1; }
     </style>
 </head>
 <body class="antialiased h-screen overflow-hidden flex">
@@ -61,8 +69,8 @@
     <!-- ANA PANEL (DASHBOARD) -->
     <div id="dashboardScreen" class="hidden flex w-full h-full">
         
-        <!-- Sol Menü (Sidebar) -->
-        <aside class="w-64 bg-burgundy-dark text-white flex flex-col shrink-0 hidden md:flex">
+        <!-- Sol Menü -->
+        <aside class="w-64 bg-burgundy-dark text-white flex flex-col shrink-0 hidden md:flex z-10 shadow-2xl">
             <div class="p-6 border-b border-white/10">
                 <div class="text-2xl font-extrabold font-display tracking-tighter leading-none mb-1">
                     me<span class="text-rose">fa.</span>
@@ -85,85 +93,87 @@
         </aside>
 
         <!-- Sağ İçerik Alanı -->
-        <main class="flex-1 flex flex-col h-screen overflow-hidden bg-cream relative">
+        <main class="flex-1 flex flex-col h-screen overflow-hidden bg-[#f8f9fa] relative">
             
-            <!-- Veri Yükleniyor Göstergesi -->
-            <div id="loadingOverlay" class="absolute inset-0 bg-cream/80 backdrop-blur-sm z-40 hidden flex-col items-center justify-center">
+            <div id="loadingOverlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm z-40 hidden flex-col items-center justify-center">
                 <i class="fas fa-spinner fa-spin text-4xl text-rose mb-3"></i>
                 <p class="text-burgundy font-medium">Veriler Senkronize Ediliyor...</p>
             </div>
 
             <!-- Üst Bar -->
-            <header class="bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex justify-between items-center shrink-0">
+            <header class="bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex justify-between items-center shrink-0 shadow-sm z-10">
                 <div class="flex items-center gap-4">
                     <button class="md:hidden text-burgundy"><i class="fas fa-bars text-xl"></i></button>
-                    <h2 class="text-lg md:text-xl font-bold text-burgundy font-display">Müşteri ve İş Takibi</h2>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-bold text-burgundy font-display">İş Takip Paneli</h2>
+                        <p class="text-xs text-gray-500">Müşterilerinizi ve devam eden projeleri yönetin.</p>
+                    </div>
                 </div>
-                <button onclick="openModal()" class="bg-rose text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-burgundy transition-colors shadow-sm flex items-center gap-2 text-sm">
-                    <i class="fas fa-plus"></i> <span class="hidden md:inline">Yeni Müşteri</span>
+                <button onclick="openModal()" class="bg-burgundy text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-rose transition-colors shadow-sm flex items-center gap-2 text-sm">
+                    <i class="fas fa-plus"></i> <span class="hidden md:inline">Yeni Müşteri Ekle</span>
                 </button>
             </header>
 
             <!-- İçerik -->
-            <div class="p-4 md:p-8 overflow-y-auto flex-1 hide-scrollbar">
+            <div class="p-4 md:p-8 overflow-y-auto flex-1 custom-scroll">
                 
                 <!-- İstatistikler -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-                    <div class="glass-panel p-4 md:p-6 rounded-2xl">
+                    <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm">Toplam</h3>
-                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><i class="fas fa-users text-sm md:text-base"></i></div>
+                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Top. Müşteri</h3>
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500"><i class="fas fa-users text-lg"></i></div>
                         </div>
-                        <p class="text-2xl md:text-3xl font-display font-bold text-burgundy mt-2 md:mt-4" id="statTotal">0</p>
+                        <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statClients">0</p>
                     </div>
                     
-                    <div class="glass-panel p-4 md:p-6 rounded-2xl">
+                    <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm">Görüşme</h3>
-                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600"><i class="fas fa-handshake text-sm md:text-base"></i></div>
+                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Görüşülen İş</h3>
+                            <div class="w-10 h-10 rounded-xl bg-yellow-50 flex items-center justify-center text-yellow-500"><i class="fas fa-comments text-lg"></i></div>
                         </div>
-                        <p class="text-2xl md:text-3xl font-display font-bold text-burgundy mt-2 md:mt-4" id="statPending">0</p>
+                        <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statPending">0</p>
                     </div>
 
-                    <div class="glass-panel p-4 md:p-6 rounded-2xl">
+                    <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm">Yapılacak</h3>
-                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-rose/20 flex items-center justify-center text-rose"><i class="fas fa-hourglass-half text-sm md:text-base"></i></div>
+                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Yapılacak İş</h3>
+                            <div class="w-10 h-10 rounded-xl bg-rose/10 flex items-center justify-center text-rose"><i class="fas fa-cog text-lg"></i></div>
                         </div>
-                        <p class="text-2xl md:text-3xl font-display font-bold text-burgundy mt-2 md:mt-4" id="statTodo">0</p>
+                        <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statTodo">0</p>
                     </div>
 
-                    <div class="glass-panel p-4 md:p-6 rounded-2xl">
+                    <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm">Tamamlandı</h3>
-                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600"><i class="fas fa-check-circle text-sm md:text-base"></i></div>
+                            <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Biten İş</h3>
+                            <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-500"><i class="fas fa-check-circle text-lg"></i></div>
                         </div>
-                        <p class="text-2xl md:text-3xl font-display font-bold text-burgundy mt-2 md:mt-4" id="statDone">0</p>
+                        <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statDone">0</p>
                     </div>
                 </div>
 
-                <!-- Tablo (Excel Tarzı Liste) -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <!-- Tablo (Açılır Kapanır Akordeon Yapısı) -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-10">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[800px]">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
                             <thead>
-                                <tr class="bg-cream-dark text-burgundy font-semibold text-sm">
-                                    <th class="py-4 px-6 w-1/4">Firma / Müşteri Adı</th>
-                                    <th class="py-4 px-6 w-1/4">Hizmet Türü</th>
-                                    <th class="py-4 px-6 w-1/6">Durum</th>
-                                    <th class="py-4 px-6 w-1/3">Notlar</th>
+                                <tr class="bg-gray-50 text-gray-600 font-bold text-xs uppercase tracking-wider border-b border-gray-200">
+                                    <th class="py-4 px-6 w-12"></th> <!-- İkon için -->
+                                    <th class="py-4 px-6 w-1/3">Firma / Müşteri Adı</th>
+                                    <th class="py-4 px-6">Aktif İşler</th>
+                                    <th class="py-4 px-6">Genel Notlar</th>
                                     <th class="py-4 px-6 text-right">İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody id="clientTableBody" class="divide-y divide-gray-100 text-sm">
-                                <!-- JavaScript ile Firebase'den doldurulacak -->
+                                <!-- JavaScript ile doldurulacak -->
                             </tbody>
                         </table>
                         
-                        <!-- Boş Durum -->
-                        <div id="emptyState" class="hidden p-12 text-center text-gray-500">
-                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fas fa-folder-open"></i></div>
-                            <p>Henüz hiç müşteri eklemediniz.</p>
+                        <div id="emptyState" class="hidden p-16 text-center text-gray-500">
+                            <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-box-open"></i></div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">Müşteri Bulunamadı</h3>
+                            <p>Sisteme henüz bir müşteri veya iş eklemediniz.</p>
                         </div>
                     </div>
                 </div>
@@ -172,47 +182,45 @@
         </main>
     </div>
 
-    <!-- MÜŞTERİ EKLE/DÜZENLE MODAL -->
+    <!-- MÜŞTERİ EKLE/DÜZENLE MODAL (ÇOKLU İŞ SİSTEMİ) -->
     <div id="clientModal" class="fixed inset-0 z-[60] bg-black/50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity p-4">
-        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-cream rounded-t-2xl shrink-0">
-                <h3 class="font-bold text-lg text-burgundy" id="modalTitle">Müşteri Ekle</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button>
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col max-h-[95vh]">
+            <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-2xl shrink-0">
+                <h3 class="font-extrabold text-xl text-burgundy" id="modalTitle">Müşteri & İş Ekle</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors bg-white w-8 h-8 rounded-full shadow-sm flex items-center justify-center"><i class="fas fa-times"></i></button>
             </div>
             
-            <div class="p-6 overflow-y-auto">
-                <form id="clientForm" class="space-y-5">
+            <div class="p-8 overflow-y-auto custom-scroll bg-white">
+                <form id="clientForm" class="space-y-6">
                     <input type="hidden" id="clientId">
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Firma / Müşteri Adı</label>
-                            <input type="text" id="cName" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Alınan Hizmet</label>
-                            <input type="text" id="cService" required placeholder="Örn: Sosyal Medya Yön." class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none">
-                        </div>
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
+                        <label class="block text-sm font-bold text-burgundy mb-2">Firma / Müşteri Adı</label>
+                        <input type="text" id="cName" required placeholder="Örn: ABC Holding" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white">
+                        
+                        <label class="block text-sm font-bold text-burgundy mb-2 mt-4">Genel Notlar <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span></label>
+                        <textarea id="cNotes" rows="2" placeholder="Firma hakkında genel bilgiler..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none resize-none bg-white"></textarea>
                     </div>
 
+                    <!-- ÇOKLU İŞ BÖLÜMÜ -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Proje Durumu</label>
-                        <select id="cStatus" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white">
-                            <option value="Görüşme Aşamasında">🤝 Görüşme Aşamasında</option>
-                            <option value="Yapılacak / Bekliyor">⏳ Yapılacak / Bekliyor</option>
-                            <option value="Tamamlandı">✅ Tamamlandı</option>
-                        </select>
+                        <div class="flex justify-between items-center mb-3">
+                            <label class="block text-sm font-bold text-burgundy">Müşteriye Ait İşler / Hizmetler</label>
+                            <button type="button" onclick="addJobRow()" class="text-sm bg-rose text-white px-4 py-1.5 rounded-lg hover:bg-burgundy transition-colors font-semibold shadow-sm flex items-center gap-2">
+                                <i class="fas fa-plus text-xs"></i> Yeni İş Ekle
+                            </button>
+                        </div>
+                        
+                        <!-- İşlerin Listeleneceği Konteyner -->
+                        <div id="jobsContainer" class="space-y-3">
+                            <!-- JS ile job satırları eklenecek -->
+                        </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Notlar (Yapılanlar & Yapılacaklar)</label>
-                        <textarea id="cNotes" rows="4" placeholder="Müşteriyle ilgili detaylar, çalışılacak konular..." class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none resize-none"></textarea>
-                    </div>
-
-                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                        <button type="button" onclick="closeModal()" class="px-5 py-2.5 rounded-lg font-semibold text-gray-600 hover:bg-gray-100 transition-colors">İptal</button>
-                        <button type="submit" id="saveBtn" class="bg-burgundy text-white px-6 py-2.5 rounded-lg font-bold hover:bg-rose transition-colors flex items-center gap-2">
-                            Kaydet
+                    <div class="flex justify-end gap-3 pt-6 border-t border-gray-100">
+                        <button type="button" onclick="closeModal()" class="px-6 py-3 rounded-lg font-bold text-gray-500 hover:bg-gray-100 transition-colors">İptal</button>
+                        <button type="submit" id="saveBtn" class="bg-burgundy text-white px-8 py-3 rounded-lg font-extrabold hover:bg-rose transition-colors shadow-md flex items-center gap-2">
+                            Müşteriyi Kaydet <i class="fas fa-check text-sm"></i>
                         </button>
                     </div>
                 </form>
@@ -226,7 +234,7 @@
         import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, orderBy, query } 
         from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // Firebase Yapılandırması (Senin ilettiğin API bilgileri)
+        // Firebase Yapılandırması
         const firebaseConfig = {
             apiKey: "AIzaSyADmNHvySaub2BJd-tc0TTHeChLXvomKwk",
             authDomain: "mefasite.firebaseapp.com",
@@ -236,29 +244,26 @@
             appId: "1:737206317283:web:ab588fd91aec8072f715d6"
         };
 
-        // Firebase Başlatma
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // === GİRİŞ BİLGİLERİ ===
+        // Giriş Bilgileri
         const ADMIN_USER = "fazlicanyksl";
         const ADMIN_PASS = "Fazlican1.";
 
-        // HTML Elementleri
         const loginScreen = document.getElementById('loginScreen');
         const dashboardScreen = document.getElementById('dashboardScreen');
         const loginForm = document.getElementById('loginForm');
-        const loginError = document.getElementById('loginError');
         const clientModal = document.getElementById('clientModal');
         const clientForm = document.getElementById('clientForm');
         const clientTableBody = document.getElementById('clientTableBody');
         const emptyState = document.getElementById('emptyState');
         const loadingOverlay = document.getElementById('loadingOverlay');
+        const jobsContainer = document.getElementById('jobsContainer');
         const saveBtn = document.getElementById('saveBtn');
 
-        let clients = []; // Firebase'den çekilen veriler burada tutulacak
+        let clients = [];
 
-        // === OTURUM KONTROLÜ ===
         window.addEventListener('load', () => {
             if (sessionStorage.getItem('mefa_admin_logged') === 'true') {
                 showDashboard();
@@ -267,34 +272,54 @@
 
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-
-            if (u === ADMIN_USER && p === ADMIN_PASS) {
+            if (document.getElementById('username').value === ADMIN_USER && document.getElementById('password').value === ADMIN_PASS) {
                 sessionStorage.setItem('mefa_admin_logged', 'true');
                 showDashboard();
             } else {
-                loginError.classList.remove('hidden');
+                document.getElementById('loginError').classList.remove('hidden');
             }
         });
 
         async function showDashboard() {
             loginScreen.classList.add('hidden');
             dashboardScreen.classList.remove('hidden');
-            await fetchClients(); // Giriş yapınca Firebase'den verileri çek
+            await fetchClients();
         }
 
-        // Module scope'unda tanımlı fonksiyonları HTML onclick attributelarında kullanabilmek için window objesine aktarıyoruz.
         window.logout = function() {
             sessionStorage.removeItem('mefa_admin_logged');
             location.reload();
         }
 
+        // === YENİ: DİNAMİK İŞ SATIRI EKLEME ===
+        window.addJobRow = function(title = '', status = 'Görüşme Aşamasında') {
+            const row = document.createElement('div');
+            row.className = 'job-row flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm animate-fade-in';
+            row.innerHTML = `
+                <div class="flex-1">
+                    <input type="text" placeholder="İş Tanımı (Örn: Sosyal Medya Yönetimi)" value="${title}" required class="job-title w-full px-4 py-2 rounded-md border border-gray-200 focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm font-semibold text-gray-700">
+                </div>
+                <div class="w-56 shrink-0">
+                    <select class="job-status w-full px-3 py-2 rounded-md border border-gray-200 focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm font-semibold bg-gray-50">
+                        <option value="Görüşme Aşamasında" ${status==='Görüşme Aşamasında'?'selected':''}>🤝 Görüşme</option>
+                        <option value="Yapılacak / Bekliyor" ${status==='Yapılacak / Bekliyor'?'selected':''}>⏳ Yapılacak</option>
+                        <option value="Tamamlandı" ${status==='Tamamlandı'?'selected':''}>✅ Tamamlandı</option>
+                    </select>
+                </div>
+                <button type="button" onclick="this.parentElement.remove()" class="w-10 h-10 shrink-0 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            `;
+            jobsContainer.appendChild(row);
+        }
+
         window.openModal = function(isEdit = false) {
-            document.getElementById('modalTitle').innerText = isEdit ? 'Müşteri Düzenle' : 'Yeni Müşteri Ekle';
+            document.getElementById('modalTitle').innerText = isEdit ? 'Müşteriyi Düzenle' : 'Yeni Müşteri & İş Ekle';
             if (!isEdit) {
                 clientForm.reset();
                 document.getElementById('clientId').value = '';
+                jobsContainer.innerHTML = '';
+                addJobRow(); // Boşken 1 tane varsayılan iş satırı ekle
             }
             clientModal.classList.remove('hidden');
         }
@@ -303,21 +328,39 @@
             clientModal.classList.add('hidden');
         }
 
+        // === MÜŞTERİ LİSTESİNDE AKORDEON AÇ/KAPAT ===
+        window.toggleDetails = function(id) {
+            const row = document.getElementById(`details-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            if (row.classList.contains('open')) {
+                row.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                row.classList.add('open');
+                icon.style.transform = 'rotate(90deg)';
+            }
+        }
+
         // === FİREBASE VERİ ÇEKME ===
         async function fetchClients() {
             loadingOverlay.classList.remove('hidden');
             try {
-                // Zaman damgasına göre (en yeni en üstte) sırala
                 const q = query(collection(db, "clients"), orderBy("timestamp", "desc"));
                 const querySnapshot = await getDocs(q);
                 clients = [];
                 querySnapshot.forEach((doc) => {
-                    clients.push({ id: doc.id, ...doc.data() });
+                    const data = doc.data();
+                    // Eski verileri yeni "jobs" formatına uyarlama (Geriye Dönük Uyumluluk)
+                    if (!data.jobs && data.service) {
+                        data.jobs = [{ title: data.service, status: data.status }];
+                    }
+                    if(!data.jobs) data.jobs = []; // Güvenlik önlemi
+                    
+                    clients.push({ id: doc.id, ...data });
                 });
                 renderTable();
             } catch (error) {
                 console.error("Veri çekme hatası:", error);
-                alert("Veriler yüklenirken bir hata oluştu. İnternet bağlantınızı kontrol edin.");
             } finally {
                 loadingOverlay.classList.add('hidden');
             }
@@ -326,7 +369,9 @@
         // === TABLOYU RENDER ETME ===
         function renderTable() {
             clientTableBody.innerHTML = '';
-            let counts = { total: clients.length, pending: 0, todo: 0, done: 0 };
+            
+            // İstatistikler (Artık İş Sayılarına Göre Hesaplanır)
+            let counts = { clients: clients.length, pending: 0, todo: 0, done: 0 };
 
             if (clients.length === 0) {
                 emptyState.classList.remove('hidden');
@@ -334,74 +379,127 @@
                 emptyState.classList.add('hidden');
                 
                 clients.forEach((client) => {
-                    let statusColor = "";
-                    if (client.status.includes("Görüşme")) { statusColor = "bg-yellow-100 text-yellow-800"; counts.pending++; }
-                    else if (client.status.includes("Yapılacak")) { statusColor = "bg-rose/20 text-rose-dark"; counts.todo++; }
-                    else { statusColor = "bg-green-100 text-green-800"; counts.done++; }
+                    
+                    // İşleri say ve HTML oluştur
+                    let jobsHtml = '';
+                    client.jobs.forEach(job => {
+                        let icon, bg, text, dot;
+                        if (job.status.includes("Görüşme")) {
+                            icon = "fa-handshake"; bg = "bg-yellow-50 border-yellow-200"; text = "text-yellow-700"; dot = "bg-yellow-400"; counts.pending++;
+                        } else if (job.status.includes("Yapılacak")) {
+                            icon = "fa-hourglass-half"; bg = "bg-rose/10 border-rose/20"; text = "text-rose-dark"; dot = "bg-rose"; counts.todo++;
+                        } else {
+                            icon = "fa-check-circle"; bg = "bg-green-50 border-green-200"; text = "text-green-700"; dot = "bg-green-500"; counts.done++;
+                        }
 
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-50";
-                    tr.innerHTML = `
-                        <td class="py-4 px-6 font-semibold text-gray-800">${client.name}</td>
-                        <td class="py-4 px-6 text-gray-600">${client.service}</td>
-                        <td class="py-4 px-6">
-                            <span class="px-3 py-1 rounded-full text-xs font-bold ${statusColor} whitespace-nowrap">${client.status}</span>
+                        jobsHtml += `
+                            <div class="flex items-center gap-4 p-4 bg-white rounded-xl border ${bg} shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                                <div class="absolute right-0 top-0 bottom-0 w-2 ${bg.split(' ')[0]}"></div>
+                                <div class="w-12 h-12 rounded-full bg-white border border-gray-100 flex items-center justify-center shrink-0 shadow-sm">
+                                    <i class="fas ${icon} ${text} text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h5 class="font-extrabold text-gray-800 text-sm mb-1">${job.title}</h5>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full ${dot}"></span>
+                                        <span class="text-[11px] font-bold uppercase tracking-wider ${text}">${job.status}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    // 1. Ana Satır (Tıklanabilir)
+                    const parentTr = document.createElement('tr');
+                    parentTr.className = "hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-100 group";
+                    parentTr.onclick = () => window.toggleDetails(client.id);
+                    parentTr.innerHTML = `
+                        <td class="py-5 px-6 text-gray-400 group-hover:text-burgundy transition-colors"><i id="icon-${client.id}" class="fas fa-chevron-right transition-transform duration-300"></i></td>
+                        <td class="py-5 px-6 font-extrabold text-gray-800 text-base">${client.name}</td>
+                        <td class="py-5 px-6">
+                            <span class="bg-gray-100 text-gray-700 border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm">
+                                <i class="fas fa-layer-group mr-1 text-rose"></i> ${client.jobs.length} Adet İş
+                            </span>
                         </td>
-                        <td class="py-4 px-6 text-gray-500 whitespace-pre-wrap">${client.notes || '-'}</td>
-                        <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
-                            <button onclick="editClient('${client.id}')" class="w-8 h-8 rounded bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors" title="Düzenle">
-                                <i class="fas fa-pen text-xs"></i>
+                        <td class="py-5 px-6 text-gray-500 whitespace-pre-wrap truncate max-w-[200px]" title="${client.notes}">${client.notes || '<span class="italic opacity-50">Not yok</span>'}</td>
+                        <td class="py-5 px-6 text-right space-x-2 whitespace-nowrap">
+                            <button onclick="event.stopPropagation(); window.editClient('${client.id}')" class="w-9 h-9 rounded-lg bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors shadow-sm" title="Düzenle">
+                                <i class="fas fa-pen text-sm"></i>
                             </button>
-                            <button onclick="deleteClient('${client.id}')" class="w-8 h-8 rounded bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 transition-colors" title="Sil">
-                                <i class="fas fa-trash text-xs"></i>
+                            <button onclick="event.stopPropagation(); window.deleteClient('${client.id}')" class="w-9 h-9 rounded-lg bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 transition-colors shadow-sm" title="Sil">
+                                <i class="fas fa-trash text-sm"></i>
                             </button>
                         </td>
                     `;
-                    clientTableBody.appendChild(tr);
+                    
+                    // 2. Alt Satır (İşlerin Listelendiği Akordeon)
+                    const childTr = document.createElement('tr');
+                    childTr.innerHTML = `
+                        <td colspan="5" class="p-0 border-b border-gray-200 bg-gray-50/50">
+                            <div id="details-${client.id}" class="accordion-content">
+                                <div class="p-6 md:p-8 bg-gradient-to-b from-gray-50 to-white">
+                                    <div class="flex items-center gap-3 mb-6 border-b border-gray-200 pb-3">
+                                        <div class="w-8 h-8 rounded bg-rose text-white flex items-center justify-center"><i class="fas fa-clipboard-list"></i></div>
+                                        <h4 class="text-sm font-extrabold text-burgundy uppercase tracking-widest">Müşteriye Ait İş Kalemleri</h4>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                                        ${jobsHtml || '<p class="text-gray-400 italic text-sm">Bu müşteriye ait kayıtlı bir iş bulunmuyor.</p>'}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    `;
+
+                    clientTableBody.appendChild(parentTr);
+                    clientTableBody.appendChild(childTr);
                 });
             }
 
-            document.getElementById('statTotal').innerText = counts.total;
+            // İstatistikleri Ekrana Yaz
+            document.getElementById('statClients').innerText = counts.clients;
             document.getElementById('statPending').innerText = counts.pending;
             document.getElementById('statTodo').innerText = counts.todo;
             document.getElementById('statDone').innerText = counts.done;
         }
 
-        // === FİREBASE VERİ EKLEME/GÜNCELLEME ===
+        // === FİREBASE VERİ KAYDETME (ÇOKLU İŞLERİYLE BERABER) ===
         clientForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const idInput = document.getElementById('clientId').value;
             const name = document.getElementById('cName').value;
-            const service = document.getElementById('cService').value;
-            const status = document.getElementById('cStatus').value;
             const notes = document.getElementById('cNotes').value;
 
-            // Butonu yükleniyor durumuna al
+            // Formdaki tüm işleri topla
+            const jobs = [];
+            document.querySelectorAll('.job-row').forEach(row => {
+                const title = row.querySelector('.job-title').value.trim();
+                const status = row.querySelector('.job-status').value;
+                if(title !== "") {
+                    jobs.push({ title, status });
+                }
+            });
+
+            if(jobs.length === 0) {
+                alert("Lütfen en az 1 adet iş/hizmet tanımı ekleyin.");
+                return;
+            }
+
             const originalBtnHtml = saveBtn.innerHTML;
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
             saveBtn.disabled = true;
 
             try {
                 if (idInput) {
-                    // Müşteri Güncelleme
-                    const clientRef = doc(db, "clients", idInput);
-                    // timestamp'i güncellemiyoruz ki listeleme sırası (en yeni eklenen başta) bozulmasın.
-                    await updateDoc(clientRef, { name, service, status, notes });
+                    await updateDoc(doc(db, "clients", idInput), { name, notes, jobs });
                 } else {
-                    // Yeni Müşteri Ekleme
                     await addDoc(collection(db, "clients"), { 
-                        name, 
-                        service, 
-                        status, 
-                        notes, 
-                        timestamp: Date.now() // Sıralama için eklendi
+                        name, notes, jobs, timestamp: Date.now() 
                     });
                 }
                 window.closeModal();
-                await fetchClients(); // Değişiklikleri görmek için listeyi yenile
+                await fetchClients();
             } catch (error) {
-                console.error("Kaydetme hatası:", error);
                 alert("Veri kaydedilirken hata oluştu.");
             } finally {
                 saveBtn.innerHTML = originalBtnHtml;
@@ -415,22 +513,27 @@
             if (client) {
                 document.getElementById('clientId').value = client.id;
                 document.getElementById('cName').value = client.name;
-                document.getElementById('cService').value = client.service;
-                document.getElementById('cStatus').value = client.status;
                 document.getElementById('cNotes').value = client.notes;
+                
+                jobsContainer.innerHTML = ''; // Temizle
+                if(client.jobs && client.jobs.length > 0) {
+                    client.jobs.forEach(job => addJobRow(job.title, job.status));
+                } else {
+                    addJobRow(); // Boşsa 1 tane ekle
+                }
+                
                 window.openModal(true);
             }
         }
 
         // === FİREBASE VERİ SİLME ===
         window.deleteClient = async function(id) {
-            if (confirm('Bu müşteriyi silmek istediğinize emin misiniz?')) {
+            if (confirm('Bu müşteriyi ve içindeki tüm işleri silmek istediğinize emin misiniz?')) {
                 loadingOverlay.classList.remove('hidden');
                 try {
                     await deleteDoc(doc(db, "clients", id));
                     await fetchClients();
                 } catch (error) {
-                    console.error("Silme hatası:", error);
                     alert("Veri silinirken hata oluştu.");
                     loadingOverlay.classList.add('hidden');
                 }
