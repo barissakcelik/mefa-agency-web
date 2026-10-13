@@ -236,11 +236,12 @@
                                 </div>
                             </div>
 
+                            <!-- Net Beklenen Gelir Güncellemesi -->
                             <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-yellow-400">
-                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Beklenen (Aktif) Gelir</h3>
+                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Net Beklenen Gelir</h3>
                                 <div class="flex flex-wrap items-end gap-2">
                                     <p class="text-2xl md:text-3xl font-display font-extrabold text-yellow-600" id="statExpected">₺0</p>
-                                    <span class="text-[10px] text-gray-400 font-bold mb-1">(Görüşülen+Yapılacak)</span>
+                                    <span class="text-[10px] text-gray-400 font-bold mb-1">(Gelir - Gider)</span>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +256,7 @@
 
                     <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-sm text-blue-800 flex items-start gap-3">
                         <i class="fas fa-info-circle mt-0.5"></i>
-                        <p>Finansal veriler; müşteri tablonuzda eklediğiniz işlerin <strong>"Fiyat"</strong> ve <strong>"Maliyet"</strong> bilgilerinden otomatik olarak hesaplanır. Sadece <strong>"Tamamlandı"</strong> durumundaki işler gelire/gidere yansır.</p>
+                        <p>Finansal veriler; müşteri tablonuzda eklediğiniz işlerin <strong>"Fiyat"</strong> ve <strong>"Maliyet"</strong> bilgilerinden otomatik olarak hesaplanır. Sadece <strong>"Tamamlandı"</strong> durumundaki işler gerçekleşen gelire/gidere yansır.</p>
                     </div>
 
                 </div>
@@ -293,6 +294,7 @@
                         </div>
                         
                         <div id="jobsContainer" class="space-y-4">
+                            <!-- JS ile job satırları eklenecek -->
                         </div>
                     </div>
 
@@ -381,7 +383,9 @@
         }
 
         window.logout = function() {
-            signOut(auth).then(() => location.reload());
+            signOut(auth).then(() => {
+                location.reload();
+            });
         }
 
         window.toggleSidebar = function() {
@@ -547,21 +551,23 @@
                         totalExp += e;
                         doneCount++;
                     } else if (job.status.includes("Yapılacak")) {
-                        expectedRev += p;
+                        expectedRev += (p - e); // NET GÜNCELLEMESİ
                         todoCount++;
                     } else if (job.status.includes("Görüşme")) {
-                        expectedRev += p;
+                        expectedRev += (p - e); // NET GÜNCELLEMESİ
                         pendingCount++;
                     }
                 });
             });
 
+            // Dashboard İş İstatistikleri
             document.getElementById('statClients').innerText = allClients.length;
             document.getElementById('statPending').innerText = pendingCount;
             document.getElementById('statTodo').innerText = todoCount;
             document.getElementById('statDone').innerText = doneCount;
             document.getElementById('statTotalClients').innerText = allClients.length + " Kayıt";
 
+            // Finans Paneli İstatistikleri
             document.getElementById('statRevenue').innerText = formatMoney(totalRev);
             document.getElementById('statExpense').innerText = formatMoney(totalExp);
             document.getElementById('statProfit').innerText = formatMoney(totalRev - totalExp);
