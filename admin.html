@@ -49,15 +49,15 @@
             
             <form id="loginForm" class="space-y-5">
                 <div>
-                    <label class="block text-sm font-semibold text-burgundy mb-1">Kullanıcı Adı</label>
-                    <input type="text" id="username" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-rose outline-none bg-gray-50">
+                    <label class="block text-sm font-semibold text-burgundy mb-1">E-Posta Adresi</label>
+                    <input type="email" id="email" required placeholder="admin@mefa.agency" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-rose outline-none bg-gray-50 text-sm">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-burgundy mb-1">Şifre</label>
-                    <input type="password" id="password" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-rose outline-none bg-gray-50">
+                    <input type="password" id="password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-rose outline-none bg-gray-50 text-sm">
                 </div>
-                <div id="loginError" class="hidden text-red-500 text-sm font-medium text-center">Kullanıcı adı veya şifre hatalı!</div>
-                <button type="submit" class="w-full bg-burgundy text-white font-bold py-3 rounded-xl hover:bg-rose transition-colors shadow-md mt-4">
+                <div id="loginError" class="hidden text-red-500 text-sm font-medium text-center">E-Posta veya şifre hatalı!</div>
+                <button type="submit" id="loginBtn" class="w-full bg-burgundy text-white font-bold py-3 rounded-xl hover:bg-rose transition-colors shadow-md mt-4">
                     Giriş Yap
                 </button>
             </form>
@@ -65,33 +65,44 @@
     </div>
 
     <!-- ANA PANEL (DASHBOARD) -->
-    <div id="dashboardScreen" class="hidden flex w-full h-full">
+    <div id="dashboardScreen" class="hidden flex w-full h-full relative">
         
+        <!-- Mobil Menü Arka Plan -->
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity"></div>
+
         <!-- Sol Menü -->
-        <aside class="w-64 bg-burgundy-dark text-white flex flex-col shrink-0 hidden md:flex z-10 shadow-2xl">
-            <div class="p-6 border-b border-white/10">
-                <div class="text-2xl font-extrabold font-display tracking-tighter leading-none mb-1">
-                    me<span class="text-rose">fa.</span>
+        <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-burgundy-dark text-white flex flex-col z-50 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 shadow-2xl">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center">
+                <div>
+                    <div class="text-2xl font-extrabold font-display tracking-tighter leading-none mb-1">
+                        me<span class="text-rose">fa.</span>
+                    </div>
+                    <div class="text-xs text-rose-light tracking-widest uppercase">Admin Panel</div>
                 </div>
-                <div class="text-xs text-rose-light tracking-widest uppercase">Admin Panel</div>
+                <button onclick="toggleSidebar()" class="md:hidden text-white/50 hover:text-white"><i class="fas fa-times text-xl"></i></button>
             </div>
+            
             <nav class="flex-1 p-4 space-y-2">
-                <a href="#" class="flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30">
-                    <i class="fas fa-chart-pie w-5"></i> Gösterge Paneli
-                </a>
-                <a href="/" class="flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors mt-auto">
-                    <i class="fas fa-globe w-5"></i> Siteye Dön
+                <button onclick="switchView('dashboard')" id="navDashboard" class="w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30">
+                    <i class="fas fa-briefcase w-5 text-center"></i> İş Takibi
+                </button>
+                <button onclick="switchView('finance')" id="navFinance" class="w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent">
+                    <i class="fas fa-chart-line w-5 text-center"></i> Finans Paneli
+                </button>
+                
+                <a href="/" class="flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors mt-8">
+                    <i class="fas fa-globe w-5 text-center"></i> Siteye Dön
                 </a>
             </nav>
             <div class="p-4 border-t border-white/10">
                 <button onclick="logout()" class="flex items-center gap-3 text-white/60 hover:text-red-400 w-full px-4 py-2 font-medium transition-colors">
-                    <i class="fas fa-sign-out-alt w-5"></i> Çıkış Yap
+                    <i class="fas fa-sign-out-alt w-5 text-center"></i> Çıkış Yap
                 </button>
             </div>
         </aside>
 
         <!-- Sağ İçerik Alanı -->
-        <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+        <main class="flex-1 flex flex-col h-screen overflow-hidden relative bg-[#f8f9fa] w-full">
             
             <div id="loadingOverlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm z-40 hidden flex-col items-center justify-center">
                 <i class="fas fa-spinner fa-spin text-4xl text-rose mb-3"></i>
@@ -101,10 +112,9 @@
             <!-- Üst Bar -->
             <header class="bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex justify-between items-center shrink-0 shadow-sm z-10">
                 <div class="flex items-center gap-4">
-                    <button class="md:hidden text-burgundy"><i class="fas fa-bars text-xl"></i></button>
+                    <button onclick="toggleSidebar()" class="md:hidden text-burgundy p-2 -ml-2 rounded-lg hover:bg-gray-100"><i class="fas fa-bars text-xl"></i></button>
                     <div>
-                        <h2 class="text-lg md:text-xl font-bold text-burgundy font-display">İş ve Finans Paneli</h2>
-                        <p class="text-xs text-gray-500">Müşterilerinizi, iş süreçlerini ve bütçeleri yönetin.</p>
+                        <h2 id="headerTitle" class="text-lg md:text-xl font-bold text-burgundy font-display">Müşteri ve İş Takibi</h2>
                     </div>
                 </div>
                 <button onclick="openModal()" class="bg-burgundy text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-rose transition-colors shadow-sm flex items-center gap-2 text-sm">
@@ -115,94 +125,139 @@
             <!-- İçerik -->
             <div class="p-4 md:p-8 overflow-y-auto flex-1 custom-scroll">
                 
-                <!-- Finansal İstatistikler -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- ==============================
+                     1. SEKME: GÖSTERGE PANELİ (İŞLER)
+                     ============================== -->
+                <div id="viewDashboard" class="block animate-fade-in">
                     
-                    <!-- Sol Taraf (4 Finans Kartı) -->
-                    <div class="grid grid-cols-2 gap-4 lg:col-span-2">
-                        <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-green-500">
-                            <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Biten İşler Geliri</h3>
-                            <div class="flex flex-wrap items-end gap-2">
-                                <p class="text-2xl md:text-3xl font-display font-extrabold text-green-600" id="statRevenue">₺0</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Top. Müşteri</h3>
+                                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500"><i class="fas fa-users text-lg"></i></div>
                             </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statClients">0</p>
                         </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-red-400">
-                            <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Biten İşler Gideri</h3>
-                            <div class="flex flex-wrap items-end gap-2">
-                                <p class="text-2xl md:text-3xl font-display font-extrabold text-red-500" id="statExpense">₺0</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-burgundy">
-                            <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Net Kazanç</h3>
-                            <div class="flex flex-wrap items-end gap-2">
-                                <p class="text-2xl md:text-3xl font-display font-extrabold text-burgundy" id="statProfit">₺0</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-yellow-400">
-                            <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Beklenen (Aktif) Gelir</h3>
-                            <div class="flex flex-wrap items-end gap-2">
-                                <p class="text-2xl md:text-3xl font-display font-extrabold text-yellow-600" id="statExpected">₺0</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sağ Taraf (Aylık Grafik) -->
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm h-[220px] flex flex-col">
-                        <h3 class="text-gray-500 font-semibold text-xs uppercase tracking-wider mb-2">Aylık Finans (Son 6 Ay)</h3>
-                        <div class="flex-1 relative w-full">
-                            <canvas id="financeChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Müşteri Listesi Başlık & Arama -->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
-                    <div class="flex items-center gap-3">
-                        <h3 class="text-xl font-bold text-burgundy font-display">Müşteri Veritabanı</h3>
-                        <span class="bg-rose/10 text-rose px-2.5 py-1 rounded-md text-xs font-bold" id="statTotalClients">0</span>
-                    </div>
-                    <div class="relative w-full md:w-80">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" id="searchInput" placeholder="Firma veya müşteri adı ara..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm transition-all shadow-sm">
-                    </div>
-                </div>
-
-                <!-- Tablo (Açılır Kapanır Akordeon) -->
-                <div class="bg-white rounded-t-2xl border border-gray-200 shadow-sm overflow-hidden">
-                    <div class="overflow-x-auto custom-scroll">
-                        <table class="w-full text-left border-collapse min-w-[700px]">
-                            <thead>
-                                <tr class="bg-gray-50 text-gray-600 font-bold text-xs uppercase tracking-wider border-b border-gray-200">
-                                    <th class="py-4 px-6 w-12"></th>
-                                    <th class="py-4 px-6 w-1/4">Müşteri / Firma Adı</th>
-                                    <th class="py-4 px-6">Kayıtlı İşler</th>
-                                    <th class="py-4 px-6">Genel Notlar</th>
-                                    <th class="py-4 px-6 text-right">İşlemler</th>
-                                </tr>
-                            </thead>
-                            <tbody id="clientTableBody" class="divide-y divide-gray-100 text-sm">
-                                <!-- JS ile Doldurulacak -->
-                            </tbody>
-                        </table>
                         
-                        <div id="emptyState" class="hidden p-16 text-center text-gray-500">
-                            <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-search"></i></div>
-                            <h3 class="text-lg font-bold text-gray-800 mb-1">Müşteri Bulunamadı</h3>
-                            <p>Aradığınız kritere uygun kayıt yok veya henüz eklemediniz.</p>
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Görüşülen İş</h3>
+                                <div class="w-10 h-10 rounded-xl bg-yellow-50 flex items-center justify-center text-yellow-500"><i class="fas fa-handshake text-lg"></i></div>
+                            </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statPending">0</p>
+                        </div>
+
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Yapılacak İş</h3>
+                                <div class="w-10 h-10 rounded-xl bg-rose/10 flex items-center justify-center text-rose"><i class="fas fa-hourglass-half text-lg"></i></div>
+                            </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statTodo">0</p>
+                        </div>
+
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Biten İş</h3>
+                                <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-500"><i class="fas fa-check-circle text-lg"></i></div>
+                            </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statDone">0</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-xl font-bold text-burgundy font-display">Müşteri Veritabanı</h3>
+                            <span class="bg-rose/10 text-rose px-2.5 py-1 rounded-md text-xs font-bold" id="statTotalClients">0</span>
+                        </div>
+                        <div class="relative w-full md:w-80">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="searchInput" placeholder="Firma veya müşteri adı ara..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm transition-all shadow-sm">
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-t-2xl border border-gray-200 shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto custom-scroll">
+                            <table class="w-full text-left border-collapse min-w-[700px]">
+                                <thead>
+                                    <tr class="bg-gray-50 text-gray-600 font-bold text-xs uppercase tracking-wider border-b border-gray-200">
+                                        <th class="py-4 px-6 w-12"></th>
+                                        <th class="py-4 px-6 w-1/4">Müşteri / Firma Adı</th>
+                                        <th class="py-4 px-6">Kayıtlı İşler</th>
+                                        <th class="py-4 px-6">Genel Notlar</th>
+                                        <th class="py-4 px-6 text-right">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clientTableBody" class="divide-y divide-gray-100 text-sm">
+                                </tbody>
+                            </table>
+                            
+                            <div id="emptyState" class="hidden p-16 text-center text-gray-500">
+                                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-search"></i></div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">Müşteri Bulunamadı</h3>
+                                <p>Aradığınız kritere uygun kayıt yok veya henüz eklemediniz.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-white border border-t-0 border-gray-200 rounded-b-2xl shadow-sm mb-10">
+                        <span class="text-sm text-gray-500 font-medium" id="pageInfo">Sayfa 1 / 1</span>
+                        <div class="flex gap-2">
+                            <button id="prevPageBtn" onclick="changePage(-1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1"><i class="fas fa-chevron-left text-[10px]"></i> Önceki</button>
+                            <button id="nextPageBtn" onclick="changePage(1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1">Sonraki <i class="fas fa-chevron-right text-[10px]"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sayfalama (Pagination) -->
-                <div class="flex items-center justify-between p-4 bg-white border border-t-0 border-gray-200 rounded-b-2xl shadow-sm mb-10">
-                    <span class="text-sm text-gray-500 font-medium" id="pageInfo">Sayfa 1 / 1</span>
-                    <div class="flex gap-2">
-                        <button id="prevPageBtn" onclick="changePage(-1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1"><i class="fas fa-chevron-left text-[10px]"></i> Önceki</button>
-                        <button id="nextPageBtn" onclick="changePage(1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1">Sonraki <i class="fas fa-chevron-right text-[10px]"></i></button>
+                <!-- ==============================
+                     2. SEKME: FİNANS PANELİ
+                     ============================== -->
+                <div id="viewFinance" class="hidden animate-fade-in">
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-green-500">
+                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Biten İşler Geliri</h3>
+                                <div class="flex flex-wrap items-end gap-2">
+                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-green-600" id="statRevenue">₺0</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-red-400">
+                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Biten İşler Gideri</h3>
+                                <div class="flex flex-wrap items-end gap-2">
+                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-red-500" id="statExpense">₺0</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-burgundy">
+                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Net Kazanç</h3>
+                                <div class="flex flex-wrap items-end gap-2">
+                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-burgundy" id="statProfit">₺0</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-yellow-400">
+                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Beklenen (Aktif) Gelir</h3>
+                                <div class="flex flex-wrap items-end gap-2">
+                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-yellow-600" id="statExpected">₺0</p>
+                                    <span class="text-[10px] text-gray-400 font-bold mb-1">(Görüşülen+Yapılacak)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm h-[400px] flex flex-col mb-10">
+                            <h3 class="text-gray-800 font-bold text-lg mb-4 font-display">Aylık Gerçekleşen Finans Tablosu (Son 6 Ay)</h3>
+                            <div class="flex-1 relative w-full">
+                                <canvas id="financeChart"></canvas>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-sm text-blue-800 flex items-start gap-3">
+                        <i class="fas fa-info-circle mt-0.5"></i>
+                        <p>Finansal veriler; müşteri tablonuzda eklediğiniz işlerin <strong>"Fiyat"</strong> ve <strong>"Maliyet"</strong> bilgilerinden otomatik olarak hesaplanır. Sadece <strong>"Tamamlandı"</strong> durumundaki işler gelire/gidere yansır.</p>
+                    </div>
+
                 </div>
 
             </div>
@@ -238,7 +293,6 @@
                         </div>
                         
                         <div id="jobsContainer" class="space-y-4">
-                            <!-- JS ile job satırları eklenecek -->
                         </div>
                     </div>
 
@@ -258,6 +312,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, orderBy, query } 
         from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } 
+        from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyADmNHvySaub2BJd-tc0TTHeChLXvomKwk",
@@ -270,13 +326,12 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        const ADMIN_USER = "fazlicanyksl";
-        const ADMIN_PASS = "Fazlican1.";
+        const auth = getAuth(app); 
 
         const loginScreen = document.getElementById('loginScreen');
         const dashboardScreen = document.getElementById('dashboardScreen');
         const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
         const clientModal = document.getElementById('clientModal');
         const clientForm = document.getElementById('clientForm');
         const clientTableBody = document.getElementById('clientTableBody');
@@ -285,26 +340,37 @@
         const jobsContainer = document.getElementById('jobsContainer');
         const saveBtn = document.getElementById('saveBtn');
 
-        // Data State
         let allClients = [];
         let filteredClients = [];
         let currentPage = 1;
         const itemsPerPage = 20;
         let myChart = null;
 
-        window.addEventListener('load', () => {
-            if (sessionStorage.getItem('mefa_admin_logged') === 'true') {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
                 showDashboard();
+            } else {
+                loginScreen.classList.remove('hidden');
+                dashboardScreen.classList.add('hidden');
             }
         });
 
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (document.getElementById('username').value === ADMIN_USER && document.getElementById('password').value === ADMIN_PASS) {
-                sessionStorage.setItem('mefa_admin_logged', 'true');
-                showDashboard();
-            } else {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            const originalBtnText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Giriş Yapılıyor...';
+            loginBtn.disabled = true;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
                 document.getElementById('loginError').classList.remove('hidden');
+            } finally {
+                loginBtn.innerHTML = originalBtnText;
+                loginBtn.disabled = false;
             }
         });
 
@@ -315,15 +381,55 @@
         }
 
         window.logout = function() {
-            sessionStorage.removeItem('mefa_admin_logged');
-            location.reload();
+            signOut(auth).then(() => location.reload());
+        }
+
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        window.switchView = function(viewName) {
+            const navDash = document.getElementById('navDashboard');
+            const navFin = document.getElementById('navFinance');
+            const viewDash = document.getElementById('viewDashboard');
+            const viewFin = document.getElementById('viewFinance');
+            const headerTitle = document.getElementById('headerTitle');
+
+            if (window.innerWidth < 768) {
+                window.toggleSidebar();
+            }
+
+            if (viewName === 'dashboard') {
+                viewDash.classList.remove('hidden');
+                viewFin.classList.add('hidden');
+                headerTitle.innerText = "Müşteri ve İş Takibi";
+                
+                navDash.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
+                navFin.className = "w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent";
+            } else {
+                viewDash.classList.add('hidden');
+                viewFin.classList.remove('hidden');
+                headerTitle.innerText = "Finans Paneli";
+
+                navFin.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
+                navDash.className = "w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent";
+                
+                if(myChart) { myChart.resize(); }
+            }
         }
 
         const formatMoney = (amount) => {
             return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(amount);
         };
 
-        // === İŞ / İNFLUENCER SATIRI EKLEME (GELİR VE GİDER EKLENDİ) ===
         window.addJobRow = function(title = '', status = 'Görüşme Aşamasında', note = '', price = '', expense = '') {
             const row = document.createElement('div');
             row.className = 'job-row flex flex-col gap-3 bg-white p-4 md:p-5 rounded-xl border border-gray-200 shadow-sm relative md:pr-12 group transition-all hover:border-rose/50';
@@ -389,7 +495,6 @@
             }
         }
 
-        // === FİREBASE VERİ ÇEKME ===
         async function fetchClients() {
             loadingOverlay.classList.remove('hidden');
             try {
@@ -401,9 +506,9 @@
                     if(!data.jobs) data.jobs = []; 
                     allClients.push({ id: doc.id, ...data });
                 });
-                applyFilters(); // Arama ve Sayfalamayı uygular
-                calculateGlobalStats(); // Üstteki büyük rakamları hesaplar
-                updateChart(); // Grafiği çizer
+                applyFilters(); 
+                calculateGlobalStats(); 
+                updateChart(); 
             } catch (error) {
                 console.error("Veri çekme hatası:", error);
             } finally {
@@ -411,17 +516,12 @@
             }
         }
 
-        // === ARAMA VE SAYFALAMA MANTIĞI ===
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            filteredClients = allClients.filter(c => c.name.toLowerCase().includes(term));
-            currentPage = 1;
-            renderTable();
-        });
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
 
         function applyFilters() {
             const term = document.getElementById('searchInput').value.toLowerCase();
             filteredClients = allClients.filter(c => c.name.toLowerCase().includes(term));
+            currentPage = 1;
             renderTable();
         }
 
@@ -433,9 +533,9 @@
             renderTable();
         }
 
-        // === GLOBAL İSTATİSTİKLER (TÜM VERİ ÜZERİNDEN) ===
         function calculateGlobalStats() {
-            let totalRev = 0; let totalExp = 0; let expectedRev = 0; let activeJobs = 0;
+            let totalRev = 0; let totalExp = 0; let expectedRev = 0; 
+            let pendingCount = 0; let todoCount = 0; let doneCount = 0;
             
             allClients.forEach(client => {
                 client.jobs.forEach(job => {
@@ -445,23 +545,29 @@
                     if (job.status.includes("Tamamlandı")) {
                         totalRev += p;
                         totalExp += e;
-                    } else {
+                        doneCount++;
+                    } else if (job.status.includes("Yapılacak")) {
                         expectedRev += p;
-                        activeJobs++;
+                        todoCount++;
+                    } else if (job.status.includes("Görüşme")) {
+                        expectedRev += p;
+                        pendingCount++;
                     }
                 });
             });
 
             document.getElementById('statClients').innerText = allClients.length;
+            document.getElementById('statPending').innerText = pendingCount;
+            document.getElementById('statTodo').innerText = todoCount;
+            document.getElementById('statDone').innerText = doneCount;
             document.getElementById('statTotalClients').innerText = allClients.length + " Kayıt";
-            document.getElementById('statActiveJobs').innerText = activeJobs;
+
             document.getElementById('statRevenue').innerText = formatMoney(totalRev);
             document.getElementById('statExpense').innerText = formatMoney(totalExp);
             document.getElementById('statProfit').innerText = formatMoney(totalRev - totalExp);
             document.getElementById('statExpected').innerText = formatMoney(expectedRev);
         }
 
-        // === TABLOYU RENDER ETME (SAYFALAMALI) ===
         function renderTable() {
             clientTableBody.innerHTML = '';
             
@@ -477,7 +583,6 @@
             
             emptyState.classList.add('hidden');
             
-            // Sadece bu sayfanın verilerini al
             const startIndex = (currentPage - 1) * itemsPerPage;
             const clientsToRender = filteredClients.slice(startIndex, startIndex + itemsPerPage);
             
@@ -506,7 +611,7 @@
                     
                     let financeHtml = '';
                     if(jPrice > 0 || jExp > 0) {
-                        financeHtml = `<div class="mt-2 flex gap-3 text-xs font-bold">`;
+                        financeHtml = `<div class="mt-2 flex flex-wrap gap-2 text-xs font-bold">`;
                         if(jPrice > 0) financeHtml += `<span class="text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Gelir: ${formatMoney(jPrice)}</span>`;
                         if(jExp > 0) financeHtml += `<span class="text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Gider: ${formatMoney(jExp)}</span>`;
                         financeHtml += `</div>`;
@@ -575,9 +680,11 @@
             });
         }
 
-        // === AYLIK FİNANS GRAFİĞİ (GELİR VE GİDER ÇİFT SÜTUN) ===
         function updateChart() {
-            const ctx = document.getElementById('financeChart').getContext('2d');
+            const ctx = document.getElementById('financeChart');
+            if(!ctx) return;
+            const context = ctx.getContext('2d');
+
             const monthNames = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"];
             const labels = [];
             const revDataMap = {};
@@ -610,7 +717,7 @@
 
             if (myChart) myChart.destroy();
 
-            myChart = new Chart(ctx, {
+            myChart = new Chart(context, {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -633,7 +740,6 @@
             });
         }
 
-        // === FİREBASE VERİ KAYDETME ===
         clientForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -645,7 +751,7 @@
             document.querySelectorAll('.job-row').forEach(row => {
                 const title = row.querySelector('.job-title').value.trim();
                 const price = row.querySelector('.job-price').value.trim();
-                const expense = row.querySelector('.job-expense').value.trim(); // Yeni Gider alanı
+                const expense = row.querySelector('.job-expense').value.trim();
                 const status = row.querySelector('.job-status').value;
                 const note = row.querySelector('.job-note').value.trim();
                 
