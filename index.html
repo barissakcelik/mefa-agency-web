@@ -49,7 +49,7 @@
         .gradient-text {
             background: linear-gradient(90deg, #4A1B22 0%, #A36B69 100%);
             -webkit-background-clip: text;
-            background-clip: text; /* Bu standart kodu ekledik */
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
     </style>
@@ -60,12 +60,14 @@
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <div class="text-4xl font-extrabold tracking-tighter text-burgundy flex flex-col leading-none">
-                        <span>me</span>
-                        <span class="text-rose -mt-1 relative">fa.<span class="absolute text-[10px] tracking-widest text-burgundy -bottom-3 left-1 font-medium">AGENCY</span></span>
+                <!-- Logo: Taşmayı önlemek için text boyutu ve marginler optimize edildi -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer h-full" onclick="window.scrollTo(0,0)">
+                    <div class="text-3xl font-extrabold tracking-tighter text-burgundy leading-none relative pb-3 mt-3">
+                        <span class="block">me</span>
+                        <span class="block text-rose -mt-1 relative">fa.<span class="absolute text-[8px] tracking-[0.2em] text-burgundy -bottom-3 left-0.5 font-bold uppercase">AGENCY</span></span>
                     </div>
                 </div>
+                
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="#hakkimizda" class="text-burgundy hover:text-rose transition-colors font-medium">Hakkımızda</a>
                     <a href="#hizmetler" class="text-burgundy hover:text-rose transition-colors font-medium">Hizmetlerimiz</a>
@@ -258,14 +260,14 @@
                     </div>
                 </div>
 
-                <!-- Sağ: Form -->
-                <div class="p-10 lg:w-2/3 bg-white">
+                <!-- Sağ: Ajax İletişim Formu -->
+                <div class="p-10 lg:w-2/3 bg-white relative">
                     <h4 class="text-2xl font-bold text-burgundy mb-2">Bize Mesaj Gönderin</h4>
                     <p class="text-gray-500 text-sm mb-8">Formu doldurarak talebinizi iletebilirsiniz. En kısa sürede size dönüş yapacağız.</p>
                     
-                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                    <form id="contactForm" class="space-y-6">
                         <!-- WEB3FORMS ACCESS KEY BURAYA GELECEK -->
-                        <input type="hidden" name="access_key" value="815c8e1a-c26a-4007-bb8d-6d81662e82a4">
+                        <input type="hidden" name="access_key" value="SENİN-ACCESS-KEY-BURAYA-GELECEK">
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -285,9 +287,12 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Mesajınız / İhtiyacınız</label>
                             <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-burgundy focus:border-burgundy outline-none transition bg-gray-50 resize-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-burgundy text-cream font-bold py-4 px-6 rounded-xl hover:bg-rose transition-colors shadow-md hover:shadow-lg flex justify-center items-center gap-2">
+                        <button type="submit" id="submitBtn" class="w-full bg-burgundy text-cream font-bold py-4 px-6 rounded-xl hover:bg-rose transition-colors shadow-md hover:shadow-lg flex justify-center items-center gap-2">
                             <i class="fas fa-paper-plane"></i> Mesajı Gönder
                         </button>
+
+                        <!-- Sonuç Mesajı Kutusu -->
+                        <div id="resultMessage" class="hidden text-center p-4 rounded-xl font-medium mt-4 transition-all"></div>
                     </form>
                 </div>
 
@@ -319,10 +324,64 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Mobil menüdeki linke tıklayınca menüyü kapat
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Formu Arka Planda Gönderme (Ajax)
+        const form = document.getElementById('contactForm');
+        const result = document.getElementById('resultMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75');
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                result.classList.remove('hidden');
+                result.className = 'text-center p-4 rounded-xl font-medium mt-4 transition-all';
+                
+                if (response.status == 200) {
+                    result.classList.add('bg-green-100', 'text-green-800');
+                    result.innerHTML = "Mesajınız başarıyla gönderildi! Size en kısa sürede dönüş yapacağız.";
+                    form.reset();
+                } else {
+                    result.classList.add('bg-red-100', 'text-red-800');
+                    result.innerHTML = "Bir hata oluştu: " + json.message;
+                }
+            })
+            .catch(error => {
+                result.classList.remove('hidden');
+                result.className = 'text-center p-4 rounded-xl font-medium mt-4 transition-all';
+                result.classList.add('bg-red-100', 'text-red-800');
+                result.innerHTML = "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.";
+            })
+            .then(function() {
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Mesajı Gönder';
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75');
+                
+                setTimeout(() => {
+                    result.classList.add('hidden');
+                }, 5000);
             });
         });
     </script>
