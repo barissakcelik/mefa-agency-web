@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MEFA Agency | Yönetim Paneli</title>
     
-    <!-- YENİ: Tarayıcı Sekme İkonu (Favicon) -->
+    <!-- Tarayıcı Sekme İkonu (Favicon) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%234A1B22'/><text x='50%' y='52%' font-family='Manrope, sans-serif' font-size='42' font-weight='800' fill='%23ffffff' text-anchor='middle' dominant-baseline='middle'>mf</text></svg>">
     
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -87,8 +87,11 @@
             </div>
             
             <nav class="flex-1 p-4 space-y-2">
-                <button onclick="switchView('dashboard')" id="navDashboard" class="w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30">
-                    <i class="fas fa-briefcase w-5 text-center"></i> İş Takibi
+                <button onclick="switchView('company')" id="navCompany" class="w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30">
+                    <i class="fas fa-building w-5 text-center"></i> Firma Takibi
+                </button>
+                <button onclick="switchView('influencer')" id="navInfluencer" class="w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent">
+                    <i class="fas fa-hashtag w-5 text-center"></i> Influencer Takibi
                 </button>
                 <button onclick="switchView('finance')" id="navFinance" class="w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent">
                     <i class="fas fa-chart-line w-5 text-center"></i> Finans Paneli
@@ -118,64 +121,62 @@
                 <div class="flex items-center gap-4">
                     <button onclick="toggleSidebar()" class="md:hidden text-burgundy p-2 -ml-2 rounded-lg hover:bg-gray-100"><i class="fas fa-bars text-xl"></i></button>
                     <div>
-                        <h2 id="headerTitle" class="text-lg md:text-xl font-bold text-burgundy font-display">Müşteri ve İş Takibi</h2>
+                        <h2 id="headerTitle" class="text-lg md:text-xl font-bold text-burgundy font-display">Firma Takibi</h2>
                     </div>
                 </div>
-                <button onclick="openModal()" class="bg-burgundy text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-rose transition-colors shadow-sm flex items-center gap-2 text-sm">
-                    <i class="fas fa-plus"></i> <span class="hidden md:inline">Yeni Ekle</span>
+                <!-- Ana Ekleme Butonu -->
+                <button id="mainAddBtn" onclick="openModal('company')" class="bg-burgundy text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-rose transition-colors shadow-sm flex items-center gap-2 text-sm">
+                    <i class="fas fa-plus"></i> <span class="hidden md:inline" id="mainAddBtnText">Yeni Firma Ekle</span>
                 </button>
             </header>
 
             <!-- İçerik -->
-            <div class="p-4 md:p-8 overflow-y-auto flex-1 custom-scroll">
+            <div class="p-4 md:p-8 overflow-y-auto flex-1 custom-scroll" id="mainContentArea">
                 
                 <!-- ==============================
-                     1. SEKME: GÖSTERGE PANELİ (İŞLER)
+                     1. SEKME: FİRMA TAKİBİ
                      ============================== -->
-                <div id="viewDashboard" class="block animate-fade-in">
+                <div id="viewCompany" class="block animate-fade-in">
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
                         <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Top. Müşteri</h3>
-                                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500"><i class="fas fa-users text-lg"></i></div>
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Top. Firma</h3>
+                                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500"><i class="fas fa-building text-lg"></i></div>
                             </div>
-                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statClients">0</p>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="cStatTotal">0</p>
                         </div>
-                        
                         <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Görüşülen İş</h3>
                                 <div class="w-10 h-10 rounded-xl bg-yellow-50 flex items-center justify-center text-yellow-500"><i class="fas fa-handshake text-lg"></i></div>
                             </div>
-                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statPending">0</p>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="cStatPending">0</p>
                         </div>
-
                         <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Yapılacak İş</h3>
                                 <div class="w-10 h-10 rounded-xl bg-rose/10 flex items-center justify-center text-rose"><i class="fas fa-hourglass-half text-lg"></i></div>
                             </div>
-                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statTodo">0</p>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="cStatTodo">0</p>
                         </div>
-
                         <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Biten İş</h3>
                                 <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-500"><i class="fas fa-check-circle text-lg"></i></div>
                             </div>
-                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="statDone">0</p>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="cStatDone">0</p>
                         </div>
                     </div>
 
                     <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
                         <div class="flex items-center gap-3">
-                            <h3 class="text-xl font-bold text-burgundy font-display">Müşteri Veritabanı</h3>
-                            <span class="bg-rose/10 text-rose px-2.5 py-1 rounded-md text-xs font-bold" id="statTotalClients">0</span>
+                            <h3 class="text-xl font-bold text-burgundy font-display">Firma Veritabanı</h3>
+                            <span class="bg-rose/10 text-rose px-2.5 py-1 rounded-md text-xs font-bold" id="cStatCount">0</span>
                         </div>
                         <div class="relative w-full md:w-80">
                             <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" id="searchInput" placeholder="Firma veya müşteri adı ara..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm transition-all shadow-sm">
+                            <input type="text" id="cSearchInput" placeholder="Firma adı ara..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm transition-all shadow-sm">
                         </div>
                     </div>
 
@@ -185,35 +186,114 @@
                                 <thead>
                                     <tr class="bg-gray-50 text-gray-600 font-bold text-xs uppercase tracking-wider border-b border-gray-200">
                                         <th class="py-4 px-6 w-12"></th>
-                                        <th class="py-4 px-6 w-1/4">Müşteri / Firma Adı</th>
+                                        <th class="py-4 px-6 w-1/4">Firma Adı</th>
                                         <th class="py-4 px-6">Kayıtlı İşler</th>
                                         <th class="py-4 px-6">Genel Notlar</th>
                                         <th class="py-4 px-6 text-right">İşlemler</th>
                                     </tr>
                                 </thead>
-                                <tbody id="clientTableBody" class="divide-y divide-gray-100 text-sm">
+                                <tbody id="cTableBody" class="divide-y divide-gray-100 text-sm">
                                 </tbody>
                             </table>
-                            
-                            <div id="emptyState" class="hidden p-16 text-center text-gray-500">
+                            <div id="cEmptyState" class="hidden p-16 text-center text-gray-500">
                                 <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-search"></i></div>
-                                <h3 class="text-lg font-bold text-gray-800 mb-1">Müşteri Bulunamadı</h3>
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">Kayıt Bulunamadı</h3>
                                 <p>Aradığınız kritere uygun kayıt yok veya henüz eklemediniz.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between p-4 bg-white border border-t-0 border-gray-200 rounded-b-2xl shadow-sm mb-10">
-                        <span class="text-sm text-gray-500 font-medium" id="pageInfo">Sayfa 1 / 1</span>
+                        <span class="text-sm text-gray-500 font-medium" id="cPageInfo">Sayfa 1 / 1</span>
                         <div class="flex gap-2">
-                            <button id="prevPageBtn" onclick="changePage(-1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1"><i class="fas fa-chevron-left text-[10px]"></i> Önceki</button>
-                            <button id="nextPageBtn" onclick="changePage(1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1">Sonraki <i class="fas fa-chevron-right text-[10px]"></i></button>
+                            <button id="cPrevPageBtn" onclick="changePage('company', -1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1"><i class="fas fa-chevron-left text-[10px]"></i> Önceki</button>
+                            <button id="cNextPageBtn" onclick="changePage('company', 1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1">Sonraki <i class="fas fa-chevron-right text-[10px]"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ==============================
+                     2. SEKME: INFLUENCER TAKİBİ
+                     ============================== -->
+                <div id="viewInfluencer" class="hidden animate-fade-in">
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Top. Influencer</h3>
+                                <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-500"><i class="fas fa-hashtag text-lg"></i></div>
+                            </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="iStatTotal">0</p>
+                        </div>
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Görüşülen</h3>
+                                <div class="w-10 h-10 rounded-xl bg-yellow-50 flex items-center justify-center text-yellow-500"><i class="fas fa-handshake text-lg"></i></div>
+                            </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="iStatPending">0</p>
+                        </div>
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Bekleyen Anlaşma</h3>
+                                <div class="w-10 h-10 rounded-xl bg-rose/10 flex items-center justify-center text-rose"><i class="fas fa-hourglass-half text-lg"></i></div>
+                            </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="iStatTodo">0</p>
+                        </div>
+                        <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-gray-500 font-semibold text-xs md:text-sm uppercase tracking-wider">Tamamlanan</h3>
+                                <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-500"><i class="fas fa-check-circle text-lg"></i></div>
+                            </div>
+                            <p class="text-3xl font-display font-bold text-gray-800 mt-3" id="iStatDone">0</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-xl font-bold text-burgundy font-display">Influencer Veritabanı</h3>
+                            <span class="bg-rose/10 text-rose px-2.5 py-1 rounded-md text-xs font-bold" id="iStatCount">0</span>
+                        </div>
+                        <div class="relative w-full md:w-80">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="iSearchInput" placeholder="Kişi veya platform ara..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm transition-all shadow-sm">
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-t-2xl border border-gray-200 shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto custom-scroll">
+                            <table class="w-full text-left border-collapse min-w-[700px]">
+                                <thead>
+                                    <tr class="bg-gray-50 text-gray-600 font-bold text-xs uppercase tracking-wider border-b border-gray-200">
+                                        <th class="py-4 px-6 w-12"></th>
+                                        <th class="py-4 px-6 w-1/4">Kişi / Influencer Adı</th>
+                                        <th class="py-4 px-6">Anlaşmalar</th>
+                                        <th class="py-4 px-6">Genel Profil Notu</th>
+                                        <th class="py-4 px-6 text-right">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="iTableBody" class="divide-y divide-gray-100 text-sm">
+                                </tbody>
+                            </table>
+                            <div id="iEmptyState" class="hidden p-16 text-center text-gray-500">
+                                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-search"></i></div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">Kayıt Bulunamadı</h3>
+                                <p>Aradığınız kritere uygun kayıt yok veya henüz eklemediniz.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-white border border-t-0 border-gray-200 rounded-b-2xl shadow-sm mb-10">
+                        <span class="text-sm text-gray-500 font-medium" id="iPageInfo">Sayfa 1 / 1</span>
+                        <div class="flex gap-2">
+                            <button id="iPrevPageBtn" onclick="changePage('influencer', -1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1"><i class="fas fa-chevron-left text-[10px]"></i> Önceki</button>
+                            <button id="iNextPageBtn" onclick="changePage('influencer', 1)" class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-medium text-sm flex items-center gap-1">Sonraki <i class="fas fa-chevron-right text-[10px]"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <!-- ==============================
-                     2. SEKME: FİNANS PANELİ
+                     3. SEKME: FİNANS PANELİ
                      ============================== -->
                 <div id="viewFinance" class="hidden animate-fade-in">
                     
@@ -240,7 +320,6 @@
                                 </div>
                             </div>
 
-                            <!-- Net Beklenen Gelir -->
                             <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-yellow-400">
                                 <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Net Beklenen Gelir</h3>
                                 <div class="flex flex-wrap items-end gap-2">
@@ -260,7 +339,7 @@
 
                     <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-sm text-blue-800 flex items-start gap-3">
                         <i class="fas fa-info-circle mt-0.5"></i>
-                        <p>Finansal veriler; müşteri tablonuzda eklediğiniz işlerin <strong>"Fiyat"</strong> ve <strong>"Maliyet"</strong> bilgilerinden otomatik olarak hesaplanır. Sadece <strong>"Tamamlandı"</strong> durumundaki işler gerçekleşen gelire/gidere yansır.</p>
+                        <p>Finansal veriler; Firma ve Influencer tablolarında eklediğiniz tüm işlerin <strong>"Fiyat"</strong> ve <strong>"Maliyet"</strong> bilgilerinden otomatik olarak hesaplanır. Sadece <strong>"Tamamlandı"</strong> durumundaki işler gerçekleşen gelire/gidere yansır.</p>
                     </div>
 
                 </div>
@@ -269,31 +348,32 @@
         </main>
     </div>
 
-    <!-- MÜŞTERİ EKLE/DÜZENLE MODAL -->
-    <div id="clientModal" class="fixed inset-0 z-[60] bg-black/50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity p-4">
+    <!-- EKLE/DÜZENLE MODAL -->
+    <div id="dataModal" class="fixed inset-0 z-[60] bg-black/50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity p-4">
         <div class="bg-white w-full max-w-5xl rounded-2xl shadow-2xl flex flex-col max-h-[95vh]">
             <div class="px-6 md:px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-2xl shrink-0">
-                <h3 class="font-extrabold text-lg md:text-xl text-burgundy" id="modalTitle">Müşteri & İş Ekle</h3>
+                <h3 class="font-extrabold text-lg md:text-xl text-burgundy" id="modalTitle">Yeni Kayıt Ekle</h3>
                 <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors bg-white w-8 h-8 rounded-full shadow-sm flex items-center justify-center"><i class="fas fa-times"></i></button>
             </div>
             
             <div class="p-4 md:p-8 overflow-y-auto custom-scroll bg-white">
-                <form id="clientForm" class="space-y-6">
-                    <input type="hidden" id="clientId">
+                <form id="dataForm" class="space-y-6">
+                    <input type="hidden" id="recordId">
+                    <input type="hidden" id="recordType" value="company"> <!-- company veya influencer -->
                     
                     <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
-                        <label class="block text-sm font-bold text-burgundy mb-2">Firma / Müşteri / Proje Adı</label>
-                        <input type="text" id="cName" required placeholder="Örn: ABC Holding / Trendyol Kampanyası" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white text-sm">
+                        <label class="block text-sm font-bold text-burgundy mb-2" id="labelName">Firma / Proje Adı</label>
+                        <input type="text" id="mName" required placeholder="Örn: ABC Holding" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white text-sm">
                         
-                        <label class="block text-sm font-bold text-burgundy mb-2 mt-4">Genel Notlar <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span></label>
-                        <textarea id="cNotes" rows="2" placeholder="Firma hakkında genel bilgiler..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none resize-none bg-white text-sm"></textarea>
+                        <label class="block text-sm font-bold text-burgundy mb-2 mt-4" id="labelNotes">Genel Notlar <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span></label>
+                        <textarea id="mNotes" rows="2" placeholder="Detaylı notlar..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none resize-none bg-white text-sm"></textarea>
                     </div>
 
                     <div>
                         <div class="flex flex-col md:flex-row justify-between md:items-center gap-3 mb-4">
-                            <label class="block text-sm font-bold text-burgundy">Müşteriye Ait İşler, Kişiler & Finans</label>
+                            <label class="block text-sm font-bold text-burgundy" id="labelJobs">Bağlı İşler, Anlaşmalar & Finans</label>
                             <button type="button" onclick="addJobRow()" class="text-xs md:text-sm bg-rose text-white px-4 py-2 rounded-lg hover:bg-burgundy transition-colors font-semibold shadow-sm flex items-center gap-2 w-fit">
-                                <i class="fas fa-plus text-xs"></i> Yeni İş/Kişi Ekle
+                                <i class="fas fa-plus text-xs"></i> Yeni İş Ekle
                             </button>
                         </div>
                         
@@ -338,24 +418,30 @@
         const dashboardScreen = document.getElementById('dashboardScreen');
         const loginForm = document.getElementById('loginForm');
         const loginBtn = document.getElementById('loginBtn');
-        const clientModal = document.getElementById('clientModal');
-        const clientForm = document.getElementById('clientForm');
-        const clientTableBody = document.getElementById('clientTableBody');
-        const emptyState = document.getElementById('emptyState');
+        const dataModal = document.getElementById('dataModal');
+        const dataForm = document.getElementById('dataForm');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const jobsContainer = document.getElementById('jobsContainer');
         const saveBtn = document.getElementById('saveBtn');
-
-        let allClients = [];
-        let filteredClients = [];
-        let currentPage = 1;
+        const recordTypeInput = document.getElementById('recordType');
+        
+        let allRecords = [];
+        let filteredCompany = [];
+        let filteredInfluencer = [];
+        
+        let cPage = 1;
+        let iPage = 1;
         const itemsPerPage = 20;
         let myChart = null;
 
-        // === OTURUM KONTROLÜ ===
+        // Geçerli Aktif Sekme (company, influencer, finance)
+        let currentTab = 'company';
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                showDashboard();
+                loginScreen.classList.add('hidden');
+                dashboardScreen.classList.remove('hidden');
+                fetchData();
             } else {
                 loginScreen.classList.remove('hidden');
                 dashboardScreen.classList.add('hidden');
@@ -366,7 +452,6 @@
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            
             const originalBtnText = loginBtn.innerHTML;
             loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Giriş Yapılıyor...';
             loginBtn.disabled = true;
@@ -381,16 +466,8 @@
             }
         });
 
-        async function showDashboard() {
-            loginScreen.classList.add('hidden');
-            dashboardScreen.classList.remove('hidden');
-            await fetchClients();
-        }
-
         window.logout = function() {
-            signOut(auth).then(() => {
-                location.reload();
-            });
+            signOut(auth).then(() => location.reload());
         }
 
         window.toggleSidebar = function() {
@@ -406,32 +483,48 @@
         }
 
         window.switchView = function(viewName) {
-            const navDash = document.getElementById('navDashboard');
-            const navFin = document.getElementById('navFinance');
-            const viewDash = document.getElementById('viewDashboard');
-            const viewFin = document.getElementById('viewFinance');
+            currentTab = viewName;
+            
+            const vCompany = document.getElementById('viewCompany');
+            const vInfluencer = document.getElementById('viewInfluencer');
+            const vFinance = document.getElementById('viewFinance');
+            
+            const nCompany = document.getElementById('navCompany');
+            const nInfluencer = document.getElementById('navInfluencer');
+            const nFinance = document.getElementById('navFinance');
             const headerTitle = document.getElementById('headerTitle');
+            const mainAddBtn = document.getElementById('mainAddBtn');
+            const mainAddBtnText = document.getElementById('mainAddBtnText');
 
-            if (window.innerWidth < 768) {
-                window.toggleSidebar();
-            }
+            if (window.innerWidth < 768) { window.toggleSidebar(); }
 
-            if (viewName === 'dashboard') {
-                viewDash.classList.remove('hidden');
-                viewFin.classList.add('hidden');
-                headerTitle.innerText = "Müşteri ve İş Takibi";
-                
-                navDash.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
-                navFin.className = "w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent";
-            } else {
-                viewDash.classList.add('hidden');
-                viewFin.classList.remove('hidden');
+            // Menü stillerini sıfırla
+            [nCompany, nInfluencer, nFinance].forEach(n => {
+                n.className = "w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent";
+            });
+            // Görünümleri gizle
+            [vCompany, vInfluencer, vFinance].forEach(v => v.classList.add('hidden'));
+
+            if (viewName === 'company') {
+                vCompany.classList.remove('hidden');
+                nCompany.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
+                headerTitle.innerText = "Firma Takibi";
+                mainAddBtn.classList.remove('hidden');
+                mainAddBtnText.innerText = "Yeni Firma Ekle";
+            } 
+            else if (viewName === 'influencer') {
+                vInfluencer.classList.remove('hidden');
+                nInfluencer.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
+                headerTitle.innerText = "Influencer Takibi";
+                mainAddBtn.classList.remove('hidden');
+                mainAddBtnText.innerText = "Yeni Influencer Ekle";
+            } 
+            else {
+                vFinance.classList.remove('hidden');
+                nFinance.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
                 headerTitle.innerText = "Finans Paneli";
-
-                navFin.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
-                navDash.className = "w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent";
-                
-                if(myChart) { myChart.resize(); }
+                mainAddBtn.classList.add('hidden'); // Finansta ekleme butonu yok
+                if(myChart) myChart.resize();
             }
         }
 
@@ -442,11 +535,15 @@
         window.addJobRow = function(title = '', status = 'Görüşme Aşamasında', note = '', price = '', expense = '') {
             const row = document.createElement('div');
             row.className = 'job-row flex flex-col gap-3 bg-white p-4 md:p-5 rounded-xl border border-gray-200 shadow-sm relative md:pr-12 group transition-all hover:border-rose/50';
+            
+            const isInfluencer = recordTypeInput.value === 'influencer';
+            const titlePlaceholder = isInfluencer ? 'Anlaşma Tanımı (Örn: Instagram Reel, Youtube Entegrasyon)' : 'İş Tanımı (Örn: Sosyal Medya Yönetimi)';
+            
             row.innerHTML = `
                 <div class="flex flex-col lg:flex-row gap-3">
                     <div class="flex-1">
-                        <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">İş / Kişi Tanımı</label>
-                        <input type="text" placeholder="Örn: Ahmet Y. (Influencer)" value="${title}" required class="job-title w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm font-semibold text-gray-800">
+                        <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Tanım</label>
+                        <input type="text" placeholder="${titlePlaceholder}" value="${title}" required class="job-title w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-rose focus:ring-1 focus:ring-rose outline-none text-sm font-semibold text-gray-800">
                     </div>
                     <div class="w-full lg:w-32 shrink-0 relative">
                         <label class="block text-[10px] font-bold text-green-600 uppercase mb-1">Gelir (₺)</label>
@@ -468,28 +565,34 @@
                     </div>
                 </div>
                 <div class="w-full">
-                    <input type="text" placeholder="Profil Notu / Detay Ekle (Örn: Oyun içerikleri üretiyor, ürün karşılığı anlaşıldı...)" value="${note}" class="job-note w-full px-4 py-2 rounded-lg border border-gray-100 bg-gray-50 focus:bg-white focus:border-rose focus:ring-1 focus:ring-rose outline-none text-xs md:text-sm text-gray-600 transition-colors">
+                    <input type="text" placeholder="İçerik Notu (Örn: Ürün karşılığı anlaşıldı, Çekim tarihi 15 Kasım...)" value="${note}" class="job-note w-full px-4 py-2 rounded-lg border border-gray-100 bg-gray-50 focus:bg-white focus:border-rose focus:ring-1 focus:ring-rose outline-none text-xs md:text-sm text-gray-600 transition-colors">
                 </div>
-                <button type="button" onclick="this.parentElement.remove()" class="absolute right-3 top-3 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 shrink-0 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center shadow-sm" title="Bu işi sil">
+                <button type="button" onclick="this.parentElement.remove()" class="absolute right-3 top-3 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 shrink-0 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center shadow-sm" title="Sil">
                     <i class="fas fa-trash-alt text-xs"></i>
                 </button>
             `;
             jobsContainer.appendChild(row);
         }
 
-        window.openModal = function(isEdit = false) {
-            document.getElementById('modalTitle').innerText = isEdit ? 'Müşteriyi Düzenle' : 'Yeni Müşteri & İş Ekle';
+        window.openModal = function(typeOrId, isEdit = false) {
+            // typeOrId = 'company' veya 'influencer' veya (Düzenleme ise) kaydın ID'si
             if (!isEdit) {
-                clientForm.reset();
-                document.getElementById('clientId').value = '';
+                recordTypeInput.value = typeOrId; // 'company' veya 'influencer'
+                document.getElementById('modalTitle').innerText = typeOrId === 'company' ? 'Yeni Firma Ekle' : 'Yeni Influencer Ekle';
+                document.getElementById('labelName').innerText = typeOrId === 'company' ? 'Firma / Proje Adı' : 'Influencer / Kişi Adı';
+                document.getElementById('labelNotes').innerHTML = typeOrId === 'company' ? 'Firma Notları <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span>' : 'Profil & Hedef Kitle Özeti <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span>';
+                document.getElementById('labelJobs').innerText = typeOrId === 'company' ? 'Firmaya Ait İşler & Finans' : 'Anlaşmalar, İçerikler & Finans';
+                
+                dataForm.reset();
+                document.getElementById('recordId').value = '';
                 jobsContainer.innerHTML = '';
                 addJobRow(); 
             }
-            clientModal.classList.remove('hidden');
+            dataModal.classList.remove('hidden');
         }
 
         window.closeModal = function() {
-            clientModal.classList.add('hidden');
+            dataModal.classList.add('hidden');
         }
 
         window.toggleDetails = function(id) {
@@ -504,19 +607,23 @@
             }
         }
 
-        async function fetchClients() {
+        // === FİREBASE VERİ ÇEKME ===
+        async function fetchData() {
             loadingOverlay.classList.remove('hidden');
             try {
-                const q = query(collection(db, "clients"), orderBy("timestamp", "desc"));
+                const q = query(collection(db, "records"), orderBy("timestamp", "desc"));
                 const querySnapshot = await getDocs(q);
-                allClients = [];
+                allRecords = [];
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    if(!data.jobs) data.jobs = []; 
-                    allClients.push({ id: doc.id, ...data });
+                    if(!data.jobs) data.jobs = [];
+                    // Eski verileri 'company' olarak varsay (Geriye Dönük Uyumluluk)
+                    if(!data.type) data.type = 'company';
+                    allRecords.push({ id: doc.id, ...data });
                 });
+                
                 applyFilters(); 
-                calculateGlobalStats(); 
+                calculateStats(); 
                 updateChart(); 
             } catch (error) {
                 console.error("Veri çekme hatası:", error);
@@ -525,170 +632,207 @@
             }
         }
 
-        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('cSearchInput').addEventListener('input', applyFilters);
+        document.getElementById('iSearchInput').addEventListener('input', applyFilters);
 
         function applyFilters() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            filteredClients = allClients.filter(c => c.name.toLowerCase().includes(term));
-            currentPage = 1;
-            renderTable();
-        }
-
-        window.changePage = function(step) {
-            const maxPage = Math.ceil(filteredClients.length / itemsPerPage) || 1;
-            currentPage += step;
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > maxPage) currentPage = maxPage;
-            renderTable();
-        }
-
-        function calculateGlobalStats() {
-            let totalRev = 0; let totalExp = 0; let expectedRev = 0; 
-            let pendingCount = 0; let todoCount = 0; let doneCount = 0;
+            const cTerm = document.getElementById('cSearchInput').value.toLowerCase();
+            const iTerm = document.getElementById('iSearchInput').value.toLowerCase();
             
-            allClients.forEach(client => {
-                client.jobs.forEach(job => {
+            // Verileri Tiplerine Göre Ayır ve Filtrele
+            filteredCompany = allRecords.filter(r => r.type === 'company' && r.name.toLowerCase().includes(cTerm));
+            filteredInfluencer = allRecords.filter(r => r.type === 'influencer' && r.name.toLowerCase().includes(iTerm));
+            
+            cPage = 1; iPage = 1;
+            renderTables();
+        }
+
+        window.changePage = function(type, step) {
+            if(type === 'company') {
+                const maxPage = Math.ceil(filteredCompany.length / itemsPerPage) || 1;
+                cPage += step;
+                if (cPage < 1) cPage = 1;
+                if (cPage > maxPage) cPage = maxPage;
+            } else {
+                const maxPage = Math.ceil(filteredInfluencer.length / itemsPerPage) || 1;
+                iPage += step;
+                if (iPage < 1) iPage = 1;
+                if (iPage > maxPage) iPage = maxPage;
+            }
+            renderTables();
+        }
+
+        function calculateStats() {
+            // Genel Finans
+            let totalRev = 0; let totalExp = 0; let expectedRev = 0; 
+            
+            // Company Stats
+            let cCount = 0; let cPending = 0; let cTodo = 0; let cDone = 0;
+            
+            // Influencer Stats
+            let iCount = 0; let iPending = 0; let iTodo = 0; let iDone = 0;
+
+            allRecords.forEach(record => {
+                if(record.type === 'company') cCount++;
+                if(record.type === 'influencer') iCount++;
+
+                record.jobs.forEach(job => {
                     const p = Number(job.price) || 0;
                     const e = Number(job.expense) || 0;
                     
                     if (job.status.includes("Tamamlandı")) {
-                        totalRev += p;
-                        totalExp += e;
-                        doneCount++;
+                        totalRev += p; totalExp += e;
+                        if(record.type === 'company') cDone++;
+                        if(record.type === 'influencer') iDone++;
                     } else if (job.status.includes("Yapılacak")) {
-                        expectedRev += (p - e); // NET GÜNCELLEMESİ
-                        todoCount++;
+                        expectedRev += (p - e);
+                        if(record.type === 'company') cTodo++;
+                        if(record.type === 'influencer') iTodo++;
                     } else if (job.status.includes("Görüşme")) {
-                        expectedRev += (p - e); // NET GÜNCELLEMESİ
-                        pendingCount++;
+                        expectedRev += (p - e);
+                        if(record.type === 'company') cPending++;
+                        if(record.type === 'influencer') iPending++;
                     }
                 });
             });
 
-            // Dashboard İş İstatistikleri
-            document.getElementById('statClients').innerText = allClients.length;
-            document.getElementById('statPending').innerText = pendingCount;
-            document.getElementById('statTodo').innerText = todoCount;
-            document.getElementById('statDone').innerText = doneCount;
-            document.getElementById('statTotalClients').innerText = allClients.length + " Kayıt";
+            // Yazdırma - Company
+            document.getElementById('cStatTotal').innerText = cCount;
+            document.getElementById('cStatPending').innerText = cPending;
+            document.getElementById('cStatTodo').innerText = cTodo;
+            document.getElementById('cStatDone').innerText = cDone;
+            document.getElementById('cStatCount').innerText = cCount + " Kayıt";
 
-            // Finans Paneli İstatistikleri
+            // Yazdırma - Influencer
+            document.getElementById('iStatTotal').innerText = iCount;
+            document.getElementById('iStatPending').innerText = iPending;
+            document.getElementById('iStatTodo').innerText = iTodo;
+            document.getElementById('iStatDone').innerText = iDone;
+            document.getElementById('iStatCount').innerText = iCount + " Kayıt";
+
+            // Yazdırma - Finans Paneli
             document.getElementById('statRevenue').innerText = formatMoney(totalRev);
             document.getElementById('statExpense').innerText = formatMoney(totalExp);
             document.getElementById('statProfit').innerText = formatMoney(totalRev - totalExp);
             document.getElementById('statExpected').innerText = formatMoney(expectedRev);
         }
 
-        function renderTable() {
-            clientTableBody.innerHTML = '';
+        // Ortak Render Fonksiyonu (Company ve Influencer tablosu için)
+        function renderTables() {
+            const cTable = document.getElementById('cTableBody');
+            const iTable = document.getElementById('iTableBody');
             
-            const maxPage = Math.ceil(filteredClients.length / itemsPerPage) || 1;
-            document.getElementById('pageInfo').innerText = `Sayfa ${currentPage} / ${maxPage}`;
-            document.getElementById('prevPageBtn').disabled = currentPage === 1;
-            document.getElementById('nextPageBtn').disabled = currentPage === maxPage;
+            const renderHTML = (array, page, tableBody, emptyId, pageInfoId, prevBtnId, nextBtnId, iconName) => {
+                tableBody.innerHTML = '';
+                const maxPage = Math.ceil(array.length / itemsPerPage) || 1;
+                document.getElementById(pageInfoId).innerText = `Sayfa ${page} / ${maxPage}`;
+                document.getElementById(prevBtnId).disabled = page === 1;
+                document.getElementById(nextBtnId).disabled = page === maxPage;
 
-            if (filteredClients.length === 0) {
-                emptyState.classList.remove('hidden');
-                return;
-            } 
-            
-            emptyState.classList.add('hidden');
-            
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const clientsToRender = filteredClients.slice(startIndex, startIndex + itemsPerPage);
-            
-            clientsToRender.forEach((client) => {
-                let jobsHtml = '';
+                if (array.length === 0) {
+                    document.getElementById(emptyId).classList.remove('hidden');
+                    return;
+                } 
+                document.getElementById(emptyId).classList.add('hidden');
                 
-                client.jobs.forEach(job => {
-                    let icon, bg, text, dot;
-                    if (job.status.includes("Görüşme")) {
-                        icon = "fa-handshake"; bg = "bg-yellow-50 border-yellow-200"; text = "text-yellow-700"; dot = "bg-yellow-400";
-                    } else if (job.status.includes("Yapılacak")) {
-                        icon = "fa-hourglass-half"; bg = "bg-rose/10 border-rose/20"; text = "text-rose-dark"; dot = "bg-rose";
-                    } else {
-                        icon = "fa-check-circle"; bg = "bg-green-50 border-green-200"; text = "text-green-700"; dot = "bg-green-500";
-                    }
+                const startIndex = (page - 1) * itemsPerPage;
+                const itemsToRender = array.slice(startIndex, startIndex + itemsPerPage);
+                
+                itemsToRender.forEach((item) => {
+                    let jobsHtml = '';
+                    item.jobs.forEach(job => {
+                        let icon, bg, text, dot;
+                        if (job.status.includes("Görüşme")) {
+                            icon = "fa-handshake"; bg = "bg-yellow-50 border-yellow-200"; text = "text-yellow-700"; dot = "bg-yellow-400";
+                        } else if (job.status.includes("Yapılacak")) {
+                            icon = "fa-hourglass-half"; bg = "bg-rose/10 border-rose/20"; text = "text-rose-dark"; dot = "bg-rose";
+                        } else {
+                            icon = "fa-check-circle"; bg = "bg-green-50 border-green-200"; text = "text-green-700"; dot = "bg-green-500";
+                        }
 
-                    const noteHtml = job.note ? `
-                        <div class="mt-3 p-2 bg-white/70 rounded border border-gray-100 flex items-start gap-2 shadow-sm">
-                            <i class="fas fa-comment-dots text-rose/50 mt-0.5 text-[11px]"></i>
-                            <p class="text-xs text-gray-600 font-medium leading-relaxed">${job.note}</p>
-                        </div>
-                    ` : '';
-
-                    const jPrice = Number(job.price) || 0;
-                    const jExp = Number(job.expense) || 0;
-                    
-                    let financeHtml = '';
-                    if(jPrice > 0 || jExp > 0) {
-                        financeHtml = `<div class="mt-2 flex flex-wrap gap-2 text-xs font-bold">`;
-                        if(jPrice > 0) financeHtml += `<span class="text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Gelir: ${formatMoney(jPrice)}</span>`;
-                        if(jExp > 0) financeHtml += `<span class="text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Gider: ${formatMoney(jExp)}</span>`;
-                        financeHtml += `</div>`;
-                    }
-
-                    jobsHtml += `
-                        <div class="flex items-start gap-4 p-4 bg-white rounded-xl border ${bg} shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-                            <div class="absolute right-0 top-0 bottom-0 w-2 ${bg.split(' ')[0]}"></div>
-                            <div class="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center shrink-0 shadow-sm mt-0.5">
-                                <i class="fas ${icon} ${text} text-base"></i>
+                        const noteHtml = job.note ? `
+                            <div class="mt-3 p-2 bg-white/70 rounded border border-gray-100 flex items-start gap-2 shadow-sm">
+                                <i class="fas fa-comment-dots text-rose/50 mt-0.5 text-[11px]"></i>
+                                <p class="text-xs text-gray-600 font-medium leading-relaxed">${job.note}</p>
                             </div>
-                            <div class="flex-1">
-                                <h5 class="font-extrabold text-gray-800 text-sm mb-1">${job.title}</h5>
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full ${dot}"></span>
-                                    <span class="text-[10px] font-bold uppercase tracking-wider ${text}">${job.status}</span>
+                        ` : '';
+
+                        const jPrice = Number(job.price) || 0;
+                        const jExp = Number(job.expense) || 0;
+                        
+                        let financeHtml = '';
+                        if(jPrice > 0 || jExp > 0) {
+                            financeHtml = `<div class="mt-2 flex flex-wrap gap-2 text-xs font-bold">`;
+                            if(jPrice > 0) financeHtml += `<span class="text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">Gelir: ${formatMoney(jPrice)}</span>`;
+                            if(jExp > 0) financeHtml += `<span class="text-red-500 bg-red-50 px-2 py-0.5 rounded border border-red-100">Gider: ${formatMoney(jExp)}</span>`;
+                            financeHtml += `</div>`;
+                        }
+
+                        jobsHtml += `
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-xl border ${bg} shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+                                <div class="absolute right-0 top-0 bottom-0 w-2 ${bg.split(' ')[0]}"></div>
+                                <div class="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                                    <i class="fas ${icon} ${text} text-base"></i>
                                 </div>
-                                ${financeHtml}
-                                ${noteHtml}
+                                <div class="flex-1">
+                                    <h5 class="font-extrabold text-gray-800 text-sm mb-1">${job.title}</h5>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full ${dot}"></span>
+                                        <span class="text-[10px] font-bold uppercase tracking-wider ${text}">${job.status}</span>
+                                    </div>
+                                    ${financeHtml}
+                                    ${noteHtml}
+                                </div>
                             </div>
-                        </div>
+                        `;
+                    });
+
+                    const parentTr = document.createElement('tr');
+                    parentTr.className = "hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-100 group";
+                    parentTr.onclick = () => window.toggleDetails(item.id);
+                    parentTr.innerHTML = `
+                        <td class="py-4 px-6 text-gray-400 group-hover:text-burgundy transition-colors"><i id="icon-${item.id}" class="fas fa-chevron-right transition-transform duration-300"></i></td>
+                        <td class="py-4 px-6 font-extrabold text-gray-800 text-[15px]">${item.name}</td>
+                        <td class="py-4 px-6">
+                            <span class="bg-gray-100 text-gray-700 border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm">
+                                <i class="fas fa-layer-group mr-1 text-rose"></i> ${item.jobs.length} Kayıt
+                            </span>
+                        </td>
+                        <td class="py-4 px-6 text-gray-500 whitespace-pre-wrap truncate max-w-[200px]" title="${item.notes}">${item.notes || '<span class="italic opacity-50">Not yok</span>'}</td>
+                        <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
+                            <button onclick="event.stopPropagation(); window.editRecord('${item.id}')" class="w-9 h-9 rounded-lg bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors shadow-sm" title="Düzenle">
+                                <i class="fas fa-pen text-sm"></i>
+                            </button>
+                            <button onclick="event.stopPropagation(); window.deleteRecord('${item.id}')" class="w-9 h-9 rounded-lg bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 transition-colors shadow-sm" title="Sil">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
+                        </td>
                     `;
-                });
-
-                const parentTr = document.createElement('tr');
-                parentTr.className = "hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-100 group";
-                parentTr.onclick = () => window.toggleDetails(client.id);
-                parentTr.innerHTML = `
-                    <td class="py-4 px-6 text-gray-400 group-hover:text-burgundy transition-colors"><i id="icon-${client.id}" class="fas fa-chevron-right transition-transform duration-300"></i></td>
-                    <td class="py-4 px-6 font-extrabold text-gray-800 text-[15px]">${client.name}</td>
-                    <td class="py-4 px-6">
-                        <span class="bg-gray-100 text-gray-700 border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm">
-                            <i class="fas fa-layer-group mr-1 text-rose"></i> ${client.jobs.length} Kayıt
-                        </span>
-                    </td>
-                    <td class="py-4 px-6 text-gray-500 whitespace-pre-wrap truncate max-w-[200px]" title="${client.notes}">${client.notes || '<span class="italic opacity-50">Not yok</span>'}</td>
-                    <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
-                        <button onclick="event.stopPropagation(); window.editClient('${client.id}')" class="w-9 h-9 rounded-lg bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors shadow-sm" title="Düzenle">
-                            <i class="fas fa-pen text-sm"></i>
-                        </button>
-                        <button onclick="event.stopPropagation(); window.deleteClient('${client.id}')" class="w-9 h-9 rounded-lg bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 transition-colors shadow-sm" title="Sil">
-                            <i class="fas fa-trash text-sm"></i>
-                        </button>
-                    </td>
-                `;
-                
-                const childTr = document.createElement('tr');
-                childTr.innerHTML = `
-                    <td colspan="5" class="p-0 border-b border-gray-200 bg-gray-50/50">
-                        <div id="details-${client.id}" class="accordion-content">
-                            <div class="p-6 md:p-8 bg-gradient-to-b from-gray-50 to-white">
-                                <div class="flex items-center gap-3 mb-6 border-b border-gray-200 pb-3">
-                                    <div class="w-8 h-8 rounded bg-rose text-white flex items-center justify-center"><i class="fas fa-briefcase"></i></div>
-                                    <h4 class="text-sm font-extrabold text-burgundy uppercase tracking-widest">Kayıtlı İşler / Kişiler</h4>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    ${jobsHtml || '<p class="text-gray-400 italic text-sm">Bu müşteriye ait kayıtlı bir detay bulunmuyor.</p>'}
+                    
+                    const childTr = document.createElement('tr');
+                    childTr.innerHTML = `
+                        <td colspan="5" class="p-0 border-b border-gray-200 bg-gray-50/50">
+                            <div id="details-${item.id}" class="accordion-content">
+                                <div class="p-6 md:p-8 bg-gradient-to-b from-gray-50 to-white">
+                                    <div class="flex items-center gap-3 mb-6 border-b border-gray-200 pb-3">
+                                        <div class="w-8 h-8 rounded bg-rose text-white flex items-center justify-center"><i class="fas ${iconName}"></i></div>
+                                        <h4 class="text-sm font-extrabold text-burgundy uppercase tracking-widest">Kayıtlı İşler / Anlaşmalar</h4>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        ${jobsHtml || '<p class="text-gray-400 italic text-sm">Kayıtlı bir detay bulunmuyor.</p>'}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                `;
+                        </td>
+                    `;
 
-                clientTableBody.appendChild(parentTr);
-                clientTableBody.appendChild(childTr);
-            });
+                    tableBody.appendChild(parentTr);
+                    tableBody.appendChild(childTr);
+                });
+            };
+
+            renderHTML(filteredCompany, cPage, cTable, 'cEmptyState', 'cPageInfo', 'cPrevPageBtn', 'cNextPageBtn', 'fa-briefcase');
+            renderHTML(filteredInfluencer, iPage, iTable, 'iEmptyState', 'iPageInfo', 'iPrevPageBtn', 'iNextPageBtn', 'fa-hashtag');
         }
 
         function updateChart() {
@@ -710,13 +854,13 @@
                 expDataMap[monthStr] = 0;
             }
 
-            allClients.forEach(client => {
-                if(client.timestamp) {
-                    const cDate = new Date(client.timestamp);
+            allRecords.forEach(record => {
+                if(record.timestamp) {
+                    const cDate = new Date(record.timestamp);
                     const mName = monthNames[cDate.getMonth()];
                     
                     if(revDataMap[mName] !== undefined) {
-                        client.jobs.forEach(job => {
+                        record.jobs.forEach(job => {
                             if(job.status.includes("Tamamlandı")) {
                                 revDataMap[mName] += Number(job.price) || 0;
                                 expDataMap[mName] += Number(job.expense) || 0;
@@ -751,12 +895,14 @@
             });
         }
 
-        clientForm.addEventListener('submit', async (e) => {
+        // === FİREBASE VERİ KAYDETME (Firma veya Influencer) ===
+        dataForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const idInput = document.getElementById('clientId').value;
-            const name = document.getElementById('cName').value;
-            const notes = document.getElementById('cNotes').value;
+            const idInput = document.getElementById('recordId').value;
+            const type = document.getElementById('recordType').value;
+            const name = document.getElementById('mName').value;
+            const notes = document.getElementById('mNotes').value;
 
             const jobs = [];
             document.querySelectorAll('.job-row').forEach(row => {
@@ -788,44 +934,50 @@
 
             try {
                 if (idInput) {
-                    await updateDoc(doc(db, "clients", idInput), { name, notes, jobs });
+                    // Update
+                    // Eski collection ismi "clients" idi. Geriye dönük uyum için "records" olarak birleştirdik, veritabanı yormamak için yine clients yazıyoruz.
+                    await updateDoc(doc(db, "records", idInput), { type, name, notes, jobs });
                 } else {
-                    await addDoc(collection(db, "clients"), { name, notes, jobs, timestamp: Date.now() });
+                    // New
+                    await addDoc(collection(db, "records"), { type, name, notes, jobs, timestamp: Date.now() });
                 }
                 window.closeModal();
-                await fetchClients();
+                await fetchData();
             } catch (error) {
                 alert("Veri kaydedilirken hata oluştu.");
+                console.error(error);
             } finally {
                 saveBtn.innerHTML = originalBtnHtml;
                 saveBtn.disabled = false;
             }
         });
 
-        window.editClient = function(id) {
-            const client = allClients.find(c => c.id === id);
-            if (client) {
-                document.getElementById('clientId').value = client.id;
-                document.getElementById('cName').value = client.name;
-                document.getElementById('cNotes').value = client.notes || '';
+        window.editRecord = function(id) {
+            const record = allRecords.find(c => c.id === id);
+            if (record) {
+                // Modalı aç (tipine göre başlıkları ayarlar)
+                window.openModal(record.type, true);
+                
+                document.getElementById('recordId').value = record.id;
+                document.getElementById('recordType').value = record.type;
+                document.getElementById('mName').value = record.name;
+                document.getElementById('mNotes').value = record.notes || '';
                 
                 jobsContainer.innerHTML = ''; 
-                if(client.jobs && client.jobs.length > 0) {
-                    client.jobs.forEach(job => addJobRow(job.title, job.status, job.note || '', job.price || '', job.expense || ''));
+                if(record.jobs && record.jobs.length > 0) {
+                    record.jobs.forEach(job => addJobRow(job.title, job.status, job.note || '', job.price || '', job.expense || ''));
                 } else {
                     addJobRow();
                 }
-                
-                window.openModal(true);
             }
         }
 
-        window.deleteClient = async function(id) {
-            if (confirm('Bu müşteriyi ve içindeki tüm kayıtları silmek istediğinize emin misiniz?')) {
+        window.deleteRecord = async function(id) {
+            if (confirm('Bu kaydı ve içindeki tüm işlemleri silmek istediğinize emin misiniz?')) {
                 loadingOverlay.classList.remove('hidden');
                 try {
-                    await deleteDoc(doc(db, "clients", id));
-                    await fetchClients();
+                    await deleteDoc(doc(db, "records", id));
+                    await fetchData();
                 } catch (error) {
                     alert("Veri silinirken hata oluştu.");
                     loadingOverlay.classList.add('hidden');
