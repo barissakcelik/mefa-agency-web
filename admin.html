@@ -124,8 +124,8 @@
                         <h2 id="headerTitle" class="text-lg md:text-xl font-bold text-burgundy font-display">Firma Takibi</h2>
                     </div>
                 </div>
-                <!-- Ana Ekleme Butonu -->
-                <button id="mainAddBtn" onclick="openModal('company')" class="bg-burgundy text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-rose transition-colors shadow-sm flex items-center gap-2 text-sm">
+                <!-- Ana Ekleme Butonu (Dinamik olarak pencere açar) -->
+                <button id="mainAddBtn" onclick="window.openModal(window.currentTab)" class="bg-burgundy text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-rose transition-colors shadow-sm flex items-center gap-2 text-sm">
                     <i class="fas fa-plus"></i> <span class="hidden md:inline" id="mainAddBtnText">Yeni Firma Ekle</span>
                 </button>
             </header>
@@ -268,7 +268,7 @@
                                         <th class="py-4 px-6 w-12"></th>
                                         <th class="py-4 px-6 w-1/4">Kişi / Influencer Adı</th>
                                         <th class="py-4 px-6">Anlaşmalar</th>
-                                        <th class="py-4 px-6">Genel Profil Notu</th>
+                                        <th class="py-4 px-6">Profil & Hedef Kitle Notu</th>
                                         <th class="py-4 px-6 text-right">İşlemler</th>
                                     </tr>
                                 </thead>
@@ -348,7 +348,7 @@
         </main>
     </div>
 
-    <!-- EKLE/DÜZENLE MODAL -->
+    <!-- EKLE/DÜZENLE MODAL (DİNAMİK YAZILAR İLE) -->
     <div id="dataModal" class="fixed inset-0 z-[60] bg-black/50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity p-4">
         <div class="bg-white w-full max-w-5xl rounded-2xl shadow-2xl flex flex-col max-h-[95vh]">
             <div class="px-6 md:px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-2xl shrink-0">
@@ -363,7 +363,7 @@
                     
                     <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
                         <label class="block text-sm font-bold text-burgundy mb-2" id="labelName">Firma / Proje Adı</label>
-                        <input type="text" id="mName" required placeholder="Örn: ABC Holding" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white text-sm">
+                        <input type="text" id="mName" required placeholder="Örn: ABC Holding / Trendyol" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white text-sm">
                         
                         <label class="block text-sm font-bold text-burgundy mb-2 mt-4" id="labelNotes">Genel Notlar <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span></label>
                         <textarea id="mNotes" rows="2" placeholder="Detaylı notlar..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none resize-none bg-white text-sm"></textarea>
@@ -373,7 +373,7 @@
                         <div class="flex flex-col md:flex-row justify-between md:items-center gap-3 mb-4">
                             <label class="block text-sm font-bold text-burgundy" id="labelJobs">Bağlı İşler, Anlaşmalar & Finans</label>
                             <button type="button" onclick="addJobRow()" class="text-xs md:text-sm bg-rose text-white px-4 py-2 rounded-lg hover:bg-burgundy transition-colors font-semibold shadow-sm flex items-center gap-2 w-fit">
-                                <i class="fas fa-plus text-xs"></i> Yeni İş Ekle
+                                <i class="fas fa-plus text-xs"></i> Yeni Ekle
                             </button>
                         </div>
                         
@@ -434,8 +434,8 @@
         const itemsPerPage = 20;
         let myChart = null;
 
-        // Geçerli Aktif Sekme (company, influencer, finance)
-        let currentTab = 'company';
+        // Geçerli Aktif Sekme Değişkeni
+        window.currentTab = 'company';
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -483,7 +483,7 @@
         }
 
         window.switchView = function(viewName) {
-            currentTab = viewName;
+            window.currentTab = viewName;
             
             const vCompany = document.getElementById('viewCompany');
             const vInfluencer = document.getElementById('viewInfluencer');
@@ -537,7 +537,8 @@
             row.className = 'job-row flex flex-col gap-3 bg-white p-4 md:p-5 rounded-xl border border-gray-200 shadow-sm relative md:pr-12 group transition-all hover:border-rose/50';
             
             const isInfluencer = recordTypeInput.value === 'influencer';
-            const titlePlaceholder = isInfluencer ? 'Anlaşma Tanımı (Örn: Instagram Reel, Youtube Entegrasyon)' : 'İş Tanımı (Örn: Sosyal Medya Yönetimi)';
+            const titlePlaceholder = isInfluencer ? 'Anlaşma / İçerik (Örn: IG Reel)' : 'İş Tanımı (Örn: Sosyal Medya Yön.)';
+            const notePlaceholder = isInfluencer ? 'İçerik Notu (Örn: Ürün karşılığı, 15 Kasım teslim...)' : 'İş Notu (Örn: Haftalık 3 post girilecek...)';
             
             row.innerHTML = `
                 <div class="flex flex-col lg:flex-row gap-3">
@@ -565,7 +566,7 @@
                     </div>
                 </div>
                 <div class="w-full">
-                    <input type="text" placeholder="İçerik Notu (Örn: Ürün karşılığı anlaşıldı, Çekim tarihi 15 Kasım...)" value="${note}" class="job-note w-full px-4 py-2 rounded-lg border border-gray-100 bg-gray-50 focus:bg-white focus:border-rose focus:ring-1 focus:ring-rose outline-none text-xs md:text-sm text-gray-600 transition-colors">
+                    <input type="text" placeholder="${notePlaceholder}" value="${note}" class="job-note w-full px-4 py-2 rounded-lg border border-gray-100 bg-gray-50 focus:bg-white focus:border-rose focus:ring-1 focus:ring-rose outline-none text-xs md:text-sm text-gray-600 transition-colors">
                 </div>
                 <button type="button" onclick="this.parentElement.remove()" class="absolute right-3 top-3 lg:top-1/2 lg:-translate-y-1/2 w-8 h-8 shrink-0 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center shadow-sm" title="Sil">
                     <i class="fas fa-trash-alt text-xs"></i>
@@ -575,14 +576,24 @@
         }
 
         window.openModal = function(typeOrId, isEdit = false) {
-            // typeOrId = 'company' veya 'influencer' veya (Düzenleme ise) kaydın ID'si
+            recordTypeInput.value = typeOrId; // 'company' veya 'influencer'
+            
+            // Eğer yeni ekleniyorsa veya düzenleniyorsa başlıkları uygun şekilde güncelle
+            if (typeOrId === 'company') {
+                document.getElementById('modalTitle').innerText = isEdit ? 'Firmayı Düzenle' : 'Yeni Firma Ekle';
+                document.getElementById('labelName').innerText = 'Firma / Proje Adı';
+                document.getElementById('mName').placeholder = 'Örn: ABC Holding / Trendyol Kampanyası';
+                document.getElementById('labelNotes').innerHTML = 'Genel Notlar <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span>';
+                document.getElementById('labelJobs').innerText = 'Firmaya Ait İşler & Finans';
+            } else {
+                document.getElementById('modalTitle').innerText = isEdit ? 'Influencer Düzenle' : 'Yeni Influencer Ekle';
+                document.getElementById('labelName').innerText = 'Kişi / Influencer Hesabı';
+                document.getElementById('mName').placeholder = 'Örn: Ahmet Yılmaz (@ahmetyilmaz)';
+                document.getElementById('labelNotes').innerHTML = 'Profil & Hedef Kitle Özeti <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span>';
+                document.getElementById('labelJobs').innerText = 'İçerikler, Anlaşmalar & Finans';
+            }
+
             if (!isEdit) {
-                recordTypeInput.value = typeOrId; // 'company' veya 'influencer'
-                document.getElementById('modalTitle').innerText = typeOrId === 'company' ? 'Yeni Firma Ekle' : 'Yeni Influencer Ekle';
-                document.getElementById('labelName').innerText = typeOrId === 'company' ? 'Firma / Proje Adı' : 'Influencer / Kişi Adı';
-                document.getElementById('labelNotes').innerHTML = typeOrId === 'company' ? 'Firma Notları <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span>' : 'Profil & Hedef Kitle Özeti <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span>';
-                document.getElementById('labelJobs').innerText = typeOrId === 'company' ? 'Firmaya Ait İşler & Finans' : 'Anlaşmalar, İçerikler & Finans';
-                
                 dataForm.reset();
                 document.getElementById('recordId').value = '';
                 jobsContainer.innerHTML = '';
@@ -607,7 +618,6 @@
             }
         }
 
-        // === FİREBASE VERİ ÇEKME ===
         async function fetchData() {
             loadingOverlay.classList.remove('hidden');
             try {
@@ -617,7 +627,7 @@
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     if(!data.jobs) data.jobs = [];
-                    // Eski verileri 'company' olarak varsay (Geriye Dönük Uyumluluk)
+                    // Geriye Dönük Uyumluluk: type yoksa 'company' yap
                     if(!data.type) data.type = 'company';
                     allRecords.push({ id: doc.id, ...data });
                 });
@@ -639,7 +649,6 @@
             const cTerm = document.getElementById('cSearchInput').value.toLowerCase();
             const iTerm = document.getElementById('iSearchInput').value.toLowerCase();
             
-            // Verileri Tiplerine Göre Ayır ve Filtrele
             filteredCompany = allRecords.filter(r => r.type === 'company' && r.name.toLowerCase().includes(cTerm));
             filteredInfluencer = allRecords.filter(r => r.type === 'influencer' && r.name.toLowerCase().includes(iTerm));
             
@@ -663,13 +672,9 @@
         }
 
         function calculateStats() {
-            // Genel Finans
             let totalRev = 0; let totalExp = 0; let expectedRev = 0; 
             
-            // Company Stats
             let cCount = 0; let cPending = 0; let cTodo = 0; let cDone = 0;
-            
-            // Influencer Stats
             let iCount = 0; let iPending = 0; let iTodo = 0; let iDone = 0;
 
             allRecords.forEach(record => {
@@ -696,28 +701,24 @@
                 });
             });
 
-            // Yazdırma - Company
             document.getElementById('cStatTotal').innerText = cCount;
             document.getElementById('cStatPending').innerText = cPending;
             document.getElementById('cStatTodo').innerText = cTodo;
             document.getElementById('cStatDone').innerText = cDone;
             document.getElementById('cStatCount').innerText = cCount + " Kayıt";
 
-            // Yazdırma - Influencer
             document.getElementById('iStatTotal').innerText = iCount;
             document.getElementById('iStatPending').innerText = iPending;
             document.getElementById('iStatTodo').innerText = iTodo;
             document.getElementById('iStatDone').innerText = iDone;
             document.getElementById('iStatCount').innerText = iCount + " Kayıt";
 
-            // Yazdırma - Finans Paneli
             document.getElementById('statRevenue').innerText = formatMoney(totalRev);
             document.getElementById('statExpense').innerText = formatMoney(totalExp);
             document.getElementById('statProfit').innerText = formatMoney(totalRev - totalExp);
             document.getElementById('statExpected').innerText = formatMoney(expectedRev);
         }
 
-        // Ortak Render Fonksiyonu (Company ve Influencer tablosu için)
         function renderTables() {
             const cTable = document.getElementById('cTableBody');
             const iTable = document.getElementById('iTableBody');
@@ -816,7 +817,7 @@
                                 <div class="p-6 md:p-8 bg-gradient-to-b from-gray-50 to-white">
                                     <div class="flex items-center gap-3 mb-6 border-b border-gray-200 pb-3">
                                         <div class="w-8 h-8 rounded bg-rose text-white flex items-center justify-center"><i class="fas ${iconName}"></i></div>
-                                        <h4 class="text-sm font-extrabold text-burgundy uppercase tracking-widest">Kayıtlı İşler / Anlaşmalar</h4>
+                                        <h4 class="text-sm font-extrabold text-burgundy uppercase tracking-widest">Kayıtlı Anlaşmalar & Notlar</h4>
                                     </div>
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         ${jobsHtml || '<p class="text-gray-400 italic text-sm">Kayıtlı bir detay bulunmuyor.</p>'}
@@ -895,7 +896,6 @@
             });
         }
 
-        // === FİREBASE VERİ KAYDETME (Firma veya Influencer) ===
         dataForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -934,11 +934,8 @@
 
             try {
                 if (idInput) {
-                    // Update
-                    // Eski collection ismi "clients" idi. Geriye dönük uyum için "records" olarak birleştirdik, veritabanı yormamak için yine clients yazıyoruz.
                     await updateDoc(doc(db, "records", idInput), { type, name, notes, jobs });
                 } else {
-                    // New
                     await addDoc(collection(db, "records"), { type, name, notes, jobs, timestamp: Date.now() });
                 }
                 window.closeModal();
@@ -955,7 +952,6 @@
         window.editRecord = function(id) {
             const record = allRecords.find(c => c.id === id);
             if (record) {
-                // Modalı aç (tipine göre başlıkları ayarlar)
                 window.openModal(record.type, true);
                 
                 document.getElementById('recordId').value = record.id;
