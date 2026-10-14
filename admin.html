@@ -124,7 +124,6 @@
                         <h2 id="headerTitle" class="text-lg md:text-xl font-bold text-burgundy font-display">Firma Takibi</h2>
                     </div>
                 </div>
-                <!-- Ana Ekleme Butonu (Dinamik olarak pencere açar) -->
                 <button id="mainAddBtn" onclick="window.openModal(window.currentTab)" class="bg-burgundy text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg font-bold hover:bg-rose transition-colors shadow-sm flex items-center gap-2 text-sm">
                     <i class="fas fa-plus"></i> <span class="hidden md:inline" id="mainAddBtnText">Yeni Firma Ekle</span>
                 </button>
@@ -137,7 +136,6 @@
                      1. SEKME: FİRMA TAKİBİ
                      ============================== -->
                 <div id="viewCompany" class="block animate-fade-in">
-                    
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
                         <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex items-center justify-between">
@@ -192,8 +190,7 @@
                                         <th class="py-4 px-6 text-right">İşlemler</th>
                                     </tr>
                                 </thead>
-                                <tbody id="cTableBody" class="divide-y divide-gray-100 text-sm">
-                                </tbody>
+                                <tbody id="cTableBody" class="divide-y divide-gray-100 text-sm"></tbody>
                             </table>
                             <div id="cEmptyState" class="hidden p-16 text-center text-gray-500">
                                 <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-search"></i></div>
@@ -217,7 +214,6 @@
                      2. SEKME: INFLUENCER TAKİBİ
                      ============================== -->
                 <div id="viewInfluencer" class="hidden animate-fade-in">
-                    
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
                         <div class="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div class="flex items-center justify-between">
@@ -272,8 +268,7 @@
                                         <th class="py-4 px-6 text-right">İşlemler</th>
                                     </tr>
                                 </thead>
-                                <tbody id="iTableBody" class="divide-y divide-gray-100 text-sm">
-                                </tbody>
+                                <tbody id="iTableBody" class="divide-y divide-gray-100 text-sm"></tbody>
                             </table>
                             <div id="iEmptyState" class="hidden p-16 text-center text-gray-500">
                                 <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-search"></i></div>
@@ -293,53 +288,79 @@
                 </div>
 
                 <!-- ==============================
-                     3. SEKME: FİNANS PANELİ
+                     3. SEKME: FİNANS PANELİ (DETAYLANDIRILMIŞ)
                      ============================== -->
                 <div id="viewFinance" class="hidden animate-fade-in">
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-green-500">
-                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Biten İşler Geliri</h3>
-                                <div class="flex flex-wrap items-end gap-2">
-                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-green-600" id="statRevenue">₺0</p>
-                                </div>
+                    <!-- YENİ 3'LÜ KART YAPISI: GENEL - FİRMA - INFLUENCER -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        
+                        <!-- 1. GENEL TOPLAM -->
+                        <div class="bg-white p-5 rounded-2xl border-2 border-gray-100 shadow-md">
+                            <div class="flex items-center gap-3 mb-4 border-b border-gray-100 pb-3">
+                                <div class="w-8 h-8 rounded-lg bg-burgundy/10 text-burgundy flex items-center justify-center"><i class="fas fa-globe"></i></div>
+                                <h3 class="font-bold text-gray-800 uppercase tracking-widest text-sm">Ajans Geneli (Toplam)</h3>
                             </div>
-
-                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-red-400">
-                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Biten İşler Gideri</h3>
-                                <div class="flex flex-wrap items-end gap-2">
-                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-red-500" id="statExpense">₺0</p>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-burgundy">
-                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Net Kazanç</h3>
-                                <div class="flex flex-wrap items-end gap-2">
-                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-burgundy" id="statProfit">₺0</p>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center border-b-4 border-b-yellow-400">
-                                <h3 class="text-gray-500 font-semibold text-[10px] md:text-xs uppercase tracking-wider mb-2">Net Beklenen Gelir</h3>
-                                <div class="flex flex-wrap items-end gap-2">
-                                    <p class="text-2xl md:text-3xl font-display font-extrabold text-yellow-600" id="statExpected">₺0</p>
-                                    <span class="text-[10px] text-gray-400 font-bold mb-1">(Gelir - Gider)</span>
-                                </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center"><span class="text-gray-500 text-xs font-bold">Kazanılan Gelir</span> <span class="font-bold text-green-600" id="fStatAllRev">₺0</span></div>
+                                <div class="flex justify-between items-center"><span class="text-gray-500 text-xs font-bold">Gerçekleşen Gider</span> <span class="font-bold text-red-500" id="fStatAllExp">₺0</span></div>
+                                <div class="border-t border-gray-100 pt-2 flex justify-between items-center"><span class="text-burgundy text-xs font-extrabold">NET KAZANÇ</span> <span class="font-extrabold text-lg text-burgundy" id="fStatAllNet">₺0</span></div>
+                                <div class="flex justify-between items-center bg-yellow-50 p-2 rounded-lg mt-2"><span class="text-yellow-700 text-xs font-bold">Beklenen Net Gelir</span> <span class="font-bold text-yellow-600" id="fStatAllPending">₺0</span></div>
                             </div>
                         </div>
 
-                        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm h-[400px] flex flex-col mb-10">
-                            <h3 class="text-gray-800 font-bold text-lg mb-4 font-display">Aylık Gerçekleşen Finans Tablosu (Son 6 Ay)</h3>
+                        <!-- 2. FİRMA (COMPANY) BAZLI -->
+                        <div class="bg-white p-5 rounded-2xl border-2 border-blue-50 shadow-md">
+                            <div class="flex items-center gap-3 mb-4 border-b border-blue-50 pb-3">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-building"></i></div>
+                                <h3 class="font-bold text-blue-900 uppercase tracking-widest text-sm">Firma Operasyonları</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center"><span class="text-gray-500 text-xs font-bold">Kazanılan Gelir</span> <span class="font-bold text-green-600" id="fStatCRev">₺0</span></div>
+                                <div class="flex justify-between items-center"><span class="text-gray-500 text-xs font-bold">Gerçekleşen Gider</span> <span class="font-bold text-red-500" id="fStatCExp">₺0</span></div>
+                                <div class="border-t border-gray-100 pt-2 flex justify-between items-center"><span class="text-blue-900 text-xs font-extrabold">FİRMA NET KÂRI</span> <span class="font-extrabold text-lg text-blue-600" id="fStatCNet">₺0</span></div>
+                                <div class="flex justify-between items-center bg-gray-50 p-2 rounded-lg mt-2"><span class="text-gray-500 text-xs font-bold">Beklenen Net Gelir</span> <span class="font-bold text-gray-600" id="fStatCPending">₺0</span></div>
+                            </div>
+                        </div>
+
+                        <!-- 3. INFLUENCER BAZLI -->
+                        <div class="bg-white p-5 rounded-2xl border-2 border-purple-50 shadow-md">
+                            <div class="flex items-center gap-3 mb-4 border-b border-purple-50 pb-3">
+                                <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-hashtag"></i></div>
+                                <h3 class="font-bold text-purple-900 uppercase tracking-widest text-sm">Influencer İşlemleri</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center"><span class="text-gray-500 text-xs font-bold">Kazanılan Gelir</span> <span class="font-bold text-green-600" id="fStatIRev">₺0</span></div>
+                                <div class="flex justify-between items-center"><span class="text-gray-500 text-xs font-bold">Gerçekleşen Gider</span> <span class="font-bold text-red-500" id="fStatIExp">₺0</span></div>
+                                <div class="border-t border-gray-100 pt-2 flex justify-between items-center"><span class="text-purple-900 text-xs font-extrabold">INFL. NET KÂRI</span> <span class="font-extrabold text-lg text-purple-600" id="fStatINet">₺0</span></div>
+                                <div class="flex justify-between items-center bg-gray-50 p-2 rounded-lg mt-2"><span class="text-gray-500 text-xs font-bold">Beklenen Net Gelir</span> <span class="font-bold text-gray-600" id="fStatIPending">₺0</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GRAFİKLER -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+                        
+                        <!-- Aylık Çubuk Grafik (Son 6 Ay) -->
+                        <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm h-[350px] flex flex-col">
+                            <h3 class="text-gray-800 font-bold mb-4 font-display">Aylık Gerçekleşen Finans Tablosu (Tüm Ajans)</h3>
                             <div class="flex-1 relative w-full">
                                 <canvas id="financeChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Kâr Dağılımı (Firma vs Influencer Pasta Grafik) -->
+                        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm h-[350px] flex flex-col">
+                            <h3 class="text-gray-800 font-bold mb-4 font-display text-center">Net Kâr Dağılımı</h3>
+                            <div class="flex-1 relative w-full flex items-center justify-center">
+                                <canvas id="distributionChart"></canvas>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-sm text-blue-800 flex items-start gap-3">
                         <i class="fas fa-info-circle mt-0.5"></i>
-                        <p>Finansal veriler; Firma ve Influencer tablolarında eklediğiniz tüm işlerin <strong>"Fiyat"</strong> ve <strong>"Maliyet"</strong> bilgilerinden otomatik olarak hesaplanır. Sadece <strong>"Tamamlandı"</strong> durumundaki işler gerçekleşen gelire/gidere yansır.</p>
+                        <p>Kazanılan Gelir, Gerçekleşen Gider ve Net Kâr istatistikleri; <strong>"Tamamlandı"</strong> durumundaki işlerden hesaplanır. "Görüşme Aşamasında" veya "Yapılacak" olan projelerin kazanç/gider farkı <strong>Beklenen Net Gelir</strong> kısmına eklenir.</p>
                     </div>
 
                 </div>
@@ -348,7 +369,7 @@
         </main>
     </div>
 
-    <!-- EKLE/DÜZENLE MODAL (DİNAMİK YAZILAR İLE) -->
+    <!-- EKLE/DÜZENLE MODAL -->
     <div id="dataModal" class="fixed inset-0 z-[60] bg-black/50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity p-4">
         <div class="bg-white w-full max-w-5xl rounded-2xl shadow-2xl flex flex-col max-h-[95vh]">
             <div class="px-6 md:px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-2xl shrink-0">
@@ -359,11 +380,11 @@
             <div class="p-4 md:p-8 overflow-y-auto custom-scroll bg-white">
                 <form id="dataForm" class="space-y-6">
                     <input type="hidden" id="recordId">
-                    <input type="hidden" id="recordType" value="company"> <!-- company veya influencer -->
+                    <input type="hidden" id="recordType" value="company"> 
                     
                     <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
                         <label class="block text-sm font-bold text-burgundy mb-2" id="labelName">Firma / Proje Adı</label>
-                        <input type="text" id="mName" required placeholder="Örn: ABC Holding / Trendyol" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white text-sm">
+                        <input type="text" id="mName" required placeholder="Örn: ABC Holding" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none bg-white text-sm">
                         
                         <label class="block text-sm font-bold text-burgundy mb-2 mt-4" id="labelNotes">Genel Notlar <span class="text-xs text-gray-400 font-normal">(İsteğe bağlı)</span></label>
                         <textarea id="mNotes" rows="2" placeholder="Detaylı notlar..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-rose outline-none resize-none bg-white text-sm"></textarea>
@@ -373,13 +394,11 @@
                         <div class="flex flex-col md:flex-row justify-between md:items-center gap-3 mb-4">
                             <label class="block text-sm font-bold text-burgundy" id="labelJobs">Bağlı İşler, Anlaşmalar & Finans</label>
                             <button type="button" onclick="addJobRow()" class="text-xs md:text-sm bg-rose text-white px-4 py-2 rounded-lg hover:bg-burgundy transition-colors font-semibold shadow-sm flex items-center gap-2 w-fit">
-                                <i class="fas fa-plus text-xs"></i> Yeni Ekle
+                                <i class="fas fa-plus text-xs"></i> Yeni İş Ekle
                             </button>
                         </div>
                         
-                        <div id="jobsContainer" class="space-y-4">
-                            <!-- JS ile job satırları eklenecek -->
-                        </div>
+                        <div id="jobsContainer" class="space-y-4"></div>
                     </div>
 
                     <div class="flex justify-end gap-3 pt-6 border-t border-gray-100">
@@ -433,8 +452,8 @@
         let iPage = 1;
         const itemsPerPage = 20;
         let myChart = null;
+        let myDoughnutChart = null; // Pasta grafik için
 
-        // Geçerli Aktif Sekme Değişkeni
         window.currentTab = 'company';
 
         onAuthStateChanged(auth, (user) => {
@@ -498,11 +517,9 @@
 
             if (window.innerWidth < 768) { window.toggleSidebar(); }
 
-            // Menü stillerini sıfırla
             [nCompany, nInfluencer, nFinance].forEach(n => {
                 n.className = "w-full flex items-center gap-3 text-white/60 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg font-medium transition-colors border border-transparent";
             });
-            // Görünümleri gizle
             [vCompany, vInfluencer, vFinance].forEach(v => v.classList.add('hidden'));
 
             if (viewName === 'company') {
@@ -523,8 +540,10 @@
                 vFinance.classList.remove('hidden');
                 nFinance.className = "w-full flex items-center gap-3 bg-rose/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-rose/30";
                 headerTitle.innerText = "Finans Paneli";
-                mainAddBtn.classList.add('hidden'); // Finansta ekleme butonu yok
-                if(myChart) myChart.resize();
+                mainAddBtn.classList.add('hidden'); 
+                
+                // Finans sekmesine geçince grafikleri çizdir/boyutlandır
+                updateCharts();
             }
         }
 
@@ -576,9 +595,8 @@
         }
 
         window.openModal = function(typeOrId, isEdit = false) {
-            recordTypeInput.value = typeOrId; // 'company' veya 'influencer'
+            recordTypeInput.value = typeOrId; 
             
-            // Eğer yeni ekleniyorsa veya düzenleniyorsa başlıkları uygun şekilde güncelle
             if (typeOrId === 'company') {
                 document.getElementById('modalTitle').innerText = isEdit ? 'Firmayı Düzenle' : 'Yeni Firma Ekle';
                 document.getElementById('labelName').innerText = 'Firma / Proje Adı';
@@ -627,14 +645,12 @@
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     if(!data.jobs) data.jobs = [];
-                    // Geriye Dönük Uyumluluk: type yoksa 'company' yap
                     if(!data.type) data.type = 'company';
                     allRecords.push({ id: doc.id, ...data });
                 });
                 
                 applyFilters(); 
                 calculateStats(); 
-                updateChart(); 
             } catch (error) {
                 console.error("Veri çekme hatası:", error);
             } finally {
@@ -671,52 +687,74 @@
             renderTables();
         }
 
+        // FİNANSAL HESAPLAMALARIN BEYNİ (3 KATEGORİ)
         function calculateStats() {
-            let totalRev = 0; let totalExp = 0; let expectedRev = 0; 
-            
-            let cCount = 0; let cPending = 0; let cTodo = 0; let cDone = 0;
-            let iCount = 0; let iPending = 0; let iTodo = 0; let iDone = 0;
+            // 1. GENEL
+            let tRev = 0, tExp = 0, tPend = 0; 
+            // 2. FİRMA
+            let cRev = 0, cExp = 0, cPend = 0, cCount = 0, cPendingCount = 0, cTodoCount = 0, cDoneCount = 0;
+            // 3. INFLUENCER
+            let iRev = 0, iExp = 0, iPend = 0, iCount = 0, iPendingCount = 0, iTodoCount = 0, iDoneCount = 0;
 
             allRecords.forEach(record => {
-                if(record.type === 'company') cCount++;
-                if(record.type === 'influencer') iCount++;
+                const isCompany = record.type === 'company';
+                if(isCompany) cCount++; else iCount++;
 
                 record.jobs.forEach(job => {
                     const p = Number(job.price) || 0;
                     const e = Number(job.expense) || 0;
+                    const net = p - e;
                     
                     if (job.status.includes("Tamamlandı")) {
-                        totalRev += p; totalExp += e;
-                        if(record.type === 'company') cDone++;
-                        if(record.type === 'influencer') iDone++;
+                        tRev += p; tExp += e;
+                        if(isCompany) { cRev += p; cExp += e; cDoneCount++; } 
+                        else { iRev += p; iExp += e; iDoneCount++; }
                     } else if (job.status.includes("Yapılacak")) {
-                        expectedRev += (p - e);
-                        if(record.type === 'company') cTodo++;
-                        if(record.type === 'influencer') iTodo++;
+                        tPend += net;
+                        if(isCompany) { cPend += net; cTodoCount++; }
+                        else { iPend += net; iTodoCount++; }
                     } else if (job.status.includes("Görüşme")) {
-                        expectedRev += (p - e);
-                        if(record.type === 'company') cPending++;
-                        if(record.type === 'influencer') iPending++;
+                        tPend += net;
+                        if(isCompany) { cPend += net; cPendingCount++; }
+                        else { iPend += net; iPendingCount++; }
                     }
                 });
             });
 
+            // GÖRÜNÜM 1: Firma İstatistikleri
             document.getElementById('cStatTotal').innerText = cCount;
-            document.getElementById('cStatPending').innerText = cPending;
-            document.getElementById('cStatTodo').innerText = cTodo;
-            document.getElementById('cStatDone').innerText = cDone;
+            document.getElementById('cStatPending').innerText = cPendingCount;
+            document.getElementById('cStatTodo').innerText = cTodoCount;
+            document.getElementById('cStatDone').innerText = cDoneCount;
             document.getElementById('cStatCount').innerText = cCount + " Kayıt";
 
+            // GÖRÜNÜM 2: Influencer İstatistikleri
             document.getElementById('iStatTotal').innerText = iCount;
-            document.getElementById('iStatPending').innerText = iPending;
-            document.getElementById('iStatTodo').innerText = iTodo;
-            document.getElementById('iStatDone').innerText = iDone;
+            document.getElementById('iStatPending').innerText = iPendingCount;
+            document.getElementById('iStatTodo').innerText = iTodoCount;
+            document.getElementById('iStatDone').innerText = iDoneCount;
             document.getElementById('iStatCount').innerText = iCount + " Kayıt";
 
-            document.getElementById('statRevenue').innerText = formatMoney(totalRev);
-            document.getElementById('statExpense').innerText = formatMoney(totalExp);
-            document.getElementById('statProfit').innerText = formatMoney(totalRev - totalExp);
-            document.getElementById('statExpected').innerText = formatMoney(expectedRev);
+            // GÖRÜNÜM 3: FİNANS PANELİ - 3'lü Dağılım Kartları
+            // Tüm Ajans
+            document.getElementById('fStatAllRev').innerText = formatMoney(tRev);
+            document.getElementById('fStatAllExp').innerText = formatMoney(tExp);
+            document.getElementById('fStatAllNet').innerText = formatMoney(tRev - tExp);
+            document.getElementById('fStatAllPending').innerText = formatMoney(tPend);
+            // Firma İşlemleri
+            document.getElementById('fStatCRev').innerText = formatMoney(cRev);
+            document.getElementById('fStatCExp').innerText = formatMoney(cExp);
+            document.getElementById('fStatCNet').innerText = formatMoney(cRev - cExp);
+            document.getElementById('fStatCPending').innerText = formatMoney(cPend);
+            // Influencer İşlemleri
+            document.getElementById('fStatIRev').innerText = formatMoney(iRev);
+            document.getElementById('fStatIExp').innerText = formatMoney(iExp);
+            document.getElementById('fStatINet').innerText = formatMoney(iRev - iExp);
+            document.getElementById('fStatIPending').innerText = formatMoney(iPend);
+
+            // Kâr Pasta Grafiği İçin Gerekli Veriyi Sakla (Global)
+            window.financeDataForCharts = { cNet: cRev - cExp, iNet: iRev - iExp };
+            if(currentTab === 'finance') updateCharts();
         }
 
         function renderTables() {
@@ -836,11 +874,13 @@
             renderHTML(filteredInfluencer, iPage, iTable, 'iEmptyState', 'iPageInfo', 'iPrevPageBtn', 'iNextPageBtn', 'fa-hashtag');
         }
 
-        function updateChart() {
-            const ctx = document.getElementById('financeChart');
-            if(!ctx) return;
-            const context = ctx.getContext('2d');
+        // === FİNANSAL GRAFİKLER (Aylık Bar + Kar Dağılımı Pasta) ===
+        function updateCharts() {
+            const ctxBar = document.getElementById('financeChart');
+            const ctxDoughnut = document.getElementById('distributionChart');
+            if(!ctxBar || !ctxDoughnut) return;
 
+            // 1. AYLIK ÇUBUK GRAFİK
             const monthNames = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"];
             const labels = [];
             const revDataMap = {};
@@ -872,8 +912,7 @@
             });
 
             if (myChart) myChart.destroy();
-
-            myChart = new Chart(context, {
+            myChart = new Chart(ctxBar.getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -891,6 +930,32 @@
                     scales: {
                         y: { beginAtZero: true, ticks: { callback: function(v) { return '₺' + v; }, font: {size: 10} } },
                         x: { grid: { display: false }, ticks: { font: {size: 11} } }
+                    }
+                }
+            });
+
+            // 2. KÂR DAĞILIMI PASTA GRAFİĞİ (Firmadan ne kadar, Influencer'dan ne kadar kazanıldı)
+            if (myDoughnutChart) myDoughnutChart.destroy();
+            const { cNet, iNet } = window.financeDataForCharts || { cNet: 0, iNet: 0 };
+            
+            // İkisi de 0 ise grafiği boş göstermemek için dummy veri (gri) basılabilir, ama biz 0,0 olarak bırakalım.
+            myDoughnutChart = new Chart(ctxDoughnut.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Firma Net Kâr', 'Influencer Net Kâr'],
+                    datasets: [{
+                        data: [cNet, iNet],
+                        backgroundColor: ['#2563eb', '#9333ea'], // Mavi (Firma) - Mor (Influencer)
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: {size: 11} } },
+                        tooltip: { callbacks: { label: function(c) { return formatMoney(c.raw); } } }
                     }
                 }
             });
