@@ -473,15 +473,14 @@
             projectId: "mefasite",
             storageBucket: "mefasite.firebasestorage.app",
             messagingSenderId: "737206317283",
-            appId: "1:737206317283:web:ab588fd91aec8072f715d6",
-            databaseURL: "https://mefasite-default-rtdb.europe-west1.firebasedatabase.app"
+            appId: "1:737206317283:web:ab588fd91aec8072f715d6"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app); 
 
-        // Chart.js Tema Ayarları
+        // Chart.js Tema Ayarları (Aydınlık Tema)
         Chart.defaults.color = '#756b69';
         Chart.defaults.font.family = 'Manrope';
         Chart.defaults.borderColor = '#F0ECE1';
@@ -503,7 +502,9 @@
         
         let cPage = 1;
         let iPage = 1;
+        // LİSTE BAŞINA 10 KAYIT
         const itemsPerPage = 10;
+        
         let myChart = null;
         let myDoughnutChart = null; 
 
@@ -707,8 +708,8 @@
         async function fetchData() {
             loadingOverlay.classList.remove('hidden');
             try {
-                // VERİTABANI KOLEKSİYON ADINI "clients" OLARAK AYARLADIK (ESKİ VERİLER GÖRÜNSÜN DİYE)
-                const querySnapshot = await getDocs(collection(db, "clients"));
+                // 'records' koleksiyonundan VERİLERİ ÇEKİYORUZ!
+                const querySnapshot = await getDocs(collection(db, "records"));
                 allRecords = [];
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
@@ -722,7 +723,6 @@
                     allRecords.push({ id: doc.id, ...data });
                 });
 
-                // JavaScript ile Sıralama (Firebase'in gizlemesini önler)
                 allRecords.sort((a, b) => b.timestamp - a.timestamp);
                 
                 applyFilters(); 
@@ -1095,10 +1095,9 @@
 
             try {
                 if (idInput) {
-                    // Koleksiyonu 'clients' olarak kaydet
-                    await updateDoc(doc(db, "clients", idInput), { type, name, notes, jobs });
+                    await updateDoc(doc(db, "records", idInput), { type, name, notes, jobs });
                 } else {
-                    await addDoc(collection(db, "clients"), { type, name, notes, jobs, timestamp: Date.now() });
+                    await addDoc(collection(db, "records"), { type, name, notes, jobs, timestamp: Date.now() });
                 }
                 window.closeModal();
                 await fetchData();
@@ -1134,8 +1133,7 @@
             if (confirm('Bu kaydı ve içindeki tüm işlemleri silmek istediğinize emin misiniz?')) {
                 loadingOverlay.classList.remove('hidden');
                 try {
-                    // Silerken de koleksiyon adı "clients" olacak
-                    await deleteDoc(doc(db, "clients", id));
+                    await deleteDoc(doc(db, "records", id));
                     await fetchData();
                 } catch (error) {
                     alert("Veri silinirken hata oluştu.");
